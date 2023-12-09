@@ -6,12 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:db": "json-server db.json --port 8080",
     "lint": "next lint"
   },
   "dependencies": {
+    "json-server": "^0.17.4",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^4.12.0",
+    "sonner": "^1.2.4",
     "swr": "^2.2.4"
   },
   "devDependencies": {
@@ -19,6 +23,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "daisyui": "^4.4.19",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "postcss": "^8",
