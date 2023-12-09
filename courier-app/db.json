@@ -1,0 +1,206 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "token": "USER-24ca705a-ef27-4c04-a739-4b0773a80cb6",
+      "email": "user@mail.com",
+      "password": "123123123",
+      "name": "User Name",
+      "phoneNumber": "08123456789",
+      "photo": "https://res.cloudinary.com/dzzxtxrfd/image/upload/v1702065737/2606517_5856_jmj66c.jpg",
+      "balance": 1000000,
+      "refCode": "ABCDEF",
+      "completedShipments": 2,
+      "refCodeFriend": "",
+      "countRefCode": 2,
+      "totalSpent": 500000,
+      "createdAt": "2023-12-04T08:35:32.000Z",
+      "updatedAt": "2023-12-04T08:35:32.000Z"
+    },
+    {
+      "id": 2,
+      "token": "USER-24ca705a-ef27-4c04-a739-3b0773a20cb6",
+      "email": "user2@mail.com",
+      "password": "123123123",
+      "name": "User Name",
+      "phoneNumber": "08123456789",
+      "photo": "https://res.cloudinary.com/dzzxtxrfd/image/upload/v1702065737/2606517_5856_jmj66c.jpg",
+      "balance": 1000000,
+      "refCode": "ABCXYZ",
+      "completedShipments": 2,
+      "refCodeFriend": "ABCDEF",
+      "countRefCode": 2,
+      "totalSpent": 500000,
+      "createdAt": "2023-12-04T08:35:32.000Z",
+      "updatedAt": "2023-12-04T08:35:32.000Z"
+    },
+    {
+      "token": "USER-24ca705a-ef27-4c04-a739-3b0773a80cb6",
+      "email": "evan@mail.com",
+      "password": "123123123",
+      "name": "evan",
+      "phoneNumber": "08123123123",
+      "photo": "https://res.cloudinary.com/dzzxtxrfd/image/upload/v1702065737/2606517_5856_jmj66c.jpg",
+      "balance": 0,
+      "refCode": "Kzznk3",
+      "refCodeFriend": "",
+      "countRefCode": 0,
+      "completedShipments": 0,
+      "totalSpent": 0,
+      "createdAt": "2023-12-08T20:21:17.502Z",
+      "updatedAt": "2023-12-08T20:21:17.502Z",
+      "id": 3
+    }
+  ],
+  "admin": [
+    {
+      "id": 1,
+      "token": "121212",
+      "email": "admin@mail.com",
+      "password": "123123123",
+      "name": "Admin Name",
+      "phoneNumber": "08123456789",
+      "photo": "",
+      "createdAt": "2023-12-04T08:35:32.000Z",
+      "updatedAt": "2023-12-04T08:35:32.000Z"
+    }
+  ],
+  "promo": [
+    {
+      "id": 1,
+      "promoCode": "qwerqwe",
+      "discount": 20,
+      "quota": 10,
+      "expiryDate": "2023-20-04T08:35:32.000Z",
+      "used": 2,
+      "createdAt": "2023-12-04T08:35:32.000Z",
+      "updatedAt": "2023-12-04T08:35:32.000Z"
+    }
+  ],
+  "destination": [
+    {
+      "id": 1,
+      "userId": 1,
+      "addresses": [
+        {
+          "city": "Jakarta",
+          "province": "DKI Jakarta",
+          "street": "Jl. Ini Nama Jalan Jakarta",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        },
+        {
+          "city": "Bandung",
+          "province": "Jawa Barat",
+          "street": "Jl. Ini Nama Jalan Bandung",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "addresses": [
+        {
+          "city": "Jakarta",
+          "province": "DKI Jakarta",
+          "street": "Jl. Ini Nama Jalan Jakarta 2",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        },
+        {
+          "city": "Bandung",
+          "province": "Jawa Barat",
+          "street": "Jl. Ini Nama Jalan Bandung 2",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        }
+      ]
+    }
+  ],
+  "origin": [
+    {
+      "id": 1,
+      "addresses": [
+        {
+          "city": "Jakarta",
+          "province": "DKI Jakarta",
+          "street": "Jl. Ini Nama Jalan Jakarta Origin",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        },
+        {
+          "city": "Bandung",
+          "province": "Jawa Barat",
+          "street": "Jl. Ini Nama Jalan Bandung Origin",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "addresses": [
+        {
+          "city": "Jakarta",
+          "province": "DKI Jakarta",
+          "street": "Jl. Ini Nama Jalan Jakarta 2 Origin",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        },
+        {
+          "city": "Bandung",
+          "province": "Jawa Barat",
+          "street": "Jl. Ini Nama Jalan Bandung 2 Origin",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        }
+      ]
+    }
+  ],
+  "shipping": [
+    {
+      "id": 1,
+      "userId": 1,
+      "detail": [
+        {
+          "length": 100,
+          "width": 100,
+          "height": 100,
+          "weight": 5,
+          "origin": "Jakarta",
+          "destination": "Surabaya",
+          "receiverName": "Adam",
+          "receiverPhone": "08123321679",
+          "cost": 90000,
+          "status": "Pending",
+          "promoUsed": "qwerty",
+          "category": "1",
+          "addOns": "2",
+          "review": "",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        },
+        {
+          "length": 200,
+          "width": 10,
+          "height": 400,
+          "weight": 1,
+          "origin": "Bali",
+          "destination": "Lombok",
+          "receiverName": "Budi",
+          "receiverPhone": "08189321679",
+          "cost": 9000,
+          "status": "Completed",
+          "promoUsed": "qwerty",
+          "category": "2",
+          "addOns": "1",
+          "review": "4",
+          "createdAt": "2023-13-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        }
+      ]
+    }
+  ]
+}
