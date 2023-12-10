@@ -1,15 +1,13 @@
 import { defaultPhotoURL } from "@/utils/defaultPhotoURL";
-import React, { useEffect, useState } from "react";
 import { ProfileIcon } from "./ProfileIcon";
 import { GameIcon } from "./GameIcon";
 import Link from "next/link";
 import Image from "next/image";
 import { NavbarMenu, NavbarMenuCollapsed } from "./NavbarMenu";
 import NotificationIcon from "./NotificationIcon";
-import { getCookie } from "@/utils/cookies";
-import { RoleEnum, TRole } from "@/types/role";
 import { Button } from "../Button";
 import { useRouter } from "next/router";
+import { dashboardHomeRoute } from "@/routes";
 
 const Navbar = () => {
   const router = useRouter();
@@ -32,7 +30,7 @@ const Navbar = () => {
       <div className="navbar w-[90%] max-w-screen-2xl mx-auto text-[white] ">
         <div className="navbar-start">
           <NavbarMenuCollapsed role={role} />
-          <Link href={"/home"} className="">
+          <Link href={homeRoute} className="">
             <Image
               src={"/img/logo.png"}
               alt={"SeaCourier logo"}
@@ -47,16 +45,9 @@ const Navbar = () => {
         <div className="navbar-end gap-1">
           {role === "USER" && <GameIcon />}
           {role === "ADMIN" && (
-            <div>
-              <Button
-                withoutHoverEffect={true}
-                onClick={() => {
-                  router.push("/dashboard");
-                }}
-              >
-                Go to Dashboard
-              </Button>
-            </div>
+            <Link href={dashboardHomeRoute}>
+              <Button withoutHoverEffect={true}>Go to Dashboard</Button>
+            </Link>
           )}
           {role === "USER" || role === "ADMIN" ? (
             <>
@@ -78,7 +69,7 @@ const Navbar = () => {
             </div>
           )}
         </div>
-      </div>{" "}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { TRole } from "@/types/role";
-import { removeCookie } from "@/utils/cookies";
 import Image from "next/image";
+import Link from "next/link";
+import * as R from "@/routes";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
 
@@ -36,11 +37,22 @@ export const ProfileIcon = ({
         className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 text-[black]"
       >
         <li>
-          <a className="justify-between">Profile</a>
+          <Link
+            href={
+              role === "USER"
+                ? R.profileRoute
+                : role === "ADMIN"
+                ? R.dashboardProfileRoute
+                : ""
+            }
+            className="justify-between"
+          >
+            Profile
+          </Link>
         </li>
         {role === "USER" && (
           <li>
-            <a>Saved Addresses</a>
+            <Link href={R.addressRoute}>Saved Addresses</Link>
           </li>
         )}
         <li>

@@ -1,5 +1,6 @@
 import { Button, ButtonBorderOnly } from "@/components/Button";
 import { Form, FormInput } from "@/components/Form";
+import { homeRoute } from "@/routes";
 import useAdmin from "@/utils/api/useAdmin";
 import useUsers from "@/utils/api/useUsers";
 import { setCookie } from "@/utils/cookies";
@@ -119,7 +120,7 @@ const Login = () => {
           }
         );
         setTimeout(() => {
-          router.push("/home");
+          router.push(homeRoute);
         }, 1200);
       }
       setIsButtonLoading(false);

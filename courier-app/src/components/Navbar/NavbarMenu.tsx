@@ -1,3 +1,4 @@
+import * as R from "@/routes";
 import { TRole } from "@/types/role";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,10 +7,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 export const NavbarMenuItems = ({ role }: { role: TRole }) => {
   const router = useRouter();
   const currentPage = router.route;
-  const homeRoute = "/home";
-  const shippingRoute = "/shipping";
-  const shippingHistoryRoute = "/shipping/history";
-  const topupRoute = "/topup";
 
   const activeText = (page: string) => {
     if (currentPage === page) {
@@ -20,12 +17,12 @@ export const NavbarMenuItems = ({ role }: { role: TRole }) => {
   return (
     <>
       <li>
-        <Link href={homeRoute} className={activeText(homeRoute)}>
+        <Link href={R.homeRoute} className={activeText(R.homeRoute)}>
           Home
         </Link>
       </li>
       <li>
-        <Link href={shippingRoute} className={activeText(shippingRoute)}>
+        <Link href={R.shippingRoute} className={activeText(R.shippingRoute)}>
           Ship Now
         </Link>
       </li>
@@ -33,15 +30,15 @@ export const NavbarMenuItems = ({ role }: { role: TRole }) => {
         <>
           <li>
             <Link
-              href={shippingHistoryRoute}
-              className={activeText(shippingHistoryRoute)}
+              href={R.shippingHistoryRoute}
+              className={activeText(R.shippingHistoryRoute)}
             >
               Shipping History
             </Link>
           </li>
 
           <li>
-            <Link href={topupRoute} className={activeText(topupRoute)}>
+            <Link href={R.topupRoute} className={activeText(R.topupRoute)}>
               Top Up
             </Link>
           </li>
