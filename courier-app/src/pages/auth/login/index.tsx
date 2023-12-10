@@ -101,26 +101,23 @@ const Login = () => {
         (person) => person.email === email && person.password === password
       );
 
-      if (registeredAdmin !== undefined) {
+      if (registeredAdmin !== undefined || registeredUser !== undefined) {
         setIsUserRegistered(true);
-        setCookie("token", registeredAdmin.token, 1);
+        if (registeredAdmin !== undefined) {
+          setCookie("token", registeredAdmin.token, 1);
+        } else if (registeredUser !== undefined) {
+          setCookie("token", registeredUser.token, 1);
+        }
         toast.success(
-          `Log in successful. Welcome, ${registeredAdmin.name} (Admin #${registeredAdmin.id}! `,
+          `Log in successful. Welcome, ${
+            registeredAdmin !== undefined
+              ? `${registeredAdmin.name} (Admin #${registeredAdmin?.id})`
+              : ""
+          }${registeredUser !== undefined ? registeredUser.name : ""}! `,
           {
             duration: 2000,
           }
         );
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 1200);
-      }
-
-      if (registeredUser !== undefined) {
-        setIsUserRegistered(true);
-        setCookie("token", registeredUser.token, 1);
-        toast.success(`Log in successful. Welcome,  ${registeredUser.name}! `, {
-          duration: 2000,
-        });
         setTimeout(() => {
           router.push("/home");
         }, 1200);

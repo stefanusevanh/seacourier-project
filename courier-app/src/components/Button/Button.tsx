@@ -5,13 +5,23 @@ interface IButton {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: "button" | "reset" | "submit";
   isLoading?: boolean;
+  withoutHoverEffect?: boolean;
 }
 
-export const Button = ({ children, onClick, type, isLoading }: IButton) => {
+export const Button = ({
+  children,
+  onClick,
+  type,
+  isLoading,
+  withoutHoverEffect,
+}: IButton) => {
   return (
     <div className="card-actions w-full relative">
       <button
-        className="btn text-primary_blue w-full bg-primary_orange hover:text-primary_orange hover:bg-primary_blue hover:text-[1.125rem] transition ease-linear delay-0"
+        className={`btn text-primary_blue w-full bg-primary_orange ${
+          !withoutHoverEffect &&
+          "hover:text-primary_orange hover:bg-primary_blue hover:text-[1.125rem]"
+        } transition ease-linear delay-0`}
         onClick={onClick}
         type={type}
       >

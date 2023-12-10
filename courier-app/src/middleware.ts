@@ -27,7 +27,7 @@ export default function middleware(request: NextRequest) {
     protectedUserRoutes.includes(destinationPath) && isAdmin;
 
   const isUserToProtectedAdminRoutes =
-    protectedUserRoutes.includes(destinationPath) && isUser;
+    protectedAdminRoutes.includes(destinationPath) && isUser;
 
   if (destinationPath === "/") {
     return NextResponse.redirect(new URL("/home", request.url));
