@@ -30,13 +30,13 @@ const Navbar = () => {
           <NavbarMenu role={role} />
         </div>
         <div className="navbar-end gap-1">
-          {role === "USER" && <GameIcon />}
+          {(role === "USER" || role === "USERISADMIN") && <GameIcon />}
           {role === "ADMIN" && (
             <Link href={dashboardHomeRoute}>
               <Button withoutHoverEffect={true}>Go to Dashboard</Button>
             </Link>
           )}
-          {role === "USER" || role === "ADMIN" ? (
+          {role === "USER" || role === "USERISADMIN" || role === "ADMIN" ? (
             <>
               <NotificationIcon />
               <ProfileIcon

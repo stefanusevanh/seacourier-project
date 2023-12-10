@@ -26,7 +26,7 @@ export const NavbarMenuItems = ({ role }: { role: TRole }) => {
           Ship Now
         </Link>
       </li>
-      {role === "USER" && (
+      {(role === "USER" || role === "USERISADMIN") && (
         <>
           <li>
             <Link

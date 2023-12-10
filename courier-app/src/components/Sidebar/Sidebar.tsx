@@ -2,11 +2,13 @@ import * as R from "@/routes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Button, ButtonBorderOnly, ButtonInverted } from "../Button";
 import useLogout from "@/hooks/useLogout";
 import useRole from "@/hooks/useRole";
+import useUser from "@/utils/api/useUser";
+import { setCookie } from "@/utils/cookies";
 
 const PageTitle = ({ currentPage }: { currentPage: string }) => {
   let title = "";
@@ -70,6 +72,14 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
   const currentPage = router.route;
   const logout = useLogout();
   const { setRole } = useRole();
+
+  const { user, getUser } = useUser();
+  useEffect(() => {
+    if (user !== null && user.email === "user@mail.com") {
+      setCookie("token", user.token, 1);
+      setRole("USERISADMIN");
+    }
+  }, [user]);
 
   const activeText = (page: string) => {
     if (currentPage === page) {
@@ -173,7 +183,16 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
               </li>
             </div>
           </div>
-          <div className="mb-6">
+          <div className="mb-6 flex flex-col gap-2">
+            <Button
+              withoutHoverEffect={true}
+              onClick={() => {
+                getUser(1);
+                router.push(R.homeRoute);
+              }}
+            >
+              Switch Role to User
+            </Button>
             <ButtonBorderOnly
               onClick={(e) => {
                 logout(e.detail, setRole);

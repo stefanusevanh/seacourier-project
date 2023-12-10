@@ -14,6 +14,10 @@ const useRole = () => {
       setRole("ADMIN");
       return;
     }
+    if (token.startsWith(RoleEnum["USERISADMIN"].toString())) {
+      setRole("USERISADMIN");
+      return;
+    }
   }, []);
   return { role, setRole };
 };

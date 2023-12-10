@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import * as R from "@/routes";
 import useLogout from "@/hooks/useLogout";
+import useUser from "@/utils/api/useUser";
+import { useEffect } from "react";
+import { setCookie } from "@/utils/cookies";
 
 export const ProfileIcon = ({
   imgURL,
@@ -14,6 +17,13 @@ export const ProfileIcon = ({
   setRole: React.Dispatch<React.SetStateAction<TRole>>;
 }) => {
   const logout = useLogout();
+  const { user, getUser } = useUser();
+  useEffect(() => {
+    if (user !== null && user.email === "user@mail.com") {
+      setCookie("token", user.token, 1);
+      setRole("USERISADMIN");
+    }
+  }, [user]);
 
   return (
     <div className="dropdown dropdown-end">
@@ -40,16 +50,40 @@ export const ProfileIcon = ({
             href={
               role === "USER"
                 ? R.profileRoute
-                : role === "ADMIN"
+                : role === "ADMIN" || role === "USERISADMIN"
                 ? R.dashboardProfileRoute
                 : ""
             }
             className="justify-between"
           >
-            Profile
+            Profile {(role === "ADMIN" || role === "USERISADMIN") && "(Admin)"}
           </Link>
         </li>
-        {role === "USER" && (
+        {role === "ADMIN" && (
+          <li>
+            <span
+              className="justify-between"
+              onClick={() => {
+                getUser(1);
+              }}
+            >
+              Switch Role to User
+            </span>
+          </li>
+        )}
+        {role === "USERISADMIN" && (
+          <li>
+            <span
+              className="justify-between"
+              onClick={() => {
+                //
+              }}
+            >
+              Switch Role to Admin
+            </span>
+          </li>
+        )}
+        {(role === "USER" || role === "USERISADMIN") && (
           <li>
             <Link href={R.addressRoute}>Saved Addresses</Link>
           </li>
