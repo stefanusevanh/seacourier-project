@@ -2,8 +2,7 @@ import { TRole } from "@/types/role";
 import Image from "next/image";
 import Link from "next/link";
 import * as R from "@/routes";
-import { useRouter } from "next/router";
-import { toast } from "sonner";
+import useLogout from "@/hooks/useLogout";
 
 export const ProfileIcon = ({
   imgURL,
@@ -14,7 +13,7 @@ export const ProfileIcon = ({
   role: TRole;
   setRole: React.Dispatch<React.SetStateAction<TRole>>;
 }) => {
-  const router = useRouter();
+  const logout = useLogout();
 
   return (
     <div className="dropdown dropdown-end">
@@ -58,30 +57,7 @@ export const ProfileIcon = ({
         <li>
           <span
             onClick={(e) => {
-              let timer;
-              if (e.detail === 1) {
-                timer = setTimeout(() => {
-                  toast.info("Double click to log out", {
-                    duration: 1200,
-                    id: "first-toast",
-                  });
-                }, 200);
-              } else if (e.detail === 2) {
-                clearTimeout(timer);
-                setRole("GUEST");
-                removeCookie("token");
-                toast.dismiss("first-toast");
-
-                setTimeout(() => {
-                  toast.dismiss("first-toast");
-                  toast.success("You have been logged out", {
-                    duration: 1500,
-                    dismissible: false,
-                    important: true,
-                  });
-                  router.push("/home");
-                }, 100);
-              }
+              logout(e.detail, setRole);
             }}
           >
             Log Out

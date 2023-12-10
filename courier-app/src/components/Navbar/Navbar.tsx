@@ -6,24 +6,11 @@ import Image from "next/image";
 import { NavbarMenu, NavbarMenuCollapsed } from "./NavbarMenu";
 import NotificationIcon from "./NotificationIcon";
 import { Button } from "../Button";
-import { useRouter } from "next/router";
-import { dashboardHomeRoute } from "@/routes";
+import useRole from "@/hooks/useRole";
+import { dashboardHomeRoute, homeRoute } from "@/routes";
 
 const Navbar = () => {
-  const router = useRouter();
-  const [role, setRole] = useState<TRole>("GUEST");
-  useEffect(() => {
-    const token = getCookie("token");
-    if (token.startsWith(RoleEnum["USER"].toString())) {
-      setRole("USER");
-      return;
-    }
-    if (token.startsWith(RoleEnum["ADMIN"].toString())) {
-      setRole("ADMIN");
-      return;
-    }
-    setRole("GUEST");
-  }, []);
+  const { role, setRole } = useRole();
 
   return (
     <div className="w-full bg-primary_blue ">
