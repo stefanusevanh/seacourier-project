@@ -1,6 +1,9 @@
 import { Button, ButtonBorderOnly } from "@/components/Button";
 import { Form, FormInput } from "@/components/Form";
 import { homeRoute } from "@/routes";
+import { useAppDispatch } from "@/stores/store";
+import { storeAdmin } from "@/stores/adminSlice/adminSlice";
+import { storeUser } from "@/stores/userSlice/userSlice";
 import useAdmin from "@/utils/api/useAdmin";
 import useUsers from "@/utils/api/useUsers";
 import { setCookie } from "@/utils/cookies";
@@ -29,6 +32,7 @@ const BorderLoginOption = () => {
 
 const Login = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -106,9 +110,12 @@ const Login = () => {
         setIsUserRegistered(true);
         if (registeredAdmin !== undefined) {
           setCookie("token", registeredAdmin.token, 1);
+          dispatch(storeAdmin(registeredAdmin));
         } else if (registeredUser !== undefined) {
           setCookie("token", registeredUser.token, 1);
+          dispatch(storeUser(registeredUser));
         }
+
         toast.success(
           `Log in successful. Welcome, ${
             registeredAdmin !== undefined
