@@ -1,4 +1,4 @@
-import { RoleEnum } from "@/types/RoleEnum";
+import { RoleEnum } from "@/types/role";
 
 export function generateToken(role: "USER" | "ADMIN") {
   // source: https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid

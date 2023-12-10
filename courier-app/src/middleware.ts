@@ -3,10 +3,9 @@ import {
   protectedAdminRoutes,
   protectedUserRoutes,
 } from "@/routes";
-import { RoleEnum } from "@/types/RoleEnum";
+import { RoleEnum } from "@/types/role";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { toast } from "sonner";
 
 export default function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;

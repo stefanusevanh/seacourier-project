@@ -2,7 +2,7 @@
   "users": [
     {
       "id": 1,
-      "token": "USER-24ca705a-ef27-4c04-a739-4b0773a80cb6",
+      "token": "0-97a842d9-e9d6-4087-939b-e9ca6afb62dc",
       "email": "user@mail.com",
       "password": "123123123",
       "name": "User Name",
@@ -19,7 +19,7 @@
     },
     {
       "id": 2,
-      "token": "USER-24ca705a-ef27-4c04-a739-3b0773a20cb6",
+      "token": "0-cf648bf4-1dbe-4bc4-8af8-95f42dcb3cbf  ",
       "email": "user2@mail.com",
       "password": "123123123",
       "name": "User Name",
@@ -35,7 +35,7 @@
       "updatedAt": "2023-12-04T08:35:32.000Z"
     },
     {
-      "token": "USER-24ca705a-ef27-4c04-a739-3b0773a80cb6",
+      "token": "0-24ca705a-ef27-4c04-a739-3b0773a80cb6",
       "email": "evan@mail.com",
       "password": "123123123",
       "name": "evan",
@@ -55,12 +55,12 @@
   "admin": [
     {
       "id": 1,
-      "token": "121212",
+      "token": "1-91348164-a83b-4a54-8077-c350372c0c49",
       "email": "admin@mail.com",
       "password": "123123123",
-      "name": "Admin Name",
+      "name": "MyAdmin",
       "phoneNumber": "08123456789",
-      "photo": "",
+      "photo": "https://res.cloudinary.com/dzzxtxrfd/image/upload/v1702065737/2606517_5856_jmj66c.jpg",
       "createdAt": "2023-12-04T08:35:32.000Z",
       "updatedAt": "2023-12-04T08:35:32.000Z"
     }
