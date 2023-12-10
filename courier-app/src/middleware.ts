@@ -9,7 +9,9 @@ import type { NextRequest } from "next/server";
 
 export default function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
-  const isAdmin = token?.startsWith(RoleEnum["ADMIN"].toString());
+  const isAdmin =
+    token?.startsWith(RoleEnum["ADMIN"].toString()) ||
+    token?.startsWith(RoleEnum["USERISADMIN"].toString());
   const isUser = token?.startsWith(RoleEnum["USER"].toString());
 
   const destinationPath = request.nextUrl.pathname;

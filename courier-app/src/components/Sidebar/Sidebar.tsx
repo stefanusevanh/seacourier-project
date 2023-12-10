@@ -9,6 +9,8 @@ import useLogout from "@/hooks/useLogout";
 import useRole from "@/hooks/useRole";
 import useUser from "@/utils/api/useUser";
 import { setCookie } from "@/utils/cookies";
+import { useAppDispatch, useAppSelector } from "@/stores/store";
+import { storeUser } from "@/stores/userSlice/userSlice";
 
 const PageTitle = ({ currentPage }: { currentPage: string }) => {
   let title = "";
@@ -72,14 +74,24 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
   const currentPage = router.route;
   const logout = useLogout();
   const { setRole } = useRole();
+  const userStore = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
   const { user, getUser } = useUser();
+
   useEffect(() => {
+    switchToUserIsAdmin();
+  }, [user]);
+
+  const switchToUserIsAdmin = () => {
     if (user !== null && user.email === "user@mail.com") {
       setCookie("token", user.token, 1);
       setRole("USERISADMIN");
+      if (userStore.id === 0) {
+        dispatch(storeUser(user));
+      }
     }
-  }, [user]);
+  };
 
   const activeText = (page: string) => {
     if (currentPage === page) {
@@ -187,8 +199,11 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
             <Button
               withoutHoverEffect={true}
               onClick={() => {
-                getUser(1);
-                router.push(R.homeRoute);
+                if (user === null) {
+                  getUser(1);
+                  router.push(R.homeRoute);
+                }
+                switchToUserIsAdmin();
               }}
             >
               Switch Role to User

@@ -4,8 +4,10 @@ import Link from "next/link";
 import * as R from "@/routes";
 import useLogout from "@/hooks/useLogout";
 import useUser from "@/utils/api/useUser";
-import { useEffect } from "react";
-import { setCookie } from "@/utils/cookies";
+import { useEffect, useState } from "react";
+import { getCookie, setCookie } from "@/utils/cookies";
+import { useAppDispatch, useAppSelector } from "@/stores/store";
+import { storeUser } from "@/stores/userSlice/userSlice";
 
 export const ProfileIcon = ({
   imgURL,
@@ -18,12 +20,24 @@ export const ProfileIcon = ({
 }) => {
   const logout = useLogout();
   const { user, getUser } = useUser();
+  const dispatch = useAppDispatch();
+  const userStore = useAppSelector((state) => state.user);
+  const adminStore = useAppSelector((state) => state.admin);
+  const [adminToken, setAdminToken] = useState(adminStore.token);
+
   useEffect(() => {
+    switchToUserIsAdmin();
+  }, [user]);
+
+  const switchToUserIsAdmin = () => {
     if (user !== null && user.email === "user@mail.com") {
       setCookie("token", user.token, 1);
       setRole("USERISADMIN");
+      if (userStore.id === 0) {
+        dispatch(storeUser(user));
+      }
     }
-  }, [user]);
+  };
 
   return (
     <div className="dropdown dropdown-end">
@@ -64,7 +78,12 @@ export const ProfileIcon = ({
             <span
               className="justify-between"
               onClick={() => {
-                getUser(1);
+                if (user === null) {
+                  setAdminToken(getCookie("token"));
+                  getUser(1);
+                  return;
+                }
+                switchToUserIsAdmin();
               }}
             >
               Switch Role to User
@@ -76,7 +95,8 @@ export const ProfileIcon = ({
             <span
               className="justify-between"
               onClick={() => {
-                //
+                setCookie("token", adminToken!, 1);
+                setRole("ADMIN");
               }}
             >
               Switch Role to Admin
