@@ -1,4 +1,3 @@
-import { defaultPhotoURL } from "@/utils/defaultPhotoURL";
 import { ProfileIcon } from "./ProfileIcon";
 import { GameIcon } from "./GameIcon";
 import Link from "next/link";
@@ -39,11 +38,7 @@ const Navbar = () => {
           {role === "USER" || role === "USERISADMIN" || role === "ADMIN" ? (
             <>
               <NotificationIcon />
-              <ProfileIcon
-                imgURL={defaultPhotoURL}
-                role={role}
-                setRole={setRole}
-              />
+              <ProfileIcon role={role} setRole={setRole} />
             </>
           ) : (
             <div className="flex flex-row gap-1 w-[200px] justify-center">

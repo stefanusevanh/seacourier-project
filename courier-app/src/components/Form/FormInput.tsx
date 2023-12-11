@@ -10,16 +10,20 @@ const FormInput = ({
   placeholder,
   errorText,
   isError,
+  isDisabled,
+  isHidden,
 }: {
   type: HTMLInputTypeAttribute;
-  value: string | number;
+  value?: string | number;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
-  titleText: string;
-  placeholder: string;
+  titleText?: string;
+  placeholder?: string;
   errorText?: string;
   isError?: boolean;
+  isDisabled?: boolean;
+  isHidden?: boolean;
 }) => {
   const [toggleForTypePassword, setToggleForTypePassword] =
     useState("password");
@@ -27,7 +31,7 @@ const FormInput = ({
   return (
     <label className="form-control w-full">
       <div className="label pb-1 relative">
-        <span className="label-text">{titleText}</span>
+        {titleText && <span className="label-text">{titleText}</span>}
         {type === "password" && (
           <div
             className="cursor-pointer rounded-full w-fit h-fit p-1 hover:bg-primary_orange absolute -bottom-9 right-2"
@@ -51,7 +55,12 @@ const FormInput = ({
           isError && "input-error"
         } input-bordered w-full bg-[#f4f4f4] focus:border-dashed ${
           type === "password" ? "tracking-widest" : "tracking-normal"
-        } placeholder:tracking-normal`}
+        } placeholder:tracking-normal ${isHidden ? "hidden" : ""} ${
+          isDisabled
+            ? "!bg-[white] !cursor-text !border-[1px] !border-primary_blue !text-primary_blue"
+            : ""
+        }`}
+        disabled={isDisabled}
       ></input>
 
       <div className={`label  ${isError ? "visible" : "invisible"} pb-0 pt-1`}>

@@ -1,7 +1,8 @@
 import React from "react";
+import Profile from "..";
 
 const ProfileEdit = () => {
-  return <div>ProfileEdit</div>;
+  return <Profile isEditable={true} />;
 };
 
 export default ProfileEdit;

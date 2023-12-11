@@ -38,18 +38,35 @@
       "token": "0-24ca705a-ef27-4c04-a739-3b0773a80cb6",
       "email": "evan@mail.com",
       "password": "123123123",
-      "name": "evan",
-      "phoneNumber": "08123123123",
-      "photo": "https://res.cloudinary.com/dzzxtxrfd/image/upload/v1702065737/2606517_5856_jmj66c.jpg",
+      "name": "Evan Harlan",
+      "phoneNumber": "081298123444",
+      "photo": "http://res.cloudinary.com/dzzxtxrfd/image/upload/v1702312907/sy2zgxh0l39jjn2efoxf.jpg",
       "balance": 0,
       "refCode": "Kzznk3",
       "refCodeFriend": "",
-      "countRefCode": 0,
+      "countRefCode": 1,
       "completedShipments": 0,
       "totalSpent": 0,
       "createdAt": "2023-12-08T20:21:17.502Z",
       "updatedAt": "2023-12-08T20:21:17.502Z",
       "id": 3
+    },
+    {
+      "token": "0-44f70604-219f-4dc5-842e-adc04f2f2f25",
+      "email": "evan2@mail.com",
+      "password": "123123123",
+      "name": "evann",
+      "phoneNumber": "081232131231",
+      "photo": "https://res.cloudinary.com/dzzxtxrfd/image/upload/v1702065737/2606517_5856_jmj66c.jpg",
+      "balance": 0,
+      "refCode": "yHWQt1",
+      "refCodeFriend": "Kzznk3",
+      "countRefCode": 0,
+      "completedShipments": 0,
+      "totalSpent": 0,
+      "createdAt": "2023-12-11T07:39:38.622Z",
+      "updatedAt": "2023-12-11T07:39:38.622Z",
+      "id": 4
     }
   ],
   "admin": [
@@ -60,7 +77,7 @@
       "password": "123123123",
       "name": "MyAdmin",
       "phoneNumber": "08123456789",
-      "photo": "https://res.cloudinary.com/dzzxtxrfd/image/upload/v1702065737/2606517_5856_jmj66c.jpg",
+      "photo": "http://res.cloudinary.com/dzzxtxrfd/image/upload/v1702315513/y4jlnv00y33nuzuvzyy5.jpg",
       "createdAt": "2023-12-04T08:35:32.000Z",
       "updatedAt": "2023-12-04T08:35:32.000Z"
     }

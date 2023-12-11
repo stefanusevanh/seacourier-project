@@ -34,7 +34,7 @@ export default function App({ Component, pageProps, ...rest }: AppProps) {
   return (
     <Provider store={store}>
       <Toaster
-        position="top-center"
+        position="bottom-right"
         richColors
         toastOptions={{ duration: 2500 }}
       />

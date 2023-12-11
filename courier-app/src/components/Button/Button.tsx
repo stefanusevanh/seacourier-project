@@ -34,11 +34,19 @@ export const Button = ({
   );
 };
 
-export const ButtonInverted = ({ children, onClick, type }: IButton) => {
+export const ButtonInverted = ({
+  children,
+  onClick,
+  type,
+  withoutHoverEffect,
+}: IButton) => {
   return (
     <div className="card-actions w-full">
       <button
-        className="btn hover:text-primary_blue w-full hover:bg-primary_orange text-primary_orange bg-primary_blue hover:text-[1.125rem]"
+        className={`btn  w-full  text-primary_orange bg-primary_blue ${
+          !withoutHoverEffect &&
+          "hover:text-primary_blue hover:bg-primary_orange hover:text-[1.125rem]"
+        }`}
         onClick={onClick}
         type={type}
       >
@@ -57,6 +65,32 @@ export const ButtonBorderOnly = ({ children, onClick, type }: IButton) => {
         type={type}
       >
         {children}
+      </button>
+    </div>
+  );
+};
+
+export const ButtonDanger = ({
+  children,
+  onClick,
+  type,
+  isLoading,
+  withoutHoverEffect,
+}: IButton) => {
+  return (
+    <div className="card-actions w-full relative">
+      <button
+        className={`btn text-[white] w-full bg-primary_red ${
+          !withoutHoverEffect &&
+          "hover:text-primary_red hover:bg-primary_blue hover:text-[1.125rem]"
+        } transition ease-linear delay-0`}
+        onClick={onClick}
+        type={type}
+      >
+        {children}
+        {isLoading && (
+          <span className="loading loading-spinner loading-md absolute right-5 top-3"></span>
+        )}
       </button>
     </div>
   );

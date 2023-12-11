@@ -8,13 +8,12 @@ import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "@/utils/cookies";
 import { useAppDispatch, useAppSelector } from "@/stores/store";
 import { storeUserID } from "@/stores/roleIDSlice/roleIDSlice";
+import { decodeString } from "@/utils/stringEncoderDecoder";
 
 export const ProfileIcon = ({
-  imgURL,
   role,
   setRole,
 }: {
-  imgURL: string;
   role: TRole;
   setRole: React.Dispatch<React.SetStateAction<TRole>>;
 }) => {
@@ -22,6 +21,7 @@ export const ProfileIcon = ({
   const { user, getUser } = useUser();
   const dispatch = useAppDispatch();
   const roleID = useAppSelector((state) => state.roleID);
+  const profilePhotoURL = decodeString(getCookie("PPURL"));
   const tempAdminToken = getCookie("token_temp");
   const [adminToken, setAdminToken] = useState(
     tempAdminToken !== "" ? tempAdminToken : ""
@@ -50,8 +50,8 @@ export const ProfileIcon = ({
       >
         <div className="w-10 rounded-full">
           <Image
-            alt="Tailwind CSS Navbar component"
-            src={imgURL}
+            alt="Profile Icon"
+            src={profilePhotoURL}
             height={200}
             width={200}
           />

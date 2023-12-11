@@ -82,3 +82,9 @@ export interface IShippingList {
   userId: number;
   detail: IShippingDetail[];
 }
+
+//Cloudinary API
+export interface ICloudinaryResponse {
+  url: string;
+  asset_id: string;
+}
