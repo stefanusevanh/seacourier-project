@@ -1,9 +1,8 @@
 import { Button, ButtonBorderOnly } from "@/components/Button";
 import { Form, FormInput } from "@/components/Form";
 import { homeRoute } from "@/routes";
+import { storeAdminID, storeUserID } from "@/stores/roleIDSlice/roleIDSlice";
 import { useAppDispatch } from "@/stores/store";
-import { storeAdmin } from "@/stores/adminSlice/adminSlice";
-import { storeUser } from "@/stores/userSlice/userSlice";
 import useAdmin from "@/utils/api/useAdmin";
 import useUsers from "@/utils/api/useUsers";
 import { setCookie } from "@/utils/cookies";
@@ -110,10 +109,10 @@ const Login = () => {
         setIsUserRegistered(true);
         if (registeredAdmin !== undefined) {
           setCookie("token", registeredAdmin.token, 1);
-          dispatch(storeAdmin(registeredAdmin));
+          dispatch(storeAdminID(registeredAdmin.id));
         } else if (registeredUser !== undefined) {
           setCookie("token", registeredUser.token, 1);
-          dispatch(storeUser(registeredUser));
+          dispatch(storeUserID(registeredUser.id));
         }
 
         toast.success(

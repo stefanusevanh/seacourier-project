@@ -7,7 +7,7 @@ import useUser from "@/utils/api/useUser";
 import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "@/utils/cookies";
 import { useAppDispatch, useAppSelector } from "@/stores/store";
-import { storeUser } from "@/stores/userSlice/userSlice";
+import { storeUserID } from "@/stores/roleIDSlice/roleIDSlice";
 
 export const ProfileIcon = ({
   imgURL,
@@ -21,9 +21,11 @@ export const ProfileIcon = ({
   const logout = useLogout();
   const { user, getUser } = useUser();
   const dispatch = useAppDispatch();
-  const userStore = useAppSelector((state) => state.user);
-  const adminStore = useAppSelector((state) => state.admin);
-  const [adminToken, setAdminToken] = useState(adminStore.token);
+  const roleID = useAppSelector((state) => state.roleID);
+  const tempAdminToken = getCookie("token_temp");
+  const [adminToken, setAdminToken] = useState(
+    tempAdminToken !== "" ? tempAdminToken : ""
+  );
 
   useEffect(() => {
     switchToUserIsAdmin();
@@ -33,8 +35,8 @@ export const ProfileIcon = ({
     if (user !== null && user.email === "user@mail.com") {
       setCookie("token", user.token, 1);
       setRole("USERISADMIN");
-      if (userStore.id === 0) {
-        dispatch(storeUser(user));
+      if (roleID.user_id === 0) {
+        dispatch(storeUserID(user.id));
       }
     }
   };

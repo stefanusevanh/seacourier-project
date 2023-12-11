@@ -1,14 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./userSlice/userSlice";
-import adminReducer from "./adminSlice/adminSlice";
+import roleIDReducer from "./roleIDSlice/roleIDSlice";
 import { createWrapper } from "next-redux-wrapper";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const makeStore = () =>
   configureStore({
     reducer: {
-      user: userReducer,
-      admin: adminReducer,
+      roleID: roleIDReducer,
     },
     devTools: true,
   });

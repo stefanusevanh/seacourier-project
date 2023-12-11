@@ -25,6 +25,7 @@ const useLogout = () => {
       clearTimeout(timer);
       setRole("GUEST");
       removeCookie("token");
+      removeCookie("token_temp");
       toast.dismiss("first-toast");
 
       setTimeout(() => {

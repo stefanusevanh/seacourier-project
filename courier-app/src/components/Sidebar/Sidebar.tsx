@@ -8,9 +8,9 @@ import { Button, ButtonBorderOnly, ButtonInverted } from "../Button";
 import useLogout from "@/hooks/useLogout";
 import useRole from "@/hooks/useRole";
 import useUser from "@/utils/api/useUser";
-import { setCookie } from "@/utils/cookies";
+import { getCookie, setCookie } from "@/utils/cookies";
 import { useAppDispatch, useAppSelector } from "@/stores/store";
-import { storeUser } from "@/stores/userSlice/userSlice";
+import { storeUserID } from "@/stores/roleIDSlice/roleIDSlice";
 
 const PageTitle = ({ currentPage }: { currentPage: string }) => {
   let title = "";
@@ -74,10 +74,9 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
   const currentPage = router.route;
   const logout = useLogout();
   const { setRole } = useRole();
-  const userStore = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
-
   const { user, getUser } = useUser();
+  const roleID = useAppSelector((state) => state.roleID);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     switchToUserIsAdmin();
@@ -85,11 +84,13 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
 
   const switchToUserIsAdmin = () => {
     if (user !== null && user.email === "user@mail.com") {
+      setCookie("token_temp", getCookie("token"), 1);
       setCookie("token", user.token, 1);
       setRole("USERISADMIN");
-      if (userStore.id === 0) {
-        dispatch(storeUser(user));
+      if (roleID.user_id === 0) {
+        dispatch(storeUserID(user.id));
       }
+      router.push(R.homeRoute);
     }
   };
 
@@ -201,7 +202,7 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
               onClick={() => {
                 if (user === null) {
                   getUser(1);
-                  router.push(R.homeRoute);
+                  return;
                 }
                 switchToUserIsAdmin();
               }}

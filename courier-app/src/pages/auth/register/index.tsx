@@ -1,6 +1,5 @@
 import { Button, ButtonBorderOnly } from "@/components/Button";
 import { Form, FormInput } from "@/components/Form";
-import { IUser } from "@/types/api";
 import useAdmin from "@/utils/api/useAdmin";
 import useRefCode from "@/utils/api/useRefCode";
 import { useRegisterUser } from "@/utils/api/useRegisterUser";

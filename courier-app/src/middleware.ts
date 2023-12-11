@@ -9,10 +9,9 @@ import type { NextRequest } from "next/server";
 
 export default function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
-  const isAdmin =
-    token?.startsWith(RoleEnum["ADMIN"].toString()) ||
-    token?.startsWith(RoleEnum["USERISADMIN"].toString());
+  const isAdmin = token?.startsWith(RoleEnum["ADMIN"].toString());
   const isUser = token?.startsWith(RoleEnum["USER"].toString());
+  const isUserIsAdmin = token?.startsWith(RoleEnum["USERISADMIN"].toString());
 
   const destinationPath = request.nextUrl.pathname;
   const isNotAdminToProtectedAdminRoutes =
@@ -34,6 +33,15 @@ export default function middleware(request: NextRequest) {
   if (destinationPath === "/") {
     return NextResponse.redirect(new URL("/home", request.url));
   }
+
+  if (isUserIsAdmin) {
+    if (authRoutes.includes(destinationPath)) {
+      return NextResponse.redirect(new URL("/home", request.url));
+    }
+    //unlock the protected routes
+    return;
+  }
+
   if (
     isNotAdminToProtectedAdminRoutes ||
     (isNotUserToProtectedUserRoutes && !isAdminToProtectedUserRoutes) ||
