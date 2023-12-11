@@ -20,8 +20,12 @@ const roleIDSlice = createSlice({
     storeAdminID(state, { payload }: PayloadAction<number>) {
       state.admin_id = payload;
     },
+    reset(state) {
+      state.user_id = roleIDInitialState.user_id;
+      state.admin_id = roleIDInitialState.admin_id;
+    },
   },
 });
 
-export const { storeUserID, storeAdminID } = roleIDSlice.actions;
+export const { storeUserID, storeAdminID, reset } = roleIDSlice.actions;
 export default roleIDSlice.reducer;

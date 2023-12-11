@@ -5,10 +5,12 @@ import React from "react";
 import { TRole } from "@/types/role";
 import { useRouter } from "next/router";
 import { homeRoute } from "@/routes";
+import { useAppDispatch } from "@/stores/store";
+import { reset } from "@/stores/roleIDSlice/roleIDSlice";
 
 const useLogout = () => {
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
   const logout = (
     mouseClicks: number,
     setRole: React.Dispatch<React.SetStateAction<TRole>>
@@ -26,6 +28,8 @@ const useLogout = () => {
       setRole("GUEST");
       removeCookie("token");
       removeCookie("token_temp");
+      removeCookie("PPURL");
+      dispatch(reset());
       toast.dismiss("first-toast");
 
       setTimeout(() => {

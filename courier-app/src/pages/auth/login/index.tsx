@@ -3,10 +3,11 @@ import { Form, FormInput } from "@/components/Form";
 import { homeRoute } from "@/routes";
 import { storeAdminID, storeUserID } from "@/stores/roleIDSlice/roleIDSlice";
 import { useAppDispatch } from "@/stores/store";
-import useAdmin from "@/utils/api/useAdmin";
+import useAdmins from "@/utils/api/useAdmins";
 import useUsers from "@/utils/api/useUsers";
 import { setCookie } from "@/utils/cookies";
 import * as V from "@/utils/formFieldValidation";
+import { encodeString } from "@/utils/stringEncoderDecoder";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -38,20 +39,8 @@ const Login = () => {
   const [isButtonFirstClicked, setIsButtonFirstClicked] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isUserRegistered, setIsUserRegistered] = useState(false);
-  const {
-    users,
-    isLoading: isLoadingUser,
-    isValidating: isValidatingUser,
-    error: errorUser,
-    getUsers,
-  } = useUsers();
-  const {
-    admin,
-    isLoading: isLoadingAdmin,
-    isValidating: isValidatingAdmin,
-    error: errorAdmin,
-    getAdmin,
-  } = useAdmin();
+  const { users, isLoading: isLoadingUser } = useUsers();
+  const { admin, isLoading: isLoadingAdmin } = useAdmins();
 
   const handleErrorMessages = (
     inputType: "email" | "fullname" | "password" | "confirmPassword"
@@ -109,9 +98,11 @@ const Login = () => {
         setIsUserRegistered(true);
         if (registeredAdmin !== undefined) {
           setCookie("token", registeredAdmin.token, 1);
+          setCookie("PPURL", encodeString(registeredAdmin.photo), 1);
           dispatch(storeAdminID(registeredAdmin.id));
         } else if (registeredUser !== undefined) {
           setCookie("token", registeredUser.token, 1);
+          setCookie("PPURL", encodeString(registeredUser.photo), 1);
           dispatch(storeUserID(registeredUser.id));
         }
 

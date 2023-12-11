@@ -1,8 +1,9 @@
 import { Button, ButtonBorderOnly } from "@/components/Button";
 import { Form, FormInput } from "@/components/Form";
-import useAdmin from "@/utils/api/useAdmin";
+import useAdmins from "@/utils/api/useAdmins";
 import useRefCode from "@/utils/api/useRefCode";
 import { useRegisterUser } from "@/utils/api/useRegisterUser";
+import useUpdateUser from "@/utils/api/useUpdateUser";
 import useUsers from "@/utils/api/useUsers";
 import * as V from "@/utils/formFieldValidation";
 import Link from "next/link";
@@ -54,10 +55,11 @@ const Register = () => {
     isLoading: isLoadingAdmin,
     isValidating: isValidatingAdmin,
     error: errorAdmin,
-    getAdmin,
-  } = useAdmin();
+    getAdmins,
+  } = useAdmins();
   const { registerError, registerUser } = useRegisterUser();
   const { referredUser, findRefCode } = useRefCode();
+  const { updateUserData } = useUpdateUser();
   const handleErrorMessages = (
     inputType:
       | "email"
@@ -126,7 +128,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    //to set off the error "Invalid email or password" after the user changes the email or password
+    //to set off the error "Account with same email is already registered" after the user changes the email or password
     setIsButtonFirstClicked(false);
   }, [email, password, refCodeFriend]);
 
@@ -152,7 +154,7 @@ const Register = () => {
       return;
     }
     getUsers();
-    getAdmin();
+    getAdmins();
 
     if (refCodeFriend.length === V.refCodeDigits) {
       findRefCode(refCodeFriend);
@@ -176,6 +178,11 @@ const Register = () => {
         setIsRefCodeFriendExists(true);
         setIsButtonLoading(false);
         registerUser(email, password, fullName, phoneNum, refCodeFriend);
+        if (referredUser?.length !== 0) {
+          updateUserData(referredUser![0].id, {
+            countRefCode: referredUser![0].countRefCode + 1,
+          });
+        }
         toast.success(
           "Sign up successful. Please log in with the registered email.",
           {
