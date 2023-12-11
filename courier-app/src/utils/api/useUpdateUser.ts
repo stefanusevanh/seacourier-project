@@ -20,7 +20,10 @@ function useUpdateUser() {
     const options: RequestInit = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dataToBeUpdated),
+      body: JSON.stringify({
+        ...dataToBeUpdated,
+        updatedAt: new Date().toISOString(),
+      }),
     };
     fetchData(url, options);
   };
