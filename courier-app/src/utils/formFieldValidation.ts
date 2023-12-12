@@ -1,3 +1,5 @@
+export const minTopupAmount = 10000;
+export const maxTopupAmount = 10000000;
 export const minPasswordLength = 8;
 export const maxPasswordLength = 15;
 export const minPhoneNumDigit = 10;
@@ -36,3 +38,6 @@ export const isPhoneNumValid = (phoneNum: string) =>
 
 export const isRefCodeLengthValid = (refCode: string) =>
   refCode.length === refCodeDigits || refCode.length === 0;
+
+export const isTopupAmountValid = (amount: number) =>
+  amount >= minTopupAmount && amount <= maxTopupAmount;
