@@ -25,6 +25,7 @@ import { setCookie } from "@/utils/cookies";
 import { ButtonDanger } from "@/components/Button/Button";
 import { encodeString } from "@/utils/stringEncoderDecoder";
 import useUpdateAdmin from "@/utils/api/useUpdateAdmin";
+import { MdContentCopy } from "react-icons/md";
 
 const StatCard = ({
   title,
@@ -32,11 +33,11 @@ const StatCard = ({
   desc,
 }: {
   title: string;
-  value: string;
+  value: string | JSX.Element;
   desc?: string;
 }) => {
   return (
-    <div className="stats shadow w-full h-full">
+    <div className="stats shadow w-full h-full relative z-0">
       <div className="stat">
         <div className="stat-title">{title}</div>
         <div className="stat-value text-3xl">{value}</div>
@@ -49,6 +50,24 @@ const StatCard = ({
 const LoadingDots = () => {
   return (
     <span className="loading loading-dots loading-lg absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-10 text-primary_red"></span>
+  );
+};
+
+const CopyIcon = ({ textToCopy }: { textToCopy: string }) => {
+  const [textTooltip, setTextTooltip] = useState<"Copy" | "Copied!">("Copy");
+  return (
+    <div className="w-[20px] h-[20px]">
+      <div
+        className="tooltip tooltip-right cursor-pointer absolute z-20"
+        data-tip={textTooltip}
+        onClick={() => {
+          navigator.clipboard.writeText(textToCopy);
+          setTextTooltip("Copied!");
+        }}
+      >
+        <MdContentCopy size={20} />
+      </div>
+    </div>
   );
 };
 
@@ -300,10 +319,15 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
             <div className="flex flex-row justify-between">
               <div className="flex flex-row gap-4">
                 {person.refCode && (
-                  <div className="w-52">
+                  <div className="w-60">
                     <StatCard
                       title="Your Referral Code:"
-                      value={person.refCode}
+                      value={
+                        <div className="flex flex-row  items-center gap-4">
+                          <span>{person.refCode}</span>
+                          <CopyIcon textToCopy={person.refCode} />
+                        </div>
+                      }
                       desc={`Number of Referred User: ${person.countRefCode}`}
                     />
                   </div>
@@ -393,7 +417,7 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
                 />
                 <FormInput
                   type="email"
-                  titleText="Email address"
+                  titleText="Email Address"
                   placeholder="Input your email address.."
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

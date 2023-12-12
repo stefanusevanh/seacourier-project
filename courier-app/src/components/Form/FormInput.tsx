@@ -12,6 +12,7 @@ const FormInput = ({
   isError,
   isDisabled,
   isHidden,
+  withPrefix,
 }: {
   type: HTMLInputTypeAttribute;
   value?: string | number;
@@ -24,6 +25,7 @@ const FormInput = ({
   isError?: boolean;
   isDisabled?: boolean;
   isHidden?: boolean;
+  withPrefix?: string;
 }) => {
   const [toggleForTypePassword, setToggleForTypePassword] =
     useState("password");
@@ -45,6 +47,9 @@ const FormInput = ({
             )}
           </div>
         )}
+        {withPrefix && (
+          <div className="absolute -bottom-9 left-3">{withPrefix}</div>
+        )}
       </div>
       <input
         type={type === "password" ? toggleForTypePassword : type}
@@ -57,9 +62,10 @@ const FormInput = ({
           type === "password" ? "tracking-widest" : "tracking-normal"
         } placeholder:tracking-normal ${isHidden ? "hidden" : ""} ${
           isDisabled
-            ? "!bg-[white] !cursor-text !border-[1px] !border-primary_blue !text-primary_blue"
+            ? "!bg-[white] !cursor-text !border-none !text-primary_blue"
             : ""
-        }`}
+        } ${withPrefix ? "pl-10" : ""}
+        `}
         disabled={isDisabled}
       ></input>
 
