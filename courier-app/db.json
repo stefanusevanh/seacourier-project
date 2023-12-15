@@ -40,15 +40,15 @@
       "password": "123123123",
       "name": "Evan Harlan",
       "phoneNumber": "081298123444",
-      "photo": "http://res.cloudinary.com/dzzxtxrfd/image/upload/v1702312907/sy2zgxh0l39jjn2efoxf.jpg",
-      "balance": 0,
+      "photo": "http://res.cloudinary.com/dzzxtxrfd/image/upload/v1702456228/udmtxizwj1pxxz6hxmql.jpg",
+      "balance": 40050000,
       "refCode": "Kzznk3",
       "refCodeFriend": "",
       "countRefCode": 1,
       "completedShipments": 0,
       "totalSpent": 0,
       "createdAt": "2023-12-08T20:21:17.502Z",
-      "updatedAt": "2023-12-08T20:21:17.502Z",
+      "updatedAt": "2023-12-13T08:30:30.842Z",
       "id": 3
     },
     {
@@ -75,11 +75,11 @@
       "token": "1-91348164-a83b-4a54-8077-c350372c0c49",
       "email": "admin@mail.com",
       "password": "123123123",
-      "name": "MyAdmin",
+      "name": "MyAdmins",
       "phoneNumber": "08123456789",
-      "photo": "http://res.cloudinary.com/dzzxtxrfd/image/upload/v1702315513/y4jlnv00y33nuzuvzyy5.jpg",
+      "photo": "http://res.cloudinary.com/dzzxtxrfd/image/upload/v1702437502/guhhmq5ey5nlemrlqads.jpg",
       "createdAt": "2023-12-04T08:35:32.000Z",
-      "updatedAt": "2023-12-04T08:35:32.000Z"
+      "updatedAt": "2023-12-13T03:18:27.590Z"
     }
   ],
   "promo": [
@@ -100,9 +100,11 @@
       "userId": 1,
       "addresses": [
         {
-          "city": "Jakarta",
+          "city": "Jakarta Barat",
           "province": "DKI Jakarta",
           "street": "Jl. Ini Nama Jalan Jakarta",
+          "receiverName": "Ade",
+          "receiverPhone": "081988882323",
           "createdAt": "2023-12-04T08:35:32.000Z",
           "updatedAt": "2023-12-04T08:35:32.000Z"
         },
@@ -110,6 +112,8 @@
           "city": "Bandung",
           "province": "Jawa Barat",
           "street": "Jl. Ini Nama Jalan Bandung",
+          "receiverName": "Bobi",
+          "receiverPhone": "081988882323",
           "createdAt": "2023-12-04T08:35:32.000Z",
           "updatedAt": "2023-12-04T08:35:32.000Z"
         }
@@ -120,9 +124,11 @@
       "userId": 2,
       "addresses": [
         {
-          "city": "Jakarta",
+          "city": "Jakarta Barat",
           "province": "DKI Jakarta",
           "street": "Jl. Ini Nama Jalan Jakarta 2",
+          "receiverName": "Ade2",
+          "receiverPhone": "081988882323",
           "createdAt": "2023-12-04T08:35:32.000Z",
           "updatedAt": "2023-12-04T08:35:32.000Z"
         },
@@ -130,6 +136,41 @@
           "city": "Bandung",
           "province": "Jawa Barat",
           "street": "Jl. Ini Nama Jalan Bandung 2",
+          "receiverName": "Ade3",
+          "receiverPhone": "081988882323",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "addresses": [
+        {
+          "city": "Jakarta Barat",
+          "province": "DKI Jakarta",
+          "street": "Jl. Ini Nama Jalan Jakarta 2",
+          "receiverName": "Ade1",
+          "receiverPhone": "081988882323",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        },
+        {
+          "city": "Bandung",
+          "province": "Jawa Barat",
+          "street": "Jl. Ini Nama Jalan Bandung 2",
+          "receiverName": "Ade3",
+          "receiverPhone": "081988882323",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        },
+        {
+          "city": "Surabaya",
+          "province": "Jawa Tengah",
+          "street": "Jl. Ini Nama Jalan Surabaya 2",
+          "receiverName": "Ade4",
+          "receiverPhone": "081988882323",
           "createdAt": "2023-12-04T08:35:32.000Z",
           "updatedAt": "2023-12-04T08:35:32.000Z"
         }
@@ -139,41 +180,30 @@
   "origin": [
     {
       "id": 1,
-      "addresses": [
-        {
-          "city": "Jakarta",
-          "province": "DKI Jakarta",
-          "street": "Jl. Ini Nama Jalan Jakarta Origin",
-          "createdAt": "2023-12-04T08:35:32.000Z",
-          "updatedAt": "2023-12-04T08:35:32.000Z"
-        },
-        {
-          "city": "Bandung",
-          "province": "Jawa Barat",
-          "street": "Jl. Ini Nama Jalan Bandung Origin",
-          "createdAt": "2023-12-04T08:35:32.000Z",
-          "updatedAt": "2023-12-04T08:35:32.000Z"
-        }
-      ]
+      "branchName": "Jakarta Branch 1",
+      "city": "Jakarta Pusat",
+      "province": "DKI Jakarta",
+      "street": "Jl. Ini Nama Jalan Jakarta Origin",
+      "createdAt": "2023-12-04T08:35:32.000Z",
+      "updatedAt": "2023-12-04T08:35:32.000Z"
     },
     {
       "id": 2,
-      "addresses": [
-        {
-          "city": "Jakarta",
-          "province": "DKI Jakarta",
-          "street": "Jl. Ini Nama Jalan Jakarta 2 Origin",
-          "createdAt": "2023-12-04T08:35:32.000Z",
-          "updatedAt": "2023-12-04T08:35:32.000Z"
-        },
-        {
-          "city": "Bandung",
-          "province": "Jawa Barat",
-          "street": "Jl. Ini Nama Jalan Bandung 2 Origin",
-          "createdAt": "2023-12-04T08:35:32.000Z",
-          "updatedAt": "2023-12-04T08:35:32.000Z"
-        }
-      ]
+      "branchName": "Bandung Branch",
+      "city": "Bandung",
+      "province": "Jawa Barat",
+      "street": "Jl. Ini Nama Jalan Bandung Origin",
+      "createdAt": "2023-12-04T08:35:32.000Z",
+      "updatedAt": "2023-12-04T08:35:32.000Z"
+    },
+    {
+      "id": 3,
+      "branchName": "Jakarta Branch 2",
+      "city": "Jakarta Pusat",
+      "province": "DKI Jakarta",
+      "street": "Jl. Ini Nama Jalan Jakarta Origin 2",
+      "createdAt": "2023-12-04T08:35:32.000Z",
+      "updatedAt": "2023-12-04T08:35:32.000Z"
     }
   ],
   "shipping": [
@@ -186,7 +216,49 @@
           "width": 100,
           "height": 100,
           "weight": 5,
-          "origin": "Jakarta",
+          "origin": "Jakarta Pusat",
+          "destination": "Surabaya",
+          "receiverName": "Adam",
+          "receiverPhone": "08123321679",
+          "cost": 90000,
+          "status": "Pending",
+          "promoUsed": "qwerty",
+          "category": "1",
+          "addOns": "2",
+          "review": "",
+          "createdAt": "2023-12-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        },
+        {
+          "length": 200,
+          "width": 10,
+          "height": 400,
+          "weight": 1,
+          "origin": "Bali",
+          "destination": "Lombok",
+          "receiverName": "Budi",
+          "receiverPhone": "08189321679",
+          "cost": 9000,
+          "status": "Completed",
+          "promoUsed": "qwerty",
+          "category": "2",
+          "addOns": "1",
+          "review": "4",
+          "createdAt": "2023-13-04T08:35:32.000Z",
+          "updatedAt": "2023-12-04T08:35:32.000Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "detail": [
+        {
+          "length": 100,
+          "width": 100,
+          "height": 100,
+          "weight": 5,
+          "origin": "Jakarta Pusat",
           "destination": "Surabaya",
           "receiverName": "Adam",
           "receiverPhone": "08123321679",
