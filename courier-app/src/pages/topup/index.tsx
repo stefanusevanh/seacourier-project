@@ -15,77 +15,7 @@ import useUpdateUser from "@/utils/api/useUpdateUser";
 import { useAppSelector } from "@/stores/store";
 import useUser from "@/utils/api/useUser";
 import { toast } from "sonner";
-
-const SmallCard = ({ children }: { children: ReactNode }) => {
-  return (
-    <div className="card w-full max-w-52 bg-base-100  items-center border-[grey] border-[1px] cursor-pointer">
-      <div className="card-body items-center">{children}</div>
-    </div>
-  );
-};
-const BigCard = ({ children }: { children: ReactNode }) => {
-  return (
-    <div className="card w-full bg-base-100 shadow-2xl items-center mx-auto">
-      <div className="card-body items-center w-full">{children}</div>
-    </div>
-  );
-};
-
-const OptionCard = ({
-  textMain,
-  textSecondary,
-  defaultValue,
-  defaultChecked,
-  checked,
-  onChange,
-  onClick,
-}: {
-  textMain: string;
-  textSecondary?: string;
-  defaultValue: string;
-  defaultChecked?: boolean;
-  checked?: boolean;
-  onChange?: () => void;
-  onClick?: (e: any) => void;
-}) => {
-  return (
-    <div>
-      <input
-        type="radio"
-        name="OptionCard"
-        defaultValue={defaultValue}
-        id={defaultValue}
-        className="peer hidden [&:checked_+_label_svg]:block"
-        defaultChecked={defaultChecked}
-        checked={checked}
-        onChange={onChange}
-      />
-      <label
-        id={defaultValue}
-        htmlFor={defaultValue}
-        onClick={onClick}
-        className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500"
-      >
-        <div className="flex items-center justify-between">
-          <p className="text-gray-700">{textMain}</p>
-          <svg
-            className="hidden h-5 w-5 text-blue-600"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </div>
-        {textSecondary && <p className="mt-1 text-gray-900">{textSecondary}</p>}
-      </label>
-    </div>
-  );
-};
+import { BigCard, OptionCard, SmallCard } from "@/components/Card/Card";
 
 const Topup = () => {
   const [topupAmount, setTopupAmount] = useState(0);
@@ -161,9 +91,10 @@ const Topup = () => {
                 return (
                   <OptionCard
                     key={idx}
+                    optionName="TopupOption"
                     defaultValue={amount.toString()}
                     textMain={currencyFormat(amount)}
-                    defaultChecked={idx === 1}
+                    defaultChecked={false}
                     checked={amount === topupAmount}
                     onChange={() => setTopupAmount(amount)}
                   />
