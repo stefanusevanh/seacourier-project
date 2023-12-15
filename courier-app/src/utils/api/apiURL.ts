@@ -11,3 +11,7 @@ export const SHIPPING_API_URL = `${API_URL}/shipping`;
 export const CLOUDINARY_API_URL = "https://api.cloudinary.com/v1_1/dzzxtxrfd";
 export const CLOUDINARY_UPLOAD_PRESET = "courier_app_preset";
 export const CLOUDINARY_CLOUD_NAME = "dzzxtxrfd";
+
+//RajaOngkir API
+export const RAJAONGKIR_API_URL = "https://api.rajaongkir.com/starter/cost";
+export const RAJAONGKIR_API_KEY = "cef2cc8ae1d67bbb163533f7324aaea7";

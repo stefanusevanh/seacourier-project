@@ -1,3 +1,5 @@
+import { cityMap } from "@/utils/cityMap";
+
 export interface IUser {
   id: number;
   token: string;
@@ -39,24 +41,35 @@ export interface IPromo {
   updatedAt: string;
 }
 
-export interface IAddress {
-  city: string;
+export interface IOriginAddress {
+  id: number;
+  branchName: string;
+  city: keyof typeof cityMap;
   province: string;
   street: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface IOriginAddress {
-  id: number;
-  addresses: IAddress[];
+export interface IDestinationAddressDetail {
+  city: keyof typeof cityMap;
+  province: string;
+  street: string;
+  receiverName: string;
+  receiverPhone: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IDestinationAddress {
   id: number;
   userId: number;
-  addresses: IAddress[];
+  addresses: IDestinationAddressDetail[];
 }
+
+export type TShippingCategory = "OKE" | "REG" | "SPS" | "YES";
+export type TAddOns = "0" | "1" | "2";
+export type TReview = "" | "0" | "1" | "2" | "3" | "4" | "5";
 
 export interface IShippingDetail {
   length: number;
@@ -70,9 +83,9 @@ export interface IShippingDetail {
   cost: number;
   status: string;
   promoUsed: string;
-  category: "OKE" | "REG" | "SPS" | "YES";
-  addOns: "1" | "2";
-  review: "" | "0" | "1" | "2" | "3" | "4" | "5";
+  category: TShippingCategory;
+  addOns: TAddOns;
+  review: TReview;
   createdAt: string;
   updatedAt: string;
 }
@@ -87,4 +100,54 @@ export interface IShippingList {
 export interface ICloudinaryResponse {
   url: string;
   asset_id: string;
+}
+
+//RajaOngkir API
+export interface IRajaOngkirResponse {
+  rajaongkir: IRajaOngkir;
+}
+export interface IRajaOngkir {
+  query: IQuery;
+  status: IStatus;
+  origin_details: CityDetails;
+  destination_details: CityDetails;
+  results: IResult[];
+}
+export interface IQuery {
+  origin: string;
+  destination: string;
+  weight: number;
+  courier: string;
+}
+
+export interface CityDetails {
+  city_id: string;
+  province_id: string;
+  province: string;
+  type: string;
+  city_name: string;
+  postal_code: string;
+}
+
+export interface IResult {
+  code: string;
+  name: string;
+  costs: IResultCost[];
+}
+
+export interface IResultCost {
+  service: string;
+  description: string;
+  cost: ICostCost[];
+}
+
+export interface ICostCost {
+  value: number;
+  etd: string;
+  note: string;
+}
+
+export interface IStatus {
+  code: number;
+  description: string;
 }
