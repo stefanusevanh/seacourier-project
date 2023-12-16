@@ -30,9 +30,8 @@ const NewShipmentStep1 = ({
   const [packageLength, setPackageLength] = useState(shipDetailsStore.length);
   const [packageWidth, setPackageWidth] = useState(shipDetailsStore.width);
   const [packageHeight, setPackageHeight] = useState(shipDetailsStore.height);
-  const [shippingCategory, setShippingCategory] = useState<TShippingCategory>(
-    shipDetailsStore.category
-  );
+  const [shippingCategory, setShippingCategory] =
+    useState<TShippingCategory | null>(shipDetailsStore.category);
   const [addOns, setAddOns] = useState<TAddOns>(shipDetailsStore.addOns);
   const [selectedOrigin, setSelectedOrigin] = useState<IOriginAddress | null>(
     shipDetailsStore.originAddress
@@ -63,7 +62,10 @@ const NewShipmentStep1 = ({
   }, [selectedOrigin, selectedDestination]);
 
   useEffect(() => {
-    if (availableCategories && shippingCategory !== availableCategories[0]) {
+    if (
+      availableCategories &&
+      !availableCategories.includes(shippingCategory as TShippingCategory)
+    ) {
       setShippingCategory(availableCategories[0] as TShippingCategory);
     }
   }, [availableCategories]);
@@ -90,7 +92,6 @@ const NewShipmentStep1 = ({
       setStepNum(2);
     }
   };
-
   return (
     <>
       <div className="flex flex-row gap-4">
@@ -182,7 +183,7 @@ const NewShipmentStep1 = ({
                 defaultValue={category}
                 textMain={shippingCategoriesMap[category]}
                 defaultChecked={
-                  availableCategories && category === availableCategories[0]
+                  availableCategories && category === shippingCategory
                 }
                 checked={category === shippingCategory}
                 onChange={() => setShippingCategory(category)}

@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { homeRoute } from "@/routes";
 import { useAppDispatch } from "@/stores/store";
 import { reset } from "@/stores/roleIDSlice/roleIDSlice";
+import { resetDetails } from "@/stores/shippingSlice/shippingSlice";
 
 const useLogout = () => {
   const router = useRouter();
@@ -30,6 +31,7 @@ const useLogout = () => {
       removeCookie("token_temp");
       removeCookie("PPURL");
       dispatch(reset());
+      dispatch(resetDetails());
       toast.dismiss("first-toast");
 
       setTimeout(() => {

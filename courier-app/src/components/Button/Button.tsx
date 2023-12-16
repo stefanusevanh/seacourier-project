@@ -27,7 +27,7 @@ export const Button = ({
       >
         {children}
         {isLoading && (
-          <span className="loading loading-spinner loading-md absolute right-5 top-3"></span>
+          <span className="loading loading-spinner loading-md absolute right-4 top-3"></span>
         )}
       </button>
     </div>

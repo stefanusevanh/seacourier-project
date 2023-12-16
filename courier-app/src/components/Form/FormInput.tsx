@@ -9,10 +9,13 @@ const FormInput = ({
   titleText,
   placeholder,
   errorText,
+  correctText,
   isError,
+  isCorrect,
   isDisabled,
   isHidden,
   withPrefix,
+  withElementAtRight,
 }: {
   type: HTMLInputTypeAttribute;
   value?: string | number;
@@ -22,10 +25,13 @@ const FormInput = ({
   titleText?: string;
   placeholder?: string;
   errorText?: string;
+  correctText?: string;
   isError?: boolean;
+  isCorrect?: boolean;
   isDisabled?: boolean;
   isHidden?: boolean;
   withPrefix?: string;
+  withElementAtRight?: JSX.Element;
 }) => {
   const [toggleForTypePassword, setToggleForTypePassword] =
     useState("password");
@@ -51,31 +57,39 @@ const FormInput = ({
           <div className="absolute -bottom-9 left-3">{withPrefix}</div>
         )}
       </div>
-      <input
-        type={type === "password" ? toggleForTypePassword : type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className={`input ${
-          isError && "input-error"
-        } input-bordered w-full bg-[#f4f4f4] focus:border-dashed ${
-          type === "password" ? "tracking-widest" : "tracking-normal"
-        } placeholder:tracking-normal ${isHidden ? "hidden" : ""} ${
-          isDisabled
-            ? "!bg-[white] !cursor-text !border-none !text-primary_blue"
-            : ""
-        } ${withPrefix ? "pl-10" : ""}
+      <div className="flex flex-row gap-1">
+        <input
+          type={type === "password" ? toggleForTypePassword : type}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          className={`input ${
+            isError && "input-error"
+          } input-bordered w-full bg-[#f4f4f4] focus:border-dashed ${
+            type === "password" ? "tracking-widest" : "tracking-normal"
+          } placeholder:tracking-normal ${isHidden ? "hidden" : ""} ${
+            isDisabled
+              ? "!bg-[white] !cursor-text !border-none !text-primary_blue"
+              : ""
+          } ${withPrefix ? "pl-10" : ""}
         `}
-        disabled={isDisabled}
-      ></input>
+          disabled={isDisabled}
+        />
+        {withElementAtRight && <div>{withElementAtRight}</div>}
+      </div>
 
-      <div className={`label  ${isError ? "visible" : "invisible"} pb-0 pt-1`}>
+      <div
+        className={`label  ${
+          isError || isCorrect ? "visible" : "invisible"
+        } pb-0 pt-1`}
+      >
         <span
-          className={`label-text-alt text-[red]  ${
-            isError && "animate-wiggle"
-          }`}
+          className={`label-text-alt   ${
+            isError && "text-[red] animate-wiggle"
+          } ${isCorrect && "text-[green] animate-wiggle"}`}
         >
-          {errorText}
+          {isError && errorText}
+          {isCorrect && correctText}
         </span>
       </div>
     </label>

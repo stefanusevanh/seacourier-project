@@ -44,12 +44,6 @@ export const NavbarMenuItems = ({ role }: { role: TRole }) => {
           </li>
         </>
       )}
-      <li>
-        <span className={"cursor-pointer"}>About Us</span>
-      </li>
-      <li>
-        <span className={"cursor-pointer"}>Contact Us</span>
-      </li>
     </>
   );
 };
