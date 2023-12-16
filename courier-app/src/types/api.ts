@@ -73,6 +73,7 @@ export type TAddOns = "0" | "1" | "2";
 export type TReview = "" | "0" | "1" | "2" | "3" | "4" | "5";
 
 export interface IShippingDetail {
+  trackingNumber: string;
   length: number;
   width: number;
   height: number;

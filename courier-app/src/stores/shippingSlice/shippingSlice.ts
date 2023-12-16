@@ -18,6 +18,7 @@ interface IShippingState {
   paidAmount: number;
   category: TShippingCategory | null;
   addOns: TAddOns;
+  trackingNumber: string;
 }
 
 const shippingInitialState: IShippingState = {
@@ -32,6 +33,7 @@ const shippingInitialState: IShippingState = {
   paidAmount: 0,
   category: null,
   addOns: "0",
+  trackingNumber: "",
 };
 
 const shippingSlice = createSlice({
@@ -60,6 +62,10 @@ const shippingSlice = createSlice({
         : state.paidAmount;
       state.category = payload.category ? payload.category : state.category;
       state.addOns = payload.addOns ? payload.addOns : state.addOns;
+      state.trackingNumber =
+        payload.trackingNumber !== undefined
+          ? payload.trackingNumber
+          : state.trackingNumber;
     },
     resetDetails(state) {
       Object.assign(state, {

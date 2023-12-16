@@ -2,6 +2,8 @@ import { IShippingDetail, IShippingList } from "@/types/api";
 import { SHIPPING_API_URL } from "./apiURL";
 import { useFetch } from "@/hooks/useFetch";
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "@/stores/store";
+import { saveShipmentDetails } from "@/stores/shippingSlice/shippingSlice";
 
 function useUpdateShipping() {
   const {
@@ -21,6 +23,7 @@ function useUpdateShipping() {
   const [typeOfUpdate, setTypeOfUpdate] = useState<"ADD" | "EDIT">("ADD");
   const [dataToBeUpdated, setDataToBeUpdated] =
     useState<Partial<IShippingDetail>>();
+  const dispatch = useAppDispatch();
 
   const getCurrentData = (userId: number) => {
     const url = `${SHIPPING_API_URL}/${userId}`;
@@ -44,6 +47,7 @@ function useUpdateShipping() {
       case "ADD":
         dataToBeUpdated = {
           ...dataToBeUpdated,
+          trackingNumber: `${userId}XXX${dataToBeUpdated.category}`,
           status: "PAID",
           review: "",
           updatedAt: new Date().toISOString(),
@@ -72,7 +76,13 @@ function useUpdateShipping() {
     ) {
       switch (typeOfUpdate) {
         case "ADD":
+          dataToBeUpdated.trackingNumber =
+            dataToBeUpdated.trackingNumber?.replace(
+              "XXX",
+              (userShippingData.detail.length + 1).toString().padStart(3, "0")
+            );
           userShippingData.detail.push(dataToBeUpdated as IShippingDetail);
+          dispatch(saveShipmentDetails(dataToBeUpdated));
         case "EDIT":
           // TODO: add EDIT methods
           break;
@@ -86,10 +96,11 @@ function useUpdateShipping() {
       };
       updateData(url, options);
     }
-  }, [userShippingData, userId]);
+  }, [userShippingData, userId, dataToBeUpdated]);
 
   return {
     shippings: userShippingData?.detail,
+    updatedShippings: updatedUserShippingData?.detail,
     isLoading: isUpdateDataLoading,
     error: errorUpdateData,
     updateShippingData,
