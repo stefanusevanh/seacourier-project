@@ -23,6 +23,7 @@ function useUpdateShipping() {
   const [typeOfUpdate, setTypeOfUpdate] = useState<"ADD" | "EDIT">("ADD");
   const [dataToBeUpdated, setDataToBeUpdated] =
     useState<Partial<IShippingDetail>>();
+  const [trackingNumber, setTrackingNumber] = useState("");
   const dispatch = useAppDispatch();
 
   const getCurrentData = (userId: number) => {
@@ -37,7 +38,8 @@ function useUpdateShipping() {
   const updateShippingData = (
     type: "ADD" | "EDIT",
     userId: number,
-    dataToBeUpdated: Partial<IShippingDetail>
+    dataToBeUpdated: Partial<IShippingDetail>,
+    trackingNumber?: string
   ) => {
     if (dataToBeUpdated.createdAt) {
       //this data can not be updated
@@ -55,10 +57,13 @@ function useUpdateShipping() {
         };
         break;
       case "EDIT":
-        dataToBeUpdated = {
-          ...dataToBeUpdated,
-          updatedAt: new Date().toISOString(),
-        };
+        if (trackingNumber !== "" && trackingNumber !== undefined) {
+          dataToBeUpdated = {
+            ...dataToBeUpdated,
+            updatedAt: new Date().toISOString(),
+          };
+          setTrackingNumber(trackingNumber);
+        }
         break;
     }
 
@@ -83,11 +88,19 @@ function useUpdateShipping() {
             );
           userShippingData.detail.push(dataToBeUpdated as IShippingDetail);
           dispatch(saveShipmentDetails(dataToBeUpdated));
+          break;
         case "EDIT":
-          // TODO: add EDIT methods
+          if (trackingNumber !== undefined) {
+            const updatedShippingOrderItem = userShippingData.detail.find(
+              (item) => item.trackingNumber === trackingNumber
+            );
+            if (!updatedShippingOrderItem) {
+              return;
+            }
+            Object.assign(updatedShippingOrderItem, { ...dataToBeUpdated });
+          }
           break;
       }
-
       const url = `${SHIPPING_API_URL}/${userId}`;
       const options: RequestInit = {
         method: "PATCH",
