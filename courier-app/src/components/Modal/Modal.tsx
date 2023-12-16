@@ -15,7 +15,7 @@ export const Modal = ({
       tabIndex={-1}
       className={`fixed z-40 ${
         isModalShown ? "flex" : "hidden"
-      } overflow-y-auto overflow-x-hidden justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-[rgba(0,0,0,0.4)]`}
+      } overflow-y-auto overflow-x-hidden justify-center items-center w-full h-full md:inset-0 max-h-full bg-[rgba(0,0,0,0.4)]`}
     >
       <div className="relative p-4 w-full max-w-md max-h-full ">
         <div className="relative bg-[white] rounded-lg shadow">{children}</div>

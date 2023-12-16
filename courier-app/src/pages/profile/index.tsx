@@ -25,7 +25,7 @@ import { setCookie } from "@/utils/cookies";
 import { ButtonDanger } from "@/components/Button/Button";
 import { encodeString } from "@/utils/stringEncoderDecoder";
 import useUpdateAdmin from "@/utils/api/useUpdateAdmin";
-import { MdContentCopy } from "react-icons/md";
+import CopyTextIcon from "@/components/CopyTextIcon";
 
 const StatCard = ({
   title,
@@ -50,24 +50,6 @@ const StatCard = ({
 const LoadingDots = () => {
   return (
     <span className="loading loading-dots loading-lg absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-10 text-primary_red"></span>
-  );
-};
-
-const CopyIcon = ({ textToCopy }: { textToCopy: string }) => {
-  const [textTooltip, setTextTooltip] = useState<"Copy" | "Copied!">("Copy");
-  return (
-    <div className="w-[20px] h-[20px]">
-      <div
-        className="tooltip tooltip-right cursor-pointer absolute z-20"
-        data-tip={textTooltip}
-        onClick={() => {
-          navigator.clipboard.writeText(textToCopy);
-          setTextTooltip("Copied!");
-        }}
-      >
-        <MdContentCopy size={20} />
-      </div>
-    </div>
   );
 };
 
@@ -325,7 +307,7 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
                       value={
                         <div className="flex flex-row  items-center gap-4">
                           <span>{person.refCode}</span>
-                          <CopyIcon textToCopy={person.refCode} />
+                          <CopyTextIcon textToCopy={person.refCode} />
                         </div>
                       }
                       desc={`Number of Referred User: ${person.countRefCode}`}
@@ -364,6 +346,7 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
                     <div>
                       <Button
                         onClick={() => {
+                          // TODO: HANDLE DOUBLE SUBMIT
                           setIsButtonFirstClicked(true);
                           setIsAnotherUserRegistered(false);
                           handleFormSubmit();

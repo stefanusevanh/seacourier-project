@@ -8,14 +8,35 @@ import React, { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 const ShippingStepIndicator = ({ stepNum }: { stepNum: number }) => {
   return (
-    <ul className="steps">
-      <li className={`step ${stepNum >= 1 ? "step-primary" : ""}`}>
-        Shipment Details{" "}
+    <ul className="steps ">
+      <li
+        className={`step ${
+          stepNum >= 1 ? "step-primary" : ""
+        } after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange ${
+          stepNum > 1 ? "after:!text-2xl after:!font-bold" : ""
+        }`}
+        data-content={`${stepNum <= 1 ? "1" : "✓"}`}
+      >
+        Shipment Details
       </li>
-      <li className={`step ${stepNum >= 2 ? "step-primary" : ""}`}>
+      <li
+        className={`step ${
+          stepNum >= 2 ? "step-primary" : ""
+        } after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange ${
+          stepNum > 2 ? "after:!text-2xl after:!font-bold" : ""
+        }`}
+        data-content={`${stepNum <= 2 ? "2" : "✓"}`}
+      >
         Review & Confirm
       </li>
-      <li className={`step ${stepNum === 3 ? "step-primary" : ""}`}>
+      <li
+        className={`step ${
+          stepNum >= 3 ? "step-primary" : ""
+        } after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange ${
+          stepNum > 3 ? "after:!text-2xl after:!font-bold" : ""
+        }`}
+        data-content={`${stepNum <= 3 ? "3" : "✓"}`}
+      >
         Track Your Shipment
       </li>
     </ul>
@@ -34,9 +55,9 @@ const Shipping = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Create a New Shipment</h1>
-      <div className="relative">
+    <div className="h-full">
+      <h1 className="text-center mt-4 mb-2">Order Your Shipment</h1>
+      <div className="relative mb-4">
         <div className="flex justify-center">
           <ShippingStepIndicator stepNum={stepNum} />
         </div>

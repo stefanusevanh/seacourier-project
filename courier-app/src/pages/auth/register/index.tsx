@@ -241,7 +241,7 @@ const Register = () => {
         />
         <div className="grid grid-cols-[0.55fr_0.45fr] gap-4">
           <FormInput
-            type="string"
+            type="text"
             placeholder="Input your phone number.."
             titleText="Phone Number"
             value={phoneNum}
@@ -257,7 +257,7 @@ const Register = () => {
             }
           />
           <FormInput
-            type="string"
+            type="text"
             placeholder="Ex: uKZ9zv (optional)"
             titleText="Friend's Referral Code"
             value={refCodeFriend}
