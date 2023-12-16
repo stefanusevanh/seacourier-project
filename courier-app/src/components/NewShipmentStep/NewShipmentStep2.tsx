@@ -141,7 +141,22 @@ const NewShipmentStep2 = ({
   };
 
   const handlePayment = () => {
-    setIsModalShown(true);
+    if (
+      isFormFieldEmpty(promoInput) ||
+      (isPromoCodeLengthValid(promoInput) &&
+        availablePromoCode !== null &&
+        availablePromoCode.promoCode === promoInput &&
+        availablePromoCode?.quota > availablePromoCode.used &&
+        !isLoadingPromoCode)
+    ) {
+      dispatch(
+        saveShipmentDetails({
+          promoUsed: promoInput,
+          paidAmount: paidAmount,
+        })
+      );
+      setIsModalShown(true);
+    }
   };
 
   useEffect(() => {
