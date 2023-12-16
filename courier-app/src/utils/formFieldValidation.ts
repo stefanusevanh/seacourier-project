@@ -6,6 +6,7 @@ export const minPhoneNumDigit = 10;
 export const maxPhoneNumDigit = 12;
 export const phoneNumStartDigits = "08";
 export const refCodeDigits = 6;
+export const maxPromoCodeDigits = 10;
 
 export const isFormFieldEmpty = (field: string) => field === "";
 
@@ -41,3 +42,7 @@ export const isRefCodeLengthValid = (refCode: string) =>
 
 export const isTopupAmountValid = (amount: number) =>
   amount >= minTopupAmount && amount <= maxTopupAmount;
+
+export const isPromoCodeLengthValid = (promoCode: string) =>
+  (promoCode.length > 0 && promoCode.length <= maxPromoCodeDigits) ||
+  promoCode.length === 0;
