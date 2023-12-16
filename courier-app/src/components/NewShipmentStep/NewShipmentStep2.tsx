@@ -80,31 +80,38 @@ const NewShipmentStep2 = ({
               <td>Shipping</td>
               <td>{cost !== undefined && currencyFormat(cost)}</td>
             </tr>
-            <tr>
-              <td>Add Ons</td>
-              <td>{currencyFormat(addOnsPriceMap[shipmentDetails.addOns])}</td>
-            </tr>
+            {shipmentDetails.addOns !== "0" && (
+              <tr>
+                <td>Add Ons</td>
+                <td>
+                  {currencyFormat(addOnsPriceMap[shipmentDetails.addOns])}
+                </td>
+              </tr>
+            )}
+            {availablePromoCode !== null &&
+              availablePromoCode.quota > availablePromoCode.used &&
+              !isFormFieldEmpty(promoInput) &&
+              shipmentDetails.addOns !== "0" &&
+              isButtonCheckFirstClicked && (
+                <tr className="bg-base-200">
+                  <td>Sub Total</td>
+                  <td>{currencyFormat(subTotal)}</td>
+                </tr>
+              )}
             {availablePromoCode !== null &&
               availablePromoCode.quota > availablePromoCode.used &&
               !isFormFieldEmpty(promoInput) &&
               isButtonCheckFirstClicked && (
-                <>
-                  <tr>
-                    <td>Sub Total</td>
-                    <td>{currencyFormat(subTotal)}</td>
-                  </tr>
-                  <tr>
-                    <td>{availablePromoCode.promoCode}</td>
-                    <td>
-                      -
-                      {currencyFormat(
-                        (availablePromoCode.discount * subTotal) / 100
-                      )}
-                    </td>
-                  </tr>
-                </>
+                <tr>
+                  <td>{availablePromoCode.promoCode}</td>
+                  <td>
+                    {currencyFormat(
+                      -(availablePromoCode.discount * subTotal) / 100
+                    )}
+                  </td>
+                </tr>
               )}
-            <tr>
+            <tr className="bg-base-200">
               <td>Total</td>
               <td>{currencyFormat(paidAmount)}</td>
             </tr>

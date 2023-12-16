@@ -1,9 +1,23 @@
 import React, { ReactNode } from "react";
 
-export const Card = ({ children }: { children: ReactNode }) => {
+export const Card = ({
+  withShadow = true,
+  cardPadding,
+  children,
+}: {
+  withShadow?: boolean;
+  cardPadding?: string;
+  children: ReactNode;
+}) => {
   return (
-    <div className="card w-full bg-base-100  items-center shadow-md ">
-      <div className="card-body items-center w-full">{children}</div>
+    <div
+      className={`card w-full bg-base-100 border-base-300 border-[1px] items-center ${
+        withShadow ? "shadow-md" : "shadow-none"
+      }`}
+    >
+      <div className={`card-body items-center w-full ${cardPadding}`}>
+        {children}
+      </div>
     </div>
   );
 };

@@ -11,9 +11,11 @@ const ShippingStepIndicator = ({ stepNum }: { stepNum: number }) => {
     <ul className="steps ">
       <li
         className={`step ${
-          stepNum >= 1 ? "step-primary" : ""
-        } after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange ${
-          stepNum > 1 ? "after:!text-2xl after:!font-bold" : ""
+          stepNum >= 1
+            ? "step-primary after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange"
+            : ""
+        }  ${stepNum > 1 ? "after:!text-2xl after:!font-bold " : ""} ${
+          stepNum <= 1 ? "" : ""
         }`}
         data-content={`${stepNum <= 1 ? "1" : "✓"}`}
       >
@@ -21,9 +23,11 @@ const ShippingStepIndicator = ({ stepNum }: { stepNum: number }) => {
       </li>
       <li
         className={`step ${
-          stepNum >= 2 ? "step-primary" : ""
-        } after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange ${
-          stepNum > 2 ? "after:!text-2xl after:!font-bold" : ""
+          stepNum >= 2
+            ? "step-primary after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange"
+            : ""
+        }   ${stepNum > 2 ? "after:!text-2xl after:!font-bold " : ""} ${
+          stepNum <= 2 ? "" : ""
         }`}
         data-content={`${stepNum <= 2 ? "2" : "✓"}`}
       >
@@ -31,9 +35,11 @@ const ShippingStepIndicator = ({ stepNum }: { stepNum: number }) => {
       </li>
       <li
         className={`step ${
-          stepNum >= 3 ? "step-primary" : ""
-        } after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange ${
-          stepNum > 3 ? "after:!text-2xl after:!font-bold" : ""
+          stepNum >= 3
+            ? "step-primary after:!bg-primary_orange after:!text-primary_blue before:!bg-primary_orange"
+            : ""
+        }  ${stepNum > 3 ? "after:!text-2xl after:!font-bold" : ""} ${
+          stepNum <= 3 ? "" : ""
         }`}
         data-content={`${stepNum <= 3 ? "3" : "✓"}`}
       >
