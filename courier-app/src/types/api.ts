@@ -67,6 +67,7 @@ export interface IDestinationAddress {
   addresses: IDestinationAddressDetail[];
 }
 
+export type TStatus = "PAID" | "ON SHIPPING" | "DELIVERED";
 export type TShippingCategory = "OKE" | "REG" | "SPS" | "YES";
 export type TAddOns = "0" | "1" | "2";
 export type TReview = "" | "0" | "1" | "2" | "3" | "4" | "5";
@@ -76,13 +77,12 @@ export interface IShippingDetail {
   width: number;
   height: number;
   weight: number;
-  origin: string;
-  destination: string;
-  receiverName: string;
-  receiverPhone: string;
+  originAddress: IOriginAddress;
+  destinationAddress: IDestinationAddressDetail;
   cost: number;
-  status: string;
+  status: TStatus;
   promoUsed: string;
+  paidAmount: number;
   category: TShippingCategory;
   addOns: TAddOns;
   review: TReview;

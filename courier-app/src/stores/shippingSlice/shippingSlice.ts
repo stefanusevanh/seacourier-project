@@ -13,12 +13,10 @@ interface IShippingState {
   weight: number;
   originAddress: IOriginAddress | null;
   destinationAddress: IDestinationAddressDetail | null;
-  receiverName: string;
-  receiverPhone: string;
   cost: number;
-  status: string;
   promoUsed: string;
-  category: TShippingCategory;
+  paidAmount: number;
+  category: TShippingCategory | null;
   addOns: TAddOns;
 }
 
@@ -29,12 +27,10 @@ const shippingInitialState: IShippingState = {
   weight: 0,
   originAddress: null,
   destinationAddress: null,
-  receiverName: "",
-  receiverPhone: "",
   cost: 0,
-  status: "",
   promoUsed: "",
-  category: "OKE",
+  paidAmount: 0,
+  category: null,
   addOns: "0",
 };
 
@@ -46,22 +42,32 @@ const shippingSlice = createSlice({
       state,
       { payload }: PayloadAction<Partial<IShippingState>>
     ) {
-      state.length = payload.length!;
-      state.width = payload.width!;
-      state.height = payload.height!;
-      state.weight = payload.weight!;
-      state.originAddress = payload.originAddress!;
-      state.destinationAddress = payload.destinationAddress!;
-      state.receiverName = payload.receiverName!;
-      state.receiverPhone = payload.receiverPhone!;
-      state.cost = payload.cost!;
-      state.status = payload.status!;
-      state.promoUsed = payload.promoUsed!;
-      state.category = payload.category!;
-      state.addOns = payload.addOns!;
+      state.length = payload.length ? payload.length : state.length;
+      state.width = payload.width ? payload.width : state.width;
+      state.height = payload.height ? payload.height : state.height;
+      state.weight = payload.weight ? payload.weight : state.weight;
+      state.originAddress = payload.originAddress
+        ? payload.originAddress
+        : state.originAddress;
+      state.destinationAddress = payload.destinationAddress
+        ? payload.destinationAddress
+        : state.destinationAddress;
+      state.cost = payload.cost ? payload.cost : state.cost;
+      state.promoUsed =
+        payload.promoUsed !== undefined ? payload.promoUsed : state.promoUsed;
+      state.paidAmount = payload.paidAmount
+        ? payload.paidAmount
+        : state.paidAmount;
+      state.category = payload.category ? payload.category : state.category;
+      state.addOns = payload.addOns ? payload.addOns : state.addOns;
+    },
+    resetDetails(state) {
+      Object.assign(state, {
+        ...shippingInitialState,
+      });
     },
   },
 });
 
-export const { saveShipmentDetails } = shippingSlice.actions;
+export const { saveShipmentDetails, resetDetails } = shippingSlice.actions;
 export default shippingSlice.reducer;
