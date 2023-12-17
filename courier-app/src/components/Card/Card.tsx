@@ -43,7 +43,6 @@ export const OptionCard = ({
   textSecondary,
   defaultValue,
   defaultChecked,
-  checked,
   onChange,
   onClick,
   id,
@@ -69,7 +68,6 @@ export const OptionCard = ({
         id={defaultValue}
         className="peer hidden [&:checked_+_label_svg]:block"
         defaultChecked={defaultChecked}
-        // checked={checked}
         onChange={onChange}
         disabled={isDisabled}
       />
@@ -78,7 +76,7 @@ export const OptionCard = ({
         htmlFor={defaultValue}
         onClick={onClick}
         className={`block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500 ${
-          isDisabled ? "bg-[#e7e7e7] text-[grey]" : ""
+          isDisabled ? "bg-[#e7e7e7] text-[grey] cursor-not-allowed " : ""
         }`}
       >
         <div className="flex items-center justify-between">
@@ -96,7 +94,7 @@ export const OptionCard = ({
             />
           </svg>
         </div>
-        {textSecondary && <p className="mt-1 text-gray-900">{textSecondary}</p>}
+        {textSecondary && <p className="mt-1 text-[0.8rem]">{textSecondary}</p>}
       </label>
     </div>
   );

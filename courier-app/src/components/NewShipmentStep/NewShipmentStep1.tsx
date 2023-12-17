@@ -1,6 +1,6 @@
 import { Button, ButtonBorderOnly } from "@/components/Button";
 import { Card, OptionCard } from "@/components/Card/Card";
-import DropdownMenuAddress from "@/components/DropdownMenuAddress/DropdownMenuAddress";
+import DropdownMenuAddress from "@/components/DropdownMenuAddress";
 import { FormInput } from "@/components/Form";
 import { saveShipmentDetails } from "@/stores/shippingSlice/shippingSlice";
 import { useAppDispatch, useAppSelector } from "@/stores/store";
@@ -10,12 +10,20 @@ import {
   TAddOns,
   TShippingCategory,
 } from "@/types/api";
-import { addOnsMap } from "@/utils/addOnsMap";
+import { addOnsMap, addOnsPriceMap } from "@/utils/addOnsMap";
 import useDestinationAddress from "@/utils/api/useDestinationAddress";
 import useOriginAddresses from "@/utils/api/useOriginAddresses";
 import useShipping from "@/utils/api/useShipping";
+import { currencyFormat } from "@/utils/currencyFormat";
+import {
+  isPackageDimensionValid,
+  isPackageWeightValid,
+  maxPackageDimension,
+  maxPackageWeight,
+} from "@/utils/formFieldValidation";
 import { shippingCategoriesMap } from "@/utils/shippingCategoriesMap";
 import React, { useEffect, useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
 
 const NewShipmentStep1 = ({
   setStepNum,
@@ -27,11 +35,15 @@ const NewShipmentStep1 = ({
   const shipDetailsStore = useAppSelector((state) => state.shipping);
 
   const [packageWeight, setPackageWeight] = useState(shipDetailsStore.weight);
+  const [packageWeightDebounced, setPackageWeightDebounced] =
+    useState(packageWeight);
+  const [timerDebounce, setTimerDebounce] = useState<NodeJS.Timeout>();
   const [packageLength, setPackageLength] = useState(shipDetailsStore.length);
   const [packageWidth, setPackageWidth] = useState(shipDetailsStore.width);
   const [packageHeight, setPackageHeight] = useState(shipDetailsStore.height);
-  const [shippingCategory, setShippingCategory] =
+  const [selectedCategory, setSelectedCategory] =
     useState<TShippingCategory | null>(shipDetailsStore.category);
+  const [selectedCost, setSelectedCost] = useState(0);
   const [addOns, setAddOns] = useState<TAddOns>(shipDetailsStore.addOns);
   const [selectedOrigin, setSelectedOrigin] = useState<IOriginAddress | null>(
     shipDetailsStore.originAddress
@@ -40,7 +52,12 @@ const NewShipmentStep1 = ({
     useState<IDestinationAddressDetail | null>(
       shipDetailsStore.destinationAddress
     );
-  const { availableCategories, getAvailableShipping } = useShipping();
+  const {
+    isLoading: isGetAvailableShippingLoading,
+    availableCategories,
+    availableCosts,
+    getAvailableShipping,
+  } = useShipping();
 
   const [isButtonSaveClicked, setIsButtonSaveClicked] = useState(false);
   const shippingCategories: TShippingCategory[] = ["OKE", "REG", "SPS", "YES"];
@@ -54,28 +71,67 @@ const NewShipmentStep1 = ({
     getOriginAddresses();
     getDestinationAddresses(userID);
   }, []);
+  useEffect(() => {
+    clearTimeout(timerDebounce);
+    if (isPackageWeightValid(packageWeight)) {
+      setTimerDebounce(
+        setTimeout(() => {
+          setPackageWeightDebounced(packageWeight);
+        }, 3000)
+      );
+    }
+  }, [packageWeight]);
 
   useEffect(() => {
-    if (selectedOrigin !== null && selectedDestination !== null) {
-      getAvailableShipping(selectedOrigin.city, selectedDestination.city, 1);
+    if (
+      selectedOrigin !== null &&
+      selectedDestination !== null &&
+      packageWeightDebounced !== 0 &&
+      packageWeight === packageWeightDebounced &&
+      isPackageWeightValid(packageWeightDebounced)
+    ) {
+      getAvailableShipping(
+        selectedOrigin.city,
+        selectedDestination.city,
+        packageWeightDebounced
+      );
     }
-  }, [selectedOrigin, selectedDestination]);
+  }, [selectedOrigin, selectedDestination, packageWeightDebounced]);
 
   useEffect(() => {
     if (
       availableCategories &&
-      !availableCategories.includes(shippingCategory as TShippingCategory)
+      !availableCategories.includes(selectedCategory as TShippingCategory) &&
+      availableCosts
     ) {
-      setShippingCategory(availableCategories[0] as TShippingCategory);
+      setSelectedCategory(availableCategories[0] as TShippingCategory);
+      setSelectedCost(availableCosts[0]);
+      return;
     }
-  }, [availableCategories]);
+    if (!availableCosts?.includes(selectedCost)) {
+      const cost =
+        availableCosts &&
+        availableCategories &&
+        availableCosts[
+          availableCategories.findIndex(
+            (category) => category === selectedCategory
+          )
+        ];
+      if (cost) {
+        setSelectedCost(cost);
+        return;
+      }
+    }
+  }, [availableCategories, availableCosts]);
 
   const handleFormSubmit = () => {
     if (
-      packageLength > 0 &&
-      packageWidth > 0 &&
-      packageHeight > 0 &&
-      packageWeight > 0
+      isPackageDimensionValid(packageLength) &&
+      isPackageDimensionValid(packageWidth) &&
+      isPackageDimensionValid(packageHeight) &&
+      isPackageWeightValid(packageWeightDebounced) &&
+      packageWeight === packageWeightDebounced &&
+      !isGetAvailableShippingLoading
     ) {
       dispatch(
         saveShipmentDetails({
@@ -85,7 +141,8 @@ const NewShipmentStep1 = ({
           weight: packageWeight,
           originAddress: selectedOrigin!,
           destinationAddress: selectedDestination!,
-          category: shippingCategory,
+          cost: selectedCost,
+          category: selectedCategory,
           addOns: addOns,
         })
       );
@@ -94,135 +151,250 @@ const NewShipmentStep1 = ({
   };
   return (
     <>
-      <div className="flex flex-row gap-4">
-        <Card>
-          <FormInput
-            type="text"
-            titleText="Length"
-            errorText="This field must not be empty"
-            isError={Number(packageLength) === 0 && isButtonSaveClicked}
-            placeholder="Input package length.."
-            value={packageLength === 0 ? "" : packageLength}
-            onChange={(e) => {
-              const inputValue = Number(e.target.value.replace(/[^\d]/g, ""));
-              if (inputValue >= 0) {
-                setPackageLength(inputValue);
-              }
-            }}
-          />
-          <FormInput
-            type="text"
-            titleText="Width"
-            errorText="This field must not be empty"
-            isError={Number(packageWidth) === 0 && isButtonSaveClicked}
-            placeholder="Input package width.."
-            value={packageWidth === 0 ? "" : packageWidth}
-            onChange={(e) => {
-              const inputValue = Number(e.target.value.replace(/[^\d]/g, ""));
-              if (inputValue >= 0) {
-                setPackageWidth(inputValue);
-              }
-            }}
-          />
-          <FormInput
-            type="text"
-            titleText="Height"
-            errorText="This field must not be empty"
-            isError={Number(packageHeight) === 0 && isButtonSaveClicked}
-            placeholder="Input package height.."
-            value={packageHeight === 0 ? "" : packageHeight}
-            onChange={(e) => {
-              const inputValue = Number(e.target.value.replace(/[^\d]/g, ""));
-              if (inputValue >= 0) {
-                setPackageHeight(inputValue);
-              }
-            }}
-          />
-          <FormInput
-            type="text"
-            titleText="Weight"
-            errorText="This field must not be empty"
-            isError={Number(packageWeight) === 0 && isButtonSaveClicked}
-            placeholder="Input package weight.."
-            value={packageWeight === 0 ? "" : packageWeight}
-            onChange={(e) => {
-              const inputValue = Number(e.target.value.replace(/[^\d]/g, ""));
-              if (inputValue >= 0) {
-                setPackageWeight(inputValue);
-              }
-            }}
-          />
-        </Card>
-        <Card>
-          <h2>Origin</h2>
-          <DropdownMenuAddress
-            type="origin"
-            placeholder="Select origin address"
-            addresses={originAddresses}
-            selectedAddress={selectedOrigin}
-            setSelectedAddressOrigin={setSelectedOrigin}
-          />
-          <h2>Destination</h2>
-          <DropdownMenuAddress
-            type="destination"
-            placeholder="Select destination address"
-            addresses={destinationAddresses}
-            selectedAddress={selectedDestination}
-            setSelectedAddressDestination={setSelectedDestination}
-          />
-        </Card>
-      </div>
-      <div className="flex flex-row gap-2">
-        <div className="grid grid-cols-1  gap-2 justify-between w-40">
-          Category
-          {shippingCategories.map((category, idx) => {
-            return (
-              <OptionCard
-                key={idx}
-                optionName="CategoryOption"
-                defaultValue={category}
-                textMain={shippingCategoriesMap[category]}
-                defaultChecked={
-                  availableCategories && category === shippingCategory
+      <div className="flex flex-col lg:flex-row gap-4 ">
+        <div className="flex flex-col md:flex-row w-full gap-4">
+          <div className="lg:w-3/5 min-w-[250px]">
+            <Card>
+              <h2>Package Details</h2>
+              <FormInput
+                type="text"
+                titleText="Length"
+                withSuffix={"cm"}
+                errorText={
+                  packageLength === 0
+                    ? "This field must not be empty"
+                    : `Max length: ${maxPackageDimension} cm`
                 }
-                checked={category === shippingCategory}
-                onChange={() => setShippingCategory(category)}
-                isDisabled={!availableCategories?.includes(category)}
+                isError={
+                  (packageLength === 0 && isButtonSaveClicked) ||
+                  (!isPackageDimensionValid(packageLength) &&
+                    packageLength !== 0)
+                }
+                placeholder="Package length.."
+                value={packageLength === 0 ? "" : packageLength}
+                onChange={(e) => {
+                  const inputValue = Number(
+                    e.target.value.replace(/[^\d]/g, "")
+                  );
+                  if (
+                    inputValue >= 0 &&
+                    inputValue.toString().length <=
+                      maxPackageDimension.toString().length
+                  ) {
+                    setPackageLength(inputValue);
+                  }
+                }}
               />
-            );
-          })}
+              <FormInput
+                type="text"
+                titleText="Width"
+                withSuffix={"cm"}
+                errorText={
+                  packageWidth === 0
+                    ? "This field must not be empty"
+                    : `Max width: ${maxPackageDimension} cm`
+                }
+                isError={
+                  (packageWidth === 0 && isButtonSaveClicked) ||
+                  (!isPackageDimensionValid(packageWidth) && packageWidth !== 0)
+                }
+                placeholder="Package width.."
+                value={packageWidth === 0 ? "" : packageWidth}
+                onChange={(e) => {
+                  const inputValue = Number(
+                    e.target.value.replace(/[^\d]/g, "")
+                  );
+                  if (
+                    inputValue >= 0 &&
+                    inputValue.toString().length <=
+                      maxPackageDimension.toString().length
+                  ) {
+                    setPackageWidth(inputValue);
+                  }
+                }}
+              />
+              <FormInput
+                type="text"
+                titleText="Height"
+                withSuffix={"cm"}
+                errorText={
+                  packageHeight === 0
+                    ? "This field must not be empty"
+                    : `Max height: ${maxPackageDimension} cm`
+                }
+                isError={
+                  (packageHeight === 0 && isButtonSaveClicked) ||
+                  (!isPackageDimensionValid(packageHeight) &&
+                    packageHeight !== 0)
+                }
+                placeholder="Package height.."
+                value={packageHeight === 0 ? "" : packageHeight}
+                onChange={(e) => {
+                  const inputValue = Number(
+                    e.target.value.replace(/[^\d]/g, "")
+                  );
+                  if (
+                    inputValue >= 0 &&
+                    inputValue.toString().length <=
+                      maxPackageDimension.toString().length
+                  ) {
+                    setPackageHeight(inputValue);
+                  }
+                }}
+              />
+              <FormInput
+                type="text"
+                titleText="Weight"
+                withSuffix={"gr"}
+                errorText={
+                  packageWeight === 0
+                    ? "This field must not be empty"
+                    : `Max weight: ${maxPackageWeight} gram`
+                }
+                isError={
+                  (packageWeight === 0 && isButtonSaveClicked) ||
+                  (!isPackageWeightValid(packageWeight) && packageWeight !== 0)
+                }
+                placeholder="Package weight.."
+                value={packageWeight === 0 ? "" : packageWeight}
+                onChange={(e) => {
+                  const inputValue = Number(
+                    e.target.value.replace(/[^\d]/g, "")
+                  );
+                  if (
+                    inputValue >= 0 &&
+                    inputValue.toString().length <=
+                      maxPackageWeight.toString().length
+                  ) {
+                    setPackageWeight(inputValue);
+                  }
+                }}
+              />
+            </Card>
+          </div>
+          <Card>
+            <div className="flex flex-col h-full items-center justify-evenly align-middle w-full gap-4">
+              <div className="w-full">
+                <h2>Origin</h2>
+                <DropdownMenuAddress
+                  type="origin"
+                  placeholder="Select origin address"
+                  addresses={originAddresses}
+                  selectedAddress={selectedOrigin}
+                  setSelectedAddressOrigin={setSelectedOrigin}
+                />
+              </div>
+              <div className="w-full">
+                <h2>Destination</h2>
+                <DropdownMenuAddress
+                  type="destination"
+                  placeholder="Select destination address"
+                  addresses={destinationAddresses}
+                  selectedAddress={selectedDestination}
+                  setSelectedAddressDestination={setSelectedDestination}
+                />
+              </div>
+            </div>
+          </Card>
         </div>
-        <div className="grid grid-cols-1  gap-2 justify-between w-40">
-          Add Ons
-          {addOnsOption.map((addOn, idx) => {
-            return (
-              <OptionCard
-                key={idx}
-                optionName="AddOnsOption"
-                defaultValue={addOn}
-                textMain={addOnsMap[addOn]}
-                textSecondary={addOn === "2" ? "Bubble wrap is included" : ""}
-                defaultChecked={addOn === addOns}
-                onChange={() => setAddOns(addOn)}
-              />
-            );
-          })}
+        <div className="flex ">
+          <Card>
+            <div className="flex flex-row gap-8">
+              <div className="grid grid-cols-1  gap-2 justify-between w-40">
+                Category
+                {shippingCategories.map((category, idx) => {
+                  const cost =
+                    availableCosts &&
+                    availableCategories &&
+                    availableCosts[
+                      availableCategories.findIndex((item) => item === category)
+                    ];
+                  return (
+                    <OptionCard
+                      //TODO: add cost for each category and TOTAL cost estimation
+                      key={idx}
+                      optionName="CategoryOption"
+                      defaultValue={category}
+                      textMain={shippingCategoriesMap[category]}
+                      textSecondary={
+                        !isPackageWeightValid(packageWeightDebounced)
+                          ? "Please input weight"
+                          : selectedOrigin === null
+                          ? "Please select origin"
+                          : selectedDestination === null
+                          ? "Please select destination"
+                          : isGetAvailableShippingLoading ||
+                            packageWeight !== packageWeightDebounced
+                          ? "Estimating cost..."
+                          : availableCategories?.includes(category) &&
+                            availableCosts !== undefined &&
+                            cost
+                          ? `Cost: ${currencyFormat(cost)}`
+                          : "Not available"
+                      }
+                      defaultChecked={
+                        availableCategories && category === selectedCategory
+                      }
+                      checked={category === selectedCategory}
+                      onChange={() => {
+                        setSelectedCategory(category);
+                        if (cost) {
+                          setSelectedCost(cost);
+                        }
+                      }}
+                      isDisabled={
+                        !availableCategories?.includes(category) ||
+                        packageWeight !== packageWeightDebounced ||
+                        !isPackageWeightValid(packageWeightDebounced) ||
+                        isGetAvailableShippingLoading
+                      }
+                    />
+                  );
+                })}
+              </div>
+              <div className="grid grid-cols-1  gap-2 justify-between w-40">
+                Add Ons
+                {addOnsOption.map((addOn, idx) => {
+                  return (
+                    <OptionCard
+                      key={idx}
+                      optionName="AddOnsOption"
+                      defaultValue={addOn}
+                      textMain={addOnsMap[addOn]}
+                      textSecondary={`+ ${currencyFormat(
+                        addOnsPriceMap[addOn]
+                      )}`}
+                      defaultChecked={addOn === addOns}
+                      onChange={() => setAddOns(addOn)}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
-      <div className="flex flex-row justify-end gap-2">
-        <div>
-          <ButtonBorderOnly>Cancel</ButtonBorderOnly>
-        </div>
-        <div>
-          <Button
-            withoutHoverEffect={true}
-            onClick={() => {
-              setIsButtonSaveClicked(true);
-              handleFormSubmit();
-            }}
-          >
-            Save & Proceed
-          </Button>
+
+      <div className="flex flex-col items-end gap-1 my-4">
+        <span className="font-bold text-primary_blue">
+          Total: {currencyFormat(selectedCost + addOnsPriceMap[addOns])}
+        </span>
+        <div className="flex flex-row gap-2">
+          <div>
+            <ButtonBorderOnly>Cancel</ButtonBorderOnly>
+          </div>
+          <div>
+            <Button
+              withoutHoverEffect={true}
+              onClick={() => {
+                setIsButtonSaveClicked(true);
+                handleFormSubmit();
+              }}
+            >
+              Save & Proceed
+              <FaArrowRight />
+            </Button>
+          </div>
         </div>
       </div>
     </>

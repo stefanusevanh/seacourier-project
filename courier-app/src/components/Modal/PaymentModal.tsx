@@ -70,8 +70,9 @@ export const PaymentModal = ({
     isLoading: isUpdatingUserData,
     updateUserData,
   } = useUpdateUser();
-  const { updateShippingData } = useUpdateShipping();
-  const { updatePromoCode } = useUpdatePromoCode();
+  const { isLoading: isUpdatingShippingData, updateShippingData } =
+    useUpdateShipping();
+  const { isUpdatingPromoCode, updatePromoCode } = useUpdatePromoCode();
   const shippingDetails = useAppSelector((state) => state.shipping);
 
   const handleErrorMessages = (inputType: "password") => {
@@ -96,7 +97,8 @@ export const PaymentModal = ({
       isPasswordValid(password) &&
       user !== null &&
       user.password === password &&
-      user.balance > paidAmount
+      user.balance > paidAmount &&
+      isButtonClicked
     ) {
       setIsPaymentLoading(true);
       updateUserData(user.id, { balance: user.balance - paidAmount });
@@ -118,10 +120,22 @@ export const PaymentModal = ({
   };
 
   useEffect(() => {
-    if (updatedUser !== null && user !== null && updatedUser.id === user.id) {
+    if (
+      updatedUser !== null &&
+      user !== null &&
+      updatedUser.id === user.id &&
+      !isUpdatingUserData &&
+      !isUpdatingShippingData &&
+      !isUpdatingPromoCode
+    ) {
       setIsPaymentSuccess(true);
     }
-  }, [updatedUser]);
+  }, [
+    updatedUser,
+    isUpdatingUserData,
+    isUpdatingShippingData,
+    isUpdatingPromoCode,
+  ]);
 
   useEffect(() => {
     if (isPaymentSuccess) {

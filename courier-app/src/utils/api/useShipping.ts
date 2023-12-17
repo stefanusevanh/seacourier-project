@@ -41,17 +41,6 @@ function useShipping() {
     }
   }, [data]);
 
-  const editedResults = results?.map((item) => {
-    switch (item.service) {
-      case "CTC":
-        return "REG";
-      case "CTCYES":
-        return "YES";
-      default:
-        return item.service;
-    }
-  });
-
   return {
     availableCategories: results?.map((item) => {
       switch (item.service) {
@@ -63,6 +52,7 @@ function useShipping() {
           return item.service;
       }
     }),
+    availableCosts: results?.map((item) => item.cost[0].value),
     cost: results?.filter((category) => {
       switch (category.service) {
         case "CTC":

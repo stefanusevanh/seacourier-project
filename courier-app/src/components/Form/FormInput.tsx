@@ -16,6 +16,7 @@ const FormInput = ({
   isHidden,
   isRoundedFull,
   withPrefix,
+  withSuffix,
   withElementAtRight,
 }: {
   type: HTMLInputTypeAttribute;
@@ -33,6 +34,7 @@ const FormInput = ({
   isHidden?: boolean;
   isRoundedFull?: boolean;
   withPrefix?: string | JSX.Element;
+  withSuffix?: string | JSX.Element;
   withElementAtRight?: JSX.Element;
 }) => {
   const [toggleForTypePassword, setToggleForTypePassword] =
@@ -74,6 +76,11 @@ const FormInput = ({
             ) : (
               <IoMdEye />
             )}
+          </div>
+        )}
+        {withSuffix && (
+          <div className="absolute top-1/2 right-2.5 -translate-y-1/2">
+            {withSuffix}
           </div>
         )}
         {withPrefix && (

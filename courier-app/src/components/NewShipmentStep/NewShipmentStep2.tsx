@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from "@/stores/store";
 import React, { useEffect, useState } from "react";
 import { Card } from "../Card/Card";
 import { FaArrowCircleDown } from "react-icons/fa";
-import useShipping from "@/utils/api/useShipping";
 import { addOnsMap, addOnsPriceMap } from "@/utils/addOnsMap";
 import { saveShipmentDetails } from "@/stores/shippingSlice/shippingSlice";
 import { Button, ButtonBorderOnly } from "../Button";
@@ -13,7 +12,7 @@ import {
   maxPromoCodeDigits,
 } from "@/utils/formFieldValidation";
 import usePromoCode from "@/utils/api/usePromoCode";
-import { IUser, TShippingCategory } from "@/types/api";
+import { IUser } from "@/types/api";
 import { currencyFormat } from "@/utils/currencyFormat";
 import { PaymentDetail } from "../Modal";
 
@@ -30,7 +29,6 @@ const NewShipmentStep2 = ({
 }) => {
   const dispatch = useAppDispatch();
   const shipmentDetails = useAppSelector((state) => state.shipping);
-  const { cost, getAvailableShipping: getCost } = useShipping();
   const [promoInput, setPromoInput] = useState("");
   const [isPromoShown, setIsPromoShown] = useState(false);
   const [isButtonCheckClicked, setIsButtonCheckClicked] = useState(false);
@@ -53,23 +51,9 @@ const NewShipmentStep2 = ({
   const isPromoCodeEligible =
     isPromoCodeExists && isPromoCodeQuotaOK && !isPromoCodeExpired;
 
-  useEffect(() => {
-    getCost(
-      shipmentDetails.originAddress?.city!,
-      shipmentDetails.destinationAddress?.city!,
-      shipmentDetails.weight,
-      shipmentDetails.category as TShippingCategory
-    );
-  }, []);
-
-  useEffect(() => {
-    if (cost !== undefined) {
-      dispatch(saveShipmentDetails({ cost: cost }));
-    }
-  }, [cost]);
-
   const PaymentTable = () => {
-    const subTotal = cost! + addOnsPriceMap[shipmentDetails.addOns];
+    const subTotal =
+      shipmentDetails.cost! + addOnsPriceMap[shipmentDetails.addOns];
     useEffect(() => {
       if (
         isPromoCodeEligible &&
@@ -80,7 +64,7 @@ const NewShipmentStep2 = ({
         return;
       }
       setPaidAmount(subTotal);
-    }, [cost, availablePromoCode]);
+    }, [shipmentDetails.cost, availablePromoCode]);
 
     return (
       <div className="overflow-x-auto">
@@ -88,7 +72,10 @@ const NewShipmentStep2 = ({
           <tbody>
             <tr>
               <td>Shipping</td>
-              <td>{cost !== undefined && currencyFormat(cost)}</td>
+              <td>
+                {shipmentDetails.cost !== undefined &&
+                  currencyFormat(shipmentDetails.cost)}
+              </td>
             </tr>
             {shipmentDetails.addOns !== "0" && (
               <tr>
@@ -210,7 +197,7 @@ const NewShipmentStep2 = ({
             </div>
             <div>
               <p>Category: {shipmentDetails.category}</p>
-              <p>Shipping Cost:{cost}</p>
+              <p>Shipping Cost:{shipmentDetails.cost}</p>
               <p>Add Ons: {addOnsMap[shipmentDetails.addOns]}</p>
             </div>
           </div>

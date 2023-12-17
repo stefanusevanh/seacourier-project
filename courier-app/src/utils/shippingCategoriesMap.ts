@@ -1,5 +1,5 @@
 export const shippingCategoriesMap = {
-  OKE: "Economic (OKE)",
+  OKE: "Economy (OKE)",
   REG: "Regular (REG)",
   SPS: "Express (SPS)",
   YES: "Next Day (YES)",

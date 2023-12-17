@@ -34,9 +34,12 @@ const DropdownMenuAddress = ({
           }, 200);
         }
       }}
-      className="w-full relative"
+      className="w-full h-24 relative"
     >
-      <ButtonBorderOnly onClick={() => setIsDropdownShown(!isDropdownShown)}>
+      <ButtonBorderOnly
+        onClick={() => setIsDropdownShown(!isDropdownShown)}
+        flexibleHeight
+      >
         <div className="flex flew-row w-full justify-between items-center">
           <div className="text-left">
             {selectedAddress === null ? (
@@ -63,7 +66,7 @@ const DropdownMenuAddress = ({
       </ButtonBorderOnly>
       {isDropdownShown && (
         <div
-          className="absolute z-10 bg-[white] flex flex-col gap-2"
+          className="absolute z-10 bg-[white] flex flex-col gap-2 h-80 overflow-y-auto"
           onMouseOver={() => setIsDropdownShown(true)}
         >
           {addresses !== null &&
@@ -71,8 +74,12 @@ const DropdownMenuAddress = ({
               return (
                 <OptionCard
                   key={idx}
-                  optionName="OriginAddressOption"
-                  defaultValue={address.city}
+                  optionName={`${
+                    type === "origin"
+                      ? "OriginAddressOption"
+                      : "DestinationAddressOption"
+                  }`}
+                  defaultValue={address.street}
                   textMain={
                     type === "origin"
                       ? `${(address as IOriginAddress).branchName}`
@@ -83,7 +90,7 @@ const DropdownMenuAddress = ({
                         })`
                   }
                   textSecondary={`${address.street}, ${address.city}, ${address.province}`}
-                  defaultChecked={address === selectedAddress}
+                  defaultChecked={address.street === selectedAddress?.street}
                   onChange={() => {
                     type === "origin"
                       ? setSelectedAddressOrigin!(address as IOriginAddress)

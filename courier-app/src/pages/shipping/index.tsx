@@ -92,7 +92,7 @@ const Shipping = () => {
           setIsModalShown={setIsModalShown}
         />
       )}
-      {stepNum === 3 && <NewShipmentStep3 setStepNum={setStepNum} />}
+      {stepNum === 3 && <NewShipmentStep3 />}
       <PaymentModal
         isModalShown={isModalShown}
         setIsModalShown={setIsModalShown}

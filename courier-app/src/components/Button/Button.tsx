@@ -6,6 +6,7 @@ interface IButton {
   type?: "button" | "reset" | "submit";
   isLoading?: boolean;
   withoutHoverEffect?: boolean;
+  flexibleHeight?: boolean;
 }
 
 export const Button = ({
@@ -56,11 +57,18 @@ export const ButtonInverted = ({
   );
 };
 
-export const ButtonBorderOnly = ({ children, onClick, type }: IButton) => {
+export const ButtonBorderOnly = ({
+  flexibleHeight,
+  children,
+  onClick,
+  type,
+}: IButton) => {
   return (
-    <div className="card-actions w-full">
+    <div className={`card-actions w-full ${flexibleHeight ? "h-full" : ""}`}>
       <button
-        className="btn  w-full hover:bg-[white] text-primary_blue bg-[white] border-[grey] border-[1px] border-solid hover:border-primary_blue hover:border-2"
+        className={`btn  w-full ${
+          flexibleHeight ? "h-full" : ""
+        } hover:bg-[white] text-primary_blue bg-[white] border-[grey] border-[1px] border-solid hover:border-primary_blue hover:border-2`}
         onClick={onClick}
         type={type}
       >
