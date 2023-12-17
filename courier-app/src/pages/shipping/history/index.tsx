@@ -1,4 +1,5 @@
 import { Card } from "@/components/Card/Card";
+import { SearchInput } from "@/components/Form";
 import RatingStars from "@/components/RatingStars";
 import { useAppSelector } from "@/stores/store";
 import { IShippingDetail, TReview } from "@/types/api";
@@ -6,17 +7,21 @@ import { addOnsMap, addOnsPriceMap } from "@/utils/addOnsMap";
 import useShippingHistory from "@/utils/api/useShippingHistory";
 import useUpdateShipping from "@/utils/api/useUpdateShipping";
 import { currencyFormat } from "@/utils/currencyFormat";
+import { maxTrackingNumberLength } from "@/utils/formFieldValidation";
 import React, { ReactNode, useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { LuSearchX } from "react-icons/lu";
 
 const ShippingHistoryTabContent = ({
   tabTitle,
   isOpen,
+  onChange,
   children,
 }: {
   tabTitle: string;
-  isOpen: boolean;
+  isOpen?: boolean;
+  onChange?: () => void;
   children?: ReactNode;
 }) => {
   return (
@@ -27,7 +32,8 @@ const ShippingHistoryTabContent = ({
         role="tab"
         className="tab whitespace-nowrap"
         aria-label={tabTitle}
-        defaultChecked={isOpen}
+        onChange={onChange}
+        checked={isOpen}
       />
       <div
         role="tabpanel"
@@ -39,11 +45,24 @@ const ShippingHistoryTabContent = ({
   );
 };
 
+const ShippingHistoryTabContentHidden = () => {
+  return (
+    <input
+      type="radio"
+      name="my_tabs_2"
+      role="tab"
+      className="tab whitespace-nowrap cursor-default !border-b-0"
+      checked={false}
+      onChange={() => {}}
+    />
+  );
+};
+
 const ShippingHistoryTab = ({ children }: { children: ReactNode }) => {
   return (
     <div
       role="tablist"
-      className="tabs tabs-lifted tabs-md text-primary_blue rounded-b-2xl rounded-t-2xl"
+      className="tabs tabs-lifted tabs-md text-primary_blue rounded-b-2xl rounded-t-2xl mx-auto grid-cols-[1fr_auto_auto_auto_1fr]"
     >
       {children}
     </div>
@@ -163,30 +182,25 @@ const ShippingHistoryCard = ({
           )}
         </div>
       </div>
-      <table className="w-full ">
-        <tbody>
-          <tr>
-            <td>
-              <FaLocationDot size={25} color={"#273059"} />
-            </td>
-            <td>Origin:</td>
-            <td>
-              <p>{item.originAddress.branchName}</p>
-              <p>{`${item.originAddress.street}, ${item.originAddress.city}, ${item.originAddress.province}`}</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <FaLocationDot size={25} color={"e82d28"} />
-            </td>
-            <td>Destination:</td>
-            <td>
-              <p>{`${item.destinationAddress.receiverName} (${item.destinationAddress.receiverPhone})`}</p>
-              <p>{`${item.destinationAddress.street}, ${item.destinationAddress.city}, ${item.destinationAddress.province}`}</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div className="grid grid-cols-[0.2fr_1fr] grid-rows-[1fr_1fr] gap-y-6 self-start w-11/12">
+        <div className="col-start-1 row-start-1 flex flex-row gap-2">
+          <FaLocationDot size={25} color={"#273059"} />
+          Origin:
+        </div>
+        <div className="col-start-2 row-start-1">
+          <p>{item.originAddress.branchName}</p>
+          <p>{`${item.originAddress.street}, ${item.originAddress.city}, ${item.originAddress.province}`}</p>
+        </div>
+        <div className="col-start-1 row-start-2  flex flex-row gap-2">
+          <FaLocationDot size={25} color={"e82d28"} />
+          Destination:
+        </div>
+        <div className="col-start-2 row-start-2">
+          <p>{`${item.destinationAddress.receiverName} (${item.destinationAddress.receiverPhone})`}</p>
+          <p>{`${item.destinationAddress.street}, ${item.destinationAddress.city}, ${item.destinationAddress.province}`}</p>
+        </div>
+      </div>
       <div className="flex flex-col sm:flex-row justify-center sm:justify-between gap-5 w-full text-[grey]  text-sm mt-3 ">
         <div className="flex flex-col w-fit self-center">
           {isDetailsShown && (
@@ -251,6 +265,9 @@ const ShippingHistory = () => {
   const [rating, setRating] = useState<number>();
   const [trackingNumberToBeUpdated, setTrackingNumberToBeUpdated] =
     useState("");
+  const [openedTab, setOpenedTab] = useState("My Active Orders");
+  const [searchTrackingNumberDebounced, setSearchTrackingNumberDebounced] =
+    useState("");
 
   useEffect(() => {
     if (userId !== 0) {
@@ -276,6 +293,14 @@ const ShippingHistory = () => {
   }, [updatedShippings]);
 
   const tabs = ["My Active Orders", "My Completed Orders", "All Orders"];
+  useEffect(() => {
+    if (searchTrackingNumberDebounced !== "") {
+      setOpenedTab(tabs[2]);
+      return;
+    }
+    setOpenedTab(tabs[0]);
+  }, [searchTrackingNumberDebounced]);
+
   const statusMap = {
     "My Active Orders": ["PAID", "ON SHIPPING"],
     "My Completed Orders": ["DELIVERED"],
@@ -291,25 +316,44 @@ const ShippingHistory = () => {
 
     return 0;
   };
+
   return (
     <div className="my-4">
+      <div className="w-52 mb-3 mx-auto">
+        <SearchInput
+          placeholder="Tracking Number..."
+          maxInputLength={maxTrackingNumberLength}
+          setSearchInputDebounced={setSearchTrackingNumberDebounced}
+        />
+      </div>
       <ShippingHistoryTab>
+        <ShippingHistoryTabContentHidden />
         {tabs.map((tab, idx) => {
+          const filteredShippings = shippings
+            ?.sort(sortShippingHistory)
+            ?.filter((item) =>
+              statusMap[tab as keyof typeof statusMap].includes(item.status)
+            )
+            .filter((item) => {
+              if (searchTrackingNumberDebounced !== "") {
+                return item.trackingNumber.includes(
+                  searchTrackingNumberDebounced.toUpperCase()
+                );
+              }
+              return true;
+            });
+
           return (
             <ShippingHistoryTabContent
-              tabTitle={tab}
-              isOpen={tab === tabs[0]}
               key={idx}
+              tabTitle={tab}
+              isOpen={tab === openedTab}
+              onChange={() => setOpenedTab(tab)}
             >
               <div className="flex flex-col gap-4">
-                {shippings
-                  ?.sort(sortShippingHistory)
-                  ?.filter((item) =>
-                    statusMap[tab as keyof typeof statusMap].includes(
-                      item.status
-                    )
-                  )
-                  .map((item, idx2) => {
+                {filteredShippings !== undefined &&
+                  filteredShippings.length > 0 &&
+                  filteredShippings.map((item, idx2) => {
                     return (
                       <ShippingHistoryCard
                         key={idx * 10 + idx2}
@@ -321,10 +365,23 @@ const ShippingHistory = () => {
                       />
                     );
                   })}
+                {filteredShippings?.length === 0 && (
+                  <div className="flex flex-col items-center my-5  gap-6 ">
+                    <p className="text-4xl font-bold">Oops!</p>
+                    <LuSearchX size={80} />
+                    <p className="text-xl">
+                      Sorry, we can not find shipment with tracking number:
+                      <span className="bg-primary_red mx-1 text-[white] text-xl rounded-full px-2 py-1">
+                        {searchTrackingNumberDebounced}
+                      </span>
+                    </p>
+                  </div>
+                )}
               </div>
             </ShippingHistoryTabContent>
           );
         })}
+        <ShippingHistoryTabContentHidden />
       </ShippingHistoryTab>
     </div>
   );

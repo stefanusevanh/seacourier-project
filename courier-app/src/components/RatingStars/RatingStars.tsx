@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../Button";
 
 const RatingStars = ({
@@ -14,6 +14,11 @@ const RatingStars = ({
   const [selectedRating, setSelectedRating] = useState(ratingValue);
   const [currentHoverValue, setCurrentHoverValue] = useState(ratingValue);
   const isDisabled = ratingValue !== 0;
+
+  useEffect(() => {
+    setSelectedRating(ratingValue);
+  }, [ratingValue]);
+
   return (
     <div className="flex flex-col gap-2 items-center">
       <div

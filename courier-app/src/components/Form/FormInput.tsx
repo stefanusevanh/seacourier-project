@@ -14,6 +14,7 @@ const FormInput = ({
   isCorrect,
   isDisabled,
   isHidden,
+  isRoundedFull,
   withPrefix,
   withElementAtRight,
 }: {
@@ -30,7 +31,8 @@ const FormInput = ({
   isCorrect?: boolean;
   isDisabled?: boolean;
   isHidden?: boolean;
-  withPrefix?: string;
+  isRoundedFull?: boolean;
+  withPrefix?: string | JSX.Element;
   withElementAtRight?: JSX.Element;
 }) => {
   const [toggleForTypePassword, setToggleForTypePassword] =
@@ -38,26 +40,12 @@ const FormInput = ({
 
   return (
     <label className="form-control w-full">
-      <div className="label pb-1 relative">
-        {titleText && <span className="label-text">{titleText}</span>}
-        {type === "password" && (
-          <div
-            className="cursor-pointer rounded-full w-fit h-fit p-1 hover:bg-primary_orange absolute -bottom-9 right-2"
-            onMouseDown={() => setToggleForTypePassword("text")}
-            onMouseUp={() => setToggleForTypePassword("password")}
-          >
-            {toggleForTypePassword === "password" ? (
-              <IoMdEyeOff />
-            ) : (
-              <IoMdEye />
-            )}
-          </div>
-        )}
-        {withPrefix && (
-          <div className="absolute -bottom-9 left-3">{withPrefix}</div>
-        )}
-      </div>
-      <div className="flex flex-row gap-1">
+      {titleText && (
+        <div className="label pb-1">
+          {titleText && <span className="label-text">{titleText}</span>}
+        </div>
+      )}
+      <div className="flex flex-row gap-1 relative">
         <input
           type={type === "password" ? toggleForTypePassword : type}
           value={value}
@@ -71,10 +59,28 @@ const FormInput = ({
             isDisabled
               ? "!bg-[white] !cursor-text !border-none !text-primary_blue"
               : ""
-          } ${withPrefix ? "pl-10" : ""}
+          } ${isRoundedFull ? "rounded-full" : ""} ${withPrefix ? "pl-10" : ""}
         `}
           disabled={isDisabled}
         />
+        {type === "password" && (
+          <div
+            className="cursor-pointer rounded-full w-fit h-fit p-1 hover:bg-primary_orange absolute top-1/2 right-2.5 -translate-y-1/2"
+            onMouseDown={() => setToggleForTypePassword("text")}
+            onMouseUp={() => setToggleForTypePassword("password")}
+          >
+            {toggleForTypePassword === "password" ? (
+              <IoMdEyeOff />
+            ) : (
+              <IoMdEye />
+            )}
+          </div>
+        )}
+        {withPrefix && (
+          <div className="absolute top-1/2 left-3.5 -translate-y-1/2">
+            {withPrefix}
+          </div>
+        )}
         {withElementAtRight && <div>{withElementAtRight}</div>}
       </div>
 

@@ -7,6 +7,7 @@ export const maxPhoneNumDigit = 12;
 export const phoneNumStartDigits = "08";
 export const refCodeDigits = 6;
 export const maxPromoCodeDigits = 10;
+export const maxTrackingNumberLength = 7;
 
 export const isFormFieldEmpty = (field: string) => field === "";
 
