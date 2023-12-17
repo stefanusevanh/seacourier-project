@@ -41,14 +41,14 @@
       "name": "Evan Harlan",
       "phoneNumber": "081298123444",
       "photo": "http://res.cloudinary.com/dzzxtxrfd/image/upload/v1702456228/udmtxizwj1pxxz6hxmql.jpg",
-      "balance": 127300,
+      "balance": 59900,
       "refCode": "Kzznk3",
       "refCodeFriend": "",
       "countRefCode": 1,
       "completedShipments": 0,
       "totalSpent": 0,
       "createdAt": "2023-12-08T20:21:17.502Z",
-      "updatedAt": "2023-12-16T18:05:43.373Z",
+      "updatedAt": "2023-12-17T11:19:57.841Z",
       "id": 3
     },
     {
@@ -87,21 +87,21 @@
       "id": 1,
       "promoCode": "PROMO20",
       "discount": 20,
-      "quota": 10,
+      "quota": 999,
       "expiryDate": "2023-20-04T08:35:32.000Z",
-      "used": 2,
+      "used": 3,
       "createdAt": "2023-12-04T08:35:32.000Z",
-      "updatedAt": "2023-12-04T08:35:32.000Z"
+      "updatedAt": "2023-12-17T11:19:57.842Z"
     },
     {
       "id": 2,
       "promoCode": "PROMO30",
       "discount": 30,
-      "quota": 2,
+      "quota": 999,
       "expiryDate": "2023-20-04T08:35:32.000Z",
-      "used": 1,
+      "used": 3,
       "createdAt": "2023-12-04T08:35:32.000Z",
-      "updatedAt": "2023-12-04T08:35:32.000Z"
+      "updatedAt": "2023-12-17T11:19:42.064Z"
     },
     {
       "id": 3,
@@ -112,6 +112,16 @@
       "used": 1,
       "createdAt": "2023-12-04T08:35:32.000Z",
       "updatedAt": "2023-12-04T08:35:32.000Z"
+    },
+    {
+      "id": 4,
+      "promoCode": "PROMOEXPRD",
+      "discount": 50,
+      "quota": 10,
+      "expiryDate": "2000-12-17T05:57:09.942Z",
+      "used": 1,
+      "createdAt": "2023-12-17T05:57:09.942Z",
+      "updatedAt": "2023-12-17T05:57:09.942Z"
     }
   ],
   "destination": [
@@ -756,6 +766,237 @@
           "review": "",
           "updatedAt": "2023-12-16T18:05:43.373Z",
           "createdAt": "2023-12-16T18:05:43.373Z"
+        },
+        {
+          "length": 20,
+          "width": 40,
+          "height": 60,
+          "weight": 18,
+          "originAddress": {
+            "id": 1,
+            "branchName": "Jakarta Branch 1",
+            "city": "Jakarta Pusat",
+            "province": "DKI Jakarta",
+            "street": "Jl. Ini Nama Jalan Jakarta Origin",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "destinationAddress": {
+            "city": "Surabaya",
+            "province": "Jawa Tengah",
+            "street": "Jl. Ini Nama Jalan Surabaya 2",
+            "receiverName": "Ade4",
+            "receiverPhone": "081988882323",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "cost": 17000,
+          "promoUsed": "PROMO20",
+          "paidAmount": 37600,
+          "category": "OKE",
+          "addOns": "2",
+          "trackingNumber": "3014OKE",
+          "status": "PAID",
+          "review": "",
+          "updatedAt": "2023-12-16T19:21:08.133Z",
+          "createdAt": "2023-12-16T19:21:08.133Z"
+        },
+        {
+          "length": 20,
+          "width": 40,
+          "height": 60,
+          "weight": 18,
+          "originAddress": {
+            "id": 1,
+            "branchName": "Jakarta Branch 1",
+            "city": "Jakarta Pusat",
+            "province": "DKI Jakarta",
+            "street": "Jl. Ini Nama Jalan Jakarta Origin",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "destinationAddress": {
+            "city": "Surabaya",
+            "province": "Jawa Tengah",
+            "street": "Jl. Ini Nama Jalan Surabaya 2",
+            "receiverName": "Ade4",
+            "receiverPhone": "081988882323",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "cost": 17000,
+          "promoUsed": "",
+          "paidAmount": 47000,
+          "category": "OKE",
+          "addOns": "2",
+          "trackingNumber": "3015OKE",
+          "status": "PAID",
+          "review": "",
+          "updatedAt": "2023-12-16T19:21:34.786Z",
+          "createdAt": "2023-12-16T19:21:34.786Z"
+        },
+        {
+          "length": 10,
+          "width": 20,
+          "height": 30,
+          "weight": 6,
+          "originAddress": {
+            "id": 1,
+            "branchName": "Jakarta Branch 1",
+            "city": "Jakarta Pusat",
+            "province": "DKI Jakarta",
+            "street": "Jl. Ini Nama Jalan Jakarta Origin",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "destinationAddress": {
+            "city": "Bandung",
+            "province": "Jawa Barat",
+            "street": "Jl. Ini Nama Jalan Bandung 2",
+            "receiverName": "Ade3",
+            "receiverPhone": "081988882323",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "cost": 24000,
+          "promoUsed": "",
+          "paidAmount": 54000,
+          "category": "YES",
+          "addOns": "2",
+          "trackingNumber": "3016YES",
+          "status": "PAID",
+          "review": "",
+          "updatedAt": "2023-12-17T05:57:09.942Z",
+          "createdAt": "2023-12-17T05:57:09.942Z"
+        },
+        {
+          "length": 10,
+          "width": 20,
+          "height": 30,
+          "weight": 8,
+          "originAddress": {
+            "id": 1,
+            "branchName": "Jakarta Branch 1",
+            "city": "Jakarta Pusat",
+            "province": "DKI Jakarta",
+            "street": "Jl. Ini Nama Jalan Jakarta Origin",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "destinationAddress": {
+            "city": "Bandung",
+            "province": "Jawa Barat",
+            "street": "Jl. Ini Nama Jalan Bandung 2",
+            "receiverName": "Ade3",
+            "receiverPhone": "081988882323",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "cost": 24000,
+          "promoUsed": {
+            "id": 2,
+            "promoCode": "PROMO30",
+            "discount": 30,
+            "quota": 2,
+            "expiryDate": "2023-20-04T08:35:32.000Z",
+            "used": 1,
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "paidAmount": 20300,
+          "category": "YES",
+          "addOns": "1",
+          "trackingNumber": "3017YES",
+          "status": "PAID",
+          "review": "",
+          "updatedAt": "2023-12-17T11:18:34.634Z",
+          "createdAt": "2023-12-17T11:18:34.634Z"
+        },
+        {
+          "length": 10,
+          "width": 20,
+          "height": 30,
+          "weight": 8,
+          "originAddress": {
+            "id": 1,
+            "branchName": "Jakarta Branch 1",
+            "city": "Jakarta Pusat",
+            "province": "DKI Jakarta",
+            "street": "Jl. Ini Nama Jalan Jakarta Origin",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "destinationAddress": {
+            "city": "Bandung",
+            "province": "Jawa Barat",
+            "street": "Jl. Ini Nama Jalan Bandung 2",
+            "receiverName": "Ade3",
+            "receiverPhone": "081988882323",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "cost": 24000,
+          "promoUsed": {
+            "id": 2,
+            "promoCode": "PROMO30",
+            "discount": 30,
+            "quota": 999,
+            "expiryDate": "2023-20-04T08:35:32.000Z",
+            "used": 2,
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-17T11:18:34.634Z"
+          },
+          "paidAmount": 20300,
+          "category": "YES",
+          "addOns": "1",
+          "trackingNumber": "3018YES",
+          "status": "PAID",
+          "review": "",
+          "updatedAt": "2023-12-17T11:19:42.064Z",
+          "createdAt": "2023-12-17T11:19:42.064Z"
+        },
+        {
+          "length": 10,
+          "width": 20,
+          "height": 30,
+          "weight": 8,
+          "originAddress": {
+            "id": 1,
+            "branchName": "Jakarta Branch 1",
+            "city": "Jakarta Pusat",
+            "province": "DKI Jakarta",
+            "street": "Jl. Ini Nama Jalan Jakarta Origin",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "destinationAddress": {
+            "city": "Bandung",
+            "province": "Jawa Barat",
+            "street": "Jl. Ini Nama Jalan Bandung 2",
+            "receiverName": "Ade3",
+            "receiverPhone": "081988882323",
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "cost": 24000,
+          "promoUsed": {
+            "id": 1,
+            "promoCode": "PROMO20",
+            "discount": 20,
+            "quota": 999,
+            "expiryDate": "2023-20-04T08:35:32.000Z",
+            "used": 2,
+            "createdAt": "2023-12-04T08:35:32.000Z",
+            "updatedAt": "2023-12-04T08:35:32.000Z"
+          },
+          "paidAmount": 23200,
+          "category": "YES",
+          "addOns": "1",
+          "trackingNumber": "3019YES",
+          "status": "PAID",
+          "review": "",
+          "updatedAt": "2023-12-17T11:19:57.841Z",
+          "createdAt": "2023-12-17T11:19:57.841Z"
         }
       ]
     }

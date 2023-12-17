@@ -42,6 +42,17 @@ const NewShipmentStep2 = ({
     findPromoCode,
   } = usePromoCode();
 
+  const isPromoCodeExists =
+    availablePromoCode !== null && availablePromoCode.promoCode === promoInput;
+  const isPromoCodeQuotaOK =
+    availablePromoCode !== null &&
+    availablePromoCode.quota > availablePromoCode.used;
+  const isPromoCodeExpired =
+    availablePromoCode !== null &&
+    availablePromoCode.expiryDate < new Date().toISOString();
+  const isPromoCodeEligible =
+    isPromoCodeExists && isPromoCodeQuotaOK && !isPromoCodeExpired;
+
   useEffect(() => {
     getCost(
       shipmentDetails.originAddress?.city!,
@@ -61,8 +72,7 @@ const NewShipmentStep2 = ({
     const subTotal = cost! + addOnsPriceMap[shipmentDetails.addOns];
     useEffect(() => {
       if (
-        availablePromoCode !== null &&
-        availablePromoCode.quota > availablePromoCode.used &&
+        isPromoCodeEligible &&
         !isFormFieldEmpty(promoInput) &&
         isButtonCheckFirstClicked
       ) {
@@ -88,8 +98,7 @@ const NewShipmentStep2 = ({
                 </td>
               </tr>
             )}
-            {availablePromoCode !== null &&
-              availablePromoCode.quota > availablePromoCode.used &&
+            {isPromoCodeEligible &&
               !isFormFieldEmpty(promoInput) &&
               shipmentDetails.addOns !== "0" &&
               isButtonCheckFirstClicked && (
@@ -98,8 +107,7 @@ const NewShipmentStep2 = ({
                   <td>{currencyFormat(subTotal)}</td>
                 </tr>
               )}
-            {availablePromoCode !== null &&
-              availablePromoCode.quota > availablePromoCode.used &&
+            {isPromoCodeEligible &&
               !isFormFieldEmpty(promoInput) &&
               isButtonCheckFirstClicked && (
                 <tr>
@@ -126,15 +134,14 @@ const NewShipmentStep2 = ({
     }
     if (
       !isPromoCodeLengthValid(promoInput) ||
-      availablePromoCode === null ||
-      (availablePromoCode.promoCode !== promoInput && isButtonCheckFirstClicked)
+      (!isPromoCodeExists && isButtonCheckFirstClicked)
     ) {
       return "Seems like this code is invalid. Try again!";
     }
-    if (
-      availablePromoCode !== null &&
-      availablePromoCode?.quota === availablePromoCode.used
-    ) {
+    if (isPromoCodeExpired) {
+      return "Oops! This promo has expired";
+    }
+    if (!isPromoCodeQuotaOK) {
       return "Oops! This promo has reached the usage limit";
     }
     return "This error is not shown";
@@ -151,17 +158,17 @@ const NewShipmentStep2 = ({
     if (
       isFormFieldEmpty(promoInput) ||
       (isPromoCodeLengthValid(promoInput) &&
-        availablePromoCode !== null &&
-        availablePromoCode.promoCode === promoInput &&
-        availablePromoCode?.quota > availablePromoCode.used &&
+        isPromoCodeEligible &&
         !isLoadingPromoCode)
     ) {
-      dispatch(
-        saveShipmentDetails({
-          promoUsed: promoInput,
-          paidAmount: paidAmount,
-        })
-      );
+      if (user !== undefined && user !== null && user.balance > paidAmount) {
+        dispatch(
+          saveShipmentDetails({
+            promoUsed: availablePromoCode,
+            paidAmount: paidAmount,
+          })
+        );
+      }
       setIsModalShown(true);
     }
   };
@@ -229,18 +236,12 @@ const NewShipmentStep2 = ({
               errorText={handleErrorPromo(promoInput)}
               isError={
                 !isPromoCodeLengthValid(promoInput) ||
-                ((availablePromoCode?.promoCode !== promoInput ||
-                  availablePromoCode.quota === availablePromoCode.used) &&
+                (!isPromoCodeEligible &&
                   !isLoadingPromoCode &&
                   isButtonCheckFirstClicked)
               }
               correctText={`Yay! You got promo: ${availablePromoCode?.discount}% off`}
-              isCorrect={
-                availablePromoCode !== null &&
-                availablePromoCode.promoCode === promoInput &&
-                availablePromoCode?.quota > availablePromoCode.used &&
-                !isLoadingPromoCode
-              }
+              isCorrect={isPromoCodeEligible && !isLoadingPromoCode}
               withElementAtRight={
                 <div className="self-end">
                   <Button

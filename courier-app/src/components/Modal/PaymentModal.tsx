@@ -13,6 +13,10 @@ import { Button, ButtonBorderOnly } from "../Button";
 import { RiShieldCheckFill } from "react-icons/ri";
 import useUpdateShipping from "@/utils/api/useUpdateShipping";
 import { useAppSelector } from "@/stores/store";
+import { PiWarningCircleBold } from "react-icons/pi";
+import Link from "next/link";
+import { topupRoute } from "@/routes";
+import useUpdatePromoCode from "@/utils/api/useUpdatePromoCode";
 
 export const PaymentDetail = ({
   paidAmount,
@@ -21,6 +25,7 @@ export const PaymentDetail = ({
   paidAmount: number;
   user: IUser | null;
 }) => {
+  const isBalanceSufficient = user !== null && user.balance >= paidAmount;
   return (
     <table className="table">
       <tbody>
@@ -30,7 +35,7 @@ export const PaymentDetail = ({
         </tr>
         <tr>
           <td>Your balance:</td>
-          <td>
+          <td className={`${!isBalanceSufficient ? "text-primary_red" : ""}`}>
             {user !== undefined &&
               user !== null &&
               currencyFormat(user.balance)}
@@ -66,6 +71,7 @@ export const PaymentModal = ({
     updateUserData,
   } = useUpdateUser();
   const { updateShippingData } = useUpdateShipping();
+  const { updatePromoCode } = useUpdatePromoCode();
   const shippingDetails = useAppSelector((state) => state.shipping);
 
   const handleErrorMessages = (inputType: "password") => {
@@ -89,7 +95,8 @@ export const PaymentModal = ({
     if (
       isPasswordValid(password) &&
       user !== null &&
-      user.password === password
+      user.password === password &&
+      user.balance > paidAmount
     ) {
       setIsPaymentLoading(true);
       updateUserData(user.id, { balance: user.balance - paidAmount });
@@ -98,6 +105,15 @@ export const PaymentModal = ({
         user.id,
         shippingDetails as Partial<IShippingDetail>
       );
+      if (
+        shippingDetails.promoUsed !== undefined &&
+        shippingDetails.promoUsed?.promoCode !== undefined &&
+        shippingDetails.promoUsed?.promoCode !== ""
+      ) {
+        updatePromoCode(shippingDetails.promoUsed.id, {
+          used: shippingDetails.promoUsed.used + 1,
+        });
+      }
     }
   };
 
@@ -118,65 +134,82 @@ export const PaymentModal = ({
     }
   }, [isPaymentSuccess, isModalShown]);
 
+  const isBalanceSufficient =
+    user !== null && user !== undefined && user.balance > paidAmount;
+
   return (
     <Modal isModalShown={isModalShown} setIsModalShown={setIsModalShown}>
       <div className="p-4 md:p-5 text-center flex flex-col gap-4 justify-center">
         {(!isPaymentSuccess || isPaymentLoading) && (
           <>
-            <div className="">
-              <svg
-                className="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            <div className="flex flex-col">
+              <div className="mx-auto mb-2">
+                <PiWarningCircleBold
+                  size={60}
+                  color={`${isBalanceSufficient ? "black" : "red"}`}
                 />
-              </svg>
-              <h3 className="text-lg font-normal text-gray-500 dark:text-gray-400">
-                Payment Confirmation
-              </h3>
+              </div>
+              {isBalanceSufficient ? (
+                <h3 className="text-lg font-normal text-gray-500 dark:text-gray-400">
+                  Payment Confirmation
+                </h3>
+              ) : (
+                <h3 className="text-lg font-normal text-primary_red dark:text-gray-400">
+                  <span>Insufficient Balance</span>
+                </h3>
+              )}
             </div>
             <div>
-              <PaymentDetail paidAmount={paidAmount} user={user} />
+              <div className="w-4/5 mx-auto">
+                <PaymentDetail paidAmount={paidAmount} user={user} />
+              </div>
               <Form onSubmit={handleSubmit}>
-                <FormInput
-                  type="password"
-                  titleText="Password"
-                  placeholder="Input your password.."
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  errorText={handleErrorMessages("password")}
-                  isError={
-                    (isFormFieldEmpty(password) && isButtonClicked) ||
-                    (!isPasswordValid(password) &&
-                      !isFormFieldEmpty(password)) ||
-                    (user !== null &&
-                      user.password !== password &&
-                      isButtonClicked)
-                  }
-                />
-                <div className="flex flex-row gap-2 justify-center">
+                {isBalanceSufficient && (
+                  <FormInput
+                    type="password"
+                    titleText="Password"
+                    placeholder="Input your password.."
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    errorText={handleErrorMessages("password")}
+                    isError={
+                      (isFormFieldEmpty(password) && isButtonClicked) ||
+                      (!isPasswordValid(password) &&
+                        !isFormFieldEmpty(password)) ||
+                      (user !== null &&
+                        user.password !== password &&
+                        isButtonClicked)
+                    }
+                  />
+                )}
+                <div className="flex flex-row gap-2 justify-center my-2">
                   <div className="w-48">
-                    <Button
-                      type="submit"
-                      withoutHoverEffect
-                      onClick={() => {
-                        setIsButtonClicked(true);
-                      }}
-                      isLoading={isPaymentLoading}
-                    >
-                      Order Shipment
-                    </Button>
+                    {isBalanceSufficient ? (
+                      <Button
+                        type="submit"
+                        withoutHoverEffect
+                        onClick={() => {
+                          setIsButtonClicked(true);
+                        }}
+                        isLoading={isPaymentLoading}
+                      >
+                        Order Shipment
+                      </Button>
+                    ) : (
+                      <Link href={topupRoute}>
+                        <Button type="button" withoutHoverEffect>
+                          Top Up
+                        </Button>
+                      </Link>
+                    )}
                   </div>
                   <div>
-                    <ButtonBorderOnly onClick={() => setIsModalShown(false)}>
+                    <ButtonBorderOnly
+                      onClick={() => {
+                        setIsButtonClicked(false);
+                        setIsModalShown(false);
+                      }}
+                    >
                       Cancel
                     </ButtonBorderOnly>
                   </div>

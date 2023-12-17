@@ -82,7 +82,7 @@ export interface IShippingDetail {
   destinationAddress: IDestinationAddressDetail;
   cost: number;
   status: TStatus;
-  promoUsed: string;
+  promoUsed: IPromo;
   paidAmount: number;
   category: TShippingCategory;
   addOns: TAddOns;

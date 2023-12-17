@@ -111,7 +111,7 @@ const PaymentDetailTable = ({ item }: { item: IShippingDetail }) => {
               <RightCol value={currencyFormat(addOnsPriceMap[item.addOns])} />
             </tr>
           )}
-          {item.promoUsed !== "" && item.addOns !== "0" && (
+          {item.promoUsed.promoCode !== "" && item.addOns !== "0" && (
             <tr className="bg-base-200">
               <LeftCol mainText="Sub Total" />
               <RightCol
@@ -119,9 +119,9 @@ const PaymentDetailTable = ({ item }: { item: IShippingDetail }) => {
               />
             </tr>
           )}
-          {item.promoUsed !== "" && (
+          {item.promoUsed.promoCode !== "" && (
             <tr>
-              <LeftCol mainText={item.promoUsed} />
+              <LeftCol mainText={item.promoUsed.promoCode} />
               <RightCol
                 value={currencyFormat(
                   item.paidAmount - (item.cost + addOnsPriceMap[item.addOns])

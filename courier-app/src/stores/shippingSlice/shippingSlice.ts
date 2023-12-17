@@ -1,6 +1,7 @@
 import {
   IDestinationAddressDetail,
   IOriginAddress,
+  IPromo,
   TAddOns,
   TShippingCategory,
 } from "@/types/api";
@@ -14,7 +15,7 @@ interface IShippingState {
   originAddress: IOriginAddress | null;
   destinationAddress: IDestinationAddressDetail | null;
   cost: number;
-  promoUsed: string;
+  promoUsed: IPromo | null;
   paidAmount: number;
   category: TShippingCategory | null;
   addOns: TAddOns;
@@ -29,7 +30,7 @@ const shippingInitialState: IShippingState = {
   originAddress: null,
   destinationAddress: null,
   cost: 0,
-  promoUsed: "",
+  promoUsed: null,
   paidAmount: 0,
   category: null,
   addOns: "0",
@@ -55,8 +56,7 @@ const shippingSlice = createSlice({
         ? payload.destinationAddress
         : state.destinationAddress;
       state.cost = payload.cost ? payload.cost : state.cost;
-      state.promoUsed =
-        payload.promoUsed !== undefined ? payload.promoUsed : state.promoUsed;
+      state.promoUsed = payload.promoUsed ? payload.promoUsed : state.promoUsed;
       state.paidAmount = payload.paidAmount
         ? payload.paidAmount
         : state.paidAmount;
