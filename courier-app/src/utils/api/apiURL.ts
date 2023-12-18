@@ -13,5 +13,9 @@ export const CLOUDINARY_UPLOAD_PRESET = "courier_app_preset";
 export const CLOUDINARY_CLOUD_NAME = "dzzxtxrfd";
 
 //RajaOngkir API
-export const RAJAONGKIR_API_URL = "https://api.rajaongkir.com/starter/cost";
+export const RAJAONGKIR_COST_API_URL =
+  "https://api.rajaongkir.com/starter/cost";
+export const RAJAONGKIR_CITY_API_URL =
+  "https://api.rajaongkir.com/starter/city";
 export const RAJAONGKIR_API_KEY = "cef2cc8ae1d67bbb163533f7324aaea7";
+// export const RAJAONGKIR_API_KEY = "307cd51113c59e6c7568ff60e7e8eecc";

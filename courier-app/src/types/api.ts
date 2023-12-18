@@ -52,7 +52,7 @@ export interface IOriginAddress {
 }
 
 export interface IDestinationAddressDetail {
-  city: keyof typeof cityMap;
+  city: keyof typeof cityMap | "";
   province: string;
   street: string;
   receiverName: string;
@@ -114,6 +114,15 @@ export interface IRajaOngkir {
   destination_details: CityDetails;
   results: IResult[];
 }
+
+export interface IRajaOngkirResponseCity {
+  rajaongkir: {
+    query: { province: string };
+    status: IStatus;
+    results: IResultCity[];
+  };
+}
+
 export interface IQuery {
   origin: string;
   destination: string;
@@ -134,6 +143,15 @@ export interface IResult {
   code: string;
   name: string;
   costs: IResultCost[];
+}
+
+export interface IResultCity {
+  city_id: string;
+  province_id: string;
+  province: string;
+  type: string;
+  city_name: string;
+  postal_code: string;
 }
 
 export interface IResultCost {

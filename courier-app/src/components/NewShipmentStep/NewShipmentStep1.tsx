@@ -14,6 +14,7 @@ import { addOnsMap, addOnsPriceMap } from "@/utils/addOnsMap";
 import useDestinationAddress from "@/utils/api/useDestinationAddress";
 import useOriginAddresses from "@/utils/api/useOriginAddresses";
 import useShipping from "@/utils/api/useShipping";
+import { cityMap } from "@/utils/cityMap";
 import { currencyFormat } from "@/utils/currencyFormat";
 import {
   isPackageDimensionValid,
@@ -92,7 +93,7 @@ const NewShipmentStep1 = ({
     ) {
       getAvailableShipping(
         selectedOrigin.city,
-        selectedDestination.city,
+        selectedDestination.city as keyof typeof cityMap,
         packageWeightDebounced
       );
     }

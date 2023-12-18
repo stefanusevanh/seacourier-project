@@ -1,5 +1,10 @@
 import { Card } from "@/components/Card/Card";
 import { SearchInput } from "@/components/Form";
+import {
+  PageTab,
+  PageTabContent,
+  PageTabContentHidden,
+} from "@/components/PageTab";
 import RatingStars from "@/components/RatingStars";
 import { useAppSelector } from "@/stores/store";
 import { IShippingDetail, TReview } from "@/types/api";
@@ -8,66 +13,10 @@ import useShippingHistory from "@/utils/api/useShippingHistory";
 import useUpdateShipping from "@/utils/api/useUpdateShipping";
 import { currencyFormat } from "@/utils/currencyFormat";
 import { maxTrackingNumberLength } from "@/utils/formFieldValidation";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { LuSearchX } from "react-icons/lu";
-
-const ShippingHistoryTabContent = ({
-  tabTitle,
-  isOpen,
-  onChange,
-  children,
-}: {
-  tabTitle: string;
-  isOpen?: boolean;
-  onChange?: () => void;
-  children?: ReactNode;
-}) => {
-  return (
-    <>
-      <input
-        type="radio"
-        name="my_tabs_2"
-        role="tab"
-        className="tab whitespace-nowrap"
-        aria-label={tabTitle}
-        onChange={onChange}
-        checked={isOpen}
-      />
-      <div
-        role="tabpanel"
-        className="tab-content bg-base-100 border-base-300 rounded-box p-6 shadow-md"
-      >
-        {children}
-      </div>
-    </>
-  );
-};
-
-const ShippingHistoryTabContentHidden = () => {
-  return (
-    <input
-      type="radio"
-      name="my_tabs_2"
-      role="tab"
-      className="tab whitespace-nowrap cursor-default !border-b-0"
-      checked={false}
-      onChange={() => {}}
-    />
-  );
-};
-
-const ShippingHistoryTab = ({ children }: { children: ReactNode }) => {
-  return (
-    <div
-      role="tablist"
-      className="tabs tabs-lifted tabs-md text-primary_blue rounded-b-2xl rounded-t-2xl mx-auto grid-cols-[1fr_auto_auto_auto_1fr]"
-    >
-      {children}
-    </div>
-  );
-};
 
 const PaymentDetailTable = ({ item }: { item: IShippingDetail }) => {
   const LeftCol = ({
@@ -326,8 +275,8 @@ const ShippingHistory = () => {
           setSearchInputDebounced={setSearchTrackingNumberDebounced}
         />
       </div>
-      <ShippingHistoryTab>
-        <ShippingHistoryTabContentHidden />
+      <PageTab>
+        <PageTabContentHidden />
         {tabs.map((tab, idx) => {
           const filteredShippings = shippings
             ?.sort(sortShippingHistory)
@@ -344,7 +293,7 @@ const ShippingHistory = () => {
             });
 
           return (
-            <ShippingHistoryTabContent
+            <PageTabContent
               key={idx}
               tabTitle={tab}
               isOpen={tab === openedTab}
@@ -378,11 +327,11 @@ const ShippingHistory = () => {
                   </div>
                 )}
               </div>
-            </ShippingHistoryTabContent>
+            </PageTabContent>
           );
         })}
-        <ShippingHistoryTabContentHidden />
-      </ShippingHistoryTab>
+        <PageTabContentHidden />
+      </PageTab>
     </div>
   );
 };

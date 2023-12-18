@@ -38,7 +38,6 @@ const Topup = () => {
   const handleTopupBalance = () => {
     if (isTopupAmountValid(topupAmount) && user !== null) {
       updateUserData(userID, { balance: user.balance + topupAmount });
-      console.log("update");
     }
   };
   useEffect(() => {
