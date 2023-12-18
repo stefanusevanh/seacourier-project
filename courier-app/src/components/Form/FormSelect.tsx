@@ -15,7 +15,7 @@ const FormSelect = ({
   options: string[];
   optionPlaceholderText: string;
   defaultValue: string;
-  titleText: string;
+  titleText?: string;
   errorText?: string;
   correctText?: string;
   isError?: boolean;
