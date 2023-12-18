@@ -6,6 +6,7 @@ export const shippingRoute = "/shipping";
 export const shippingHistoryRoute = "/shipping/history";
 export const addressRoute = "/address";
 export const addressEditRoute = "/address/edit";
+export const addressNewRoute = "/address/new";
 export const topupRoute = "/topup";
 export const paymentRoute = "/payment";
 export const profileRoute = "/profile";
@@ -14,6 +15,7 @@ export const protectedUserRoutes = [
   shippingHistoryRoute,
   addressRoute,
   addressEditRoute,
+  addressNewRoute,
   topupRoute,
   paymentRoute,
   profileRoute,

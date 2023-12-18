@@ -10,6 +10,7 @@ export const maxPromoCodeDigits = 10;
 export const maxTrackingNumberLength = 7;
 export const maxPackageDimension = 1000; //cm
 export const maxPackageWeight = 30000; //gram
+export const maxStreetNameCharacter = 100;
 
 export const isFormFieldEmpty = (field: string) => field === "";
 
