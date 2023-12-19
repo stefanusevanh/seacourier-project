@@ -391,7 +391,7 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
                     V.isFormFieldEmpty(email) ||
                     (isAnotherUserRegistered && isButtonFirstClicked)
                   }
-                  isDisabled={!isEditable}
+                  isDisabled={!isEditable || admin !== null}
                 />
                 <FormInput
                   type="string"
@@ -409,7 +409,7 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
                       !V.isFormFieldEmpty(phoneNum)) ||
                     V.isFormFieldEmpty(phoneNum)
                   }
-                  isDisabled={!isEditable}
+                  isDisabled={!isEditable || admin !== null}
                 />
               </Form>
             </div>
