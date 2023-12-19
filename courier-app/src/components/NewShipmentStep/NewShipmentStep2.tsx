@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/stores/store";
 import React, { useEffect, useState } from "react";
 import { Card } from "../Card/Card";
-import { FaArrowCircleDown } from "react-icons/fa";
 import { addOnsMap, addOnsPriceMap } from "@/utils/addOnsMap";
 import { saveShipmentDetails } from "@/stores/shippingSlice/shippingSlice";
 import { Button, ButtonBorderOnly } from "../Button";
@@ -165,42 +164,57 @@ const NewShipmentStep2 = ({
   }, [promoInput]);
 
   return (
-    <div className="flex flex-row gap-4">
-      <div className="w-9/12">
+    <div className="flex flex-row gap-6 justify-center">
+      <div className="w-6/12">
         <Card>
-          <h2>Package Details</h2>
-          <p>Package Length: {shipmentDetails.length} cm</p>
-          <p>Package Width: {shipmentDetails.width} cm</p>
-          <p>Package Height: {shipmentDetails.height} cm</p>
-          <p>Package Weight: {shipmentDetails.weight} kg</p>
-          <div className="flex flex-row gap-4">
-            <div className="flex flex-col gap-6">
-              <div className="w-full">
-                <p>Origin:</p>
-                <div>
-                  <p>{shipmentDetails.originAddress?.branchName}</p>
-                  <p>{`${shipmentDetails.originAddress?.street}`}</p>
-                  <p>{`${shipmentDetails.originAddress?.city}, ${shipmentDetails.originAddress?.province}`}</p>
-                </div>
-              </div>
-              <div className="pl-10">
-                <FaArrowCircleDown size={30} />
-              </div>
-              <div className="w-full">
-                <p>Destination:</p>
-                <div>
-                  <p>{`${shipmentDetails.destinationAddress?.receiverName} (${shipmentDetails.destinationAddress?.receiverPhone})`}</p>
-                  <p>{`${shipmentDetails.destinationAddress?.street}`}</p>
-                  <p>{`${shipmentDetails.destinationAddress?.city}, ${shipmentDetails.destinationAddress?.province}`}</p>
-                </div>
-              </div>
-            </div>
-            <div>
-              <p>Category: {shipmentDetails.category}</p>
-              <p>Shipping Cost:{shipmentDetails.cost}</p>
-              <p>Add Ons: {addOnsMap[shipmentDetails.addOns]}</p>
-            </div>
-          </div>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td>Package Length</td>
+                <td>{shipmentDetails.length} cm</td>
+              </tr>
+              <tr>
+                <td>Package Width</td>
+                <td>{shipmentDetails.width} cm</td>
+              </tr>
+              <tr>
+                <td>Package Height</td>
+                <td>{shipmentDetails.height} cm</td>
+              </tr>
+              <tr>
+                <td>Package Weight</td>
+                <td>{shipmentDetails.weight} gram</td>
+              </tr>
+              <tr>
+                <td>Origin</td>
+                <td>
+                  <div>
+                    <p>{shipmentDetails.originAddress?.branchName}</p>
+                    <p>{`${shipmentDetails.originAddress?.street}`}</p>
+                    <p>{`${shipmentDetails.originAddress?.city}, ${shipmentDetails.originAddress?.province}`}</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Destination</td>
+                <td>
+                  <div>
+                    <p>{`${shipmentDetails.destinationAddress?.receiverName} (${shipmentDetails.destinationAddress?.receiverPhone})`}</p>
+                    <p>{`${shipmentDetails.destinationAddress?.street}`}</p>
+                    <p>{`${shipmentDetails.destinationAddress?.city}, ${shipmentDetails.destinationAddress?.province}`}</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Category</td>
+                <td>{shipmentDetails.category}</td>
+              </tr>
+              <tr>
+                <td>Add Ons</td>
+                <td>{addOnsMap[shipmentDetails.addOns]}</td>
+              </tr>
+            </tbody>
+          </table>
         </Card>
       </div>
       <div className="w-3/12">
@@ -245,11 +259,11 @@ const NewShipmentStep2 = ({
               }
             />
           )}
-          <Card>
+          <Card cardPadding="py-4">
             <h2>Payment Summary</h2>
             <PaymentTable />
           </Card>
-          <Card>
+          <Card cardPadding="py-4">
             <h2>Payment</h2>
             <div className="overflow-x-auto">
               <PaymentDetail paidAmount={paidAmount} user={user} />

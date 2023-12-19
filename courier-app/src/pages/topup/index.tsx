@@ -51,16 +51,22 @@ const Topup = () => {
 
   return (
     <div className="w-full max-w-[800px] mx-auto">
-      Topup
-      {user !== null && (
-        <p>
-          Balance: {updatedUser === null ? user.balance : updatedUser.balance}
-        </p>
-      )}
-      <div className="mb-8">
+      <div className="my-8 relative">
         <BigCard>
+          {user !== null && (
+            <div className="absolute top-4 right-4 flex flex-row-reverse w-full h-fit text-center ">
+              <div className="flex flex-row gap-2 h-fit rounded-full border-[grey] border-[1px] px-4 py-1 bg-primary_blue text-[white]">
+                <span>Your Balance:</span>
+                <span>
+                  {currencyFormat(
+                    updatedUser === null ? user.balance : updatedUser.balance
+                  )}
+                </span>
+              </div>
+            </div>
+          )}
           <div>
-            <h2>Methods</h2>
+            <h2 className="mb-2">Methods</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center mb-6">
               <SmallCard>
                 <FaMoneyBillTransfer size={50} />
@@ -81,7 +87,7 @@ const Topup = () => {
             </div>
           </div>
           <div className="w-full">
-            <h2>Top Up Amount</h2>
+            <h2 className="mb-2">Top Up Amount</h2>
             <div
               className="grid grid-cols-2  sm:grid-cols-3 lg:grid-cols-4  gap-4 justify-between w-full"
               onClick={() => setIsButtonClicked(false)}

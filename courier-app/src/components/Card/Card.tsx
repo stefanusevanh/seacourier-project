@@ -35,7 +35,7 @@ export const SmallCard = ({ children }: { children: ReactNode }) => {
 };
 export const BigCard = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="card w-full bg-base-100 shadow-2xl items-center mx-auto">
+    <div className="card w-full bg-base-100 border-base-300 border-[1px] shadow-xl items-center mx-auto">
       <div className="card-body items-center w-full">{children}</div>
     </div>
   );
@@ -79,8 +79,10 @@ export const OptionCard = ({
         id={defaultValue}
         htmlFor={defaultValue}
         onClick={onClick}
-        className={`block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500 ${
-          isDisabled ? "bg-[#e7e7e7] text-[grey] cursor-not-allowed " : ""
+        className={`block  rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500 ${
+          isDisabled
+            ? "bg-[#e7e7e7] text-[grey] cursor-not-allowed "
+            : "cursor-pointer"
         }`}
       >
         <div className="flex items-center justify-between">

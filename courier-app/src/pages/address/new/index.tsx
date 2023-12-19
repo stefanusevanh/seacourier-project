@@ -135,7 +135,8 @@ const AddressNew = ({
 
   return (
     <div>
-      {title}
+      <h1 className="mt-4  mb-3 text-lg font-bold">{title}</h1>
+
       <Card>
         <Form formnovalidate={true} onSubmit={handleFormSubmit}>
           <FormInput

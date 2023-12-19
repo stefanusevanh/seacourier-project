@@ -60,15 +60,19 @@ const PaymentDetailTable = ({ item }: { item: IShippingDetail }) => {
               <RightCol value={currencyFormat(addOnsPriceMap[item.addOns])} />
             </tr>
           )}
-          {item.promoUsed.promoCode !== "" && item.addOns !== "0" && (
-            <tr className="bg-base-200">
-              <LeftCol mainText="Sub Total" />
-              <RightCol
-                value={currencyFormat(item.cost + addOnsPriceMap[item.addOns])}
-              />
-            </tr>
-          )}
-          {item.promoUsed.promoCode !== "" && (
+          {item.promoUsed !== null &&
+            item.promoUsed.promoCode !== "" &&
+            item.addOns !== "0" && (
+              <tr className="bg-base-200">
+                <LeftCol mainText="Sub Total" />
+                <RightCol
+                  value={currencyFormat(
+                    item.cost + addOnsPriceMap[item.addOns]
+                  )}
+                />
+              </tr>
+            )}
+          {item.promoUsed !== null && item.promoUsed.promoCode !== "" && (
             <tr>
               <LeftCol mainText={item.promoUsed.promoCode} />
               <RightCol

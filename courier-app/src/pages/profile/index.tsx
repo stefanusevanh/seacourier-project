@@ -26,26 +26,7 @@ import { ButtonDanger } from "@/components/Button/Button";
 import { encodeString } from "@/utils/stringEncoderDecoder";
 import useUpdateAdmin from "@/utils/api/useUpdateAdmin";
 import CopyTextIcon from "@/components/CopyTextIcon";
-
-const StatCard = ({
-  title,
-  value,
-  desc,
-}: {
-  title: string;
-  value: string | JSX.Element;
-  desc?: string;
-}) => {
-  return (
-    <div className="stats shadow w-full h-full relative z-0">
-      <div className="stat">
-        <div className="stat-title">{title}</div>
-        <div className="stat-value text-3xl">{value}</div>
-        {desc && <div className="stat-desc">{desc}</div>}
-      </div>
-    </div>
-  );
-};
+import StatCard from "@/components/Card/StatCard";
 
 const LoadingDots = () => {
   return (

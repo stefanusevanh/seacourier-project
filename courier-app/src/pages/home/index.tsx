@@ -156,8 +156,8 @@ const Toolbar = ({
     <div className="relative flex justify-center ">
       <div
         className={`absolute -top-10 bg-[#343d68] ${
-          isToolbarOpen ? "h-fit" : "h-20"
-        } w-4/5 rounded-2xl flex flex-col justify-center items-center gap-4  border-[white] border-2`}
+          isToolbarOpen ? "h-fit pb-5" : "h-20"
+        } w-4/5 rounded-2xl flex flex-col justify-center items-center gap-4  border-[white] border-2 `}
       >
         <div className="flex flex-row justify-center items-center gap-4 h-20">
           <div className="w-52 relative">
@@ -214,7 +214,7 @@ const Toolbar = ({
           </div>
         </div>
         {isToolbarOpen && !isTracking && (
-          <div className="flex flew-row justify-center gap-6 ">
+          <div className="flex flew-row justify-center gap-6  ">
             <div className="flex flew-row justify-between gap-2">
               <div className="w-48 flex flex-col items-center">
                 <h2 className="text-[white] text-lg font-medium">Origin</h2>
@@ -247,16 +247,12 @@ const Toolbar = ({
                   Destination
                 </h2>
                 <FormSelect
-                  // titleText="Province"
                   defaultValue={selectedProvinceDest}
                   optionPlaceholderText="Select province"
                   options={Object.keys(provinceMap)}
                   setSelectedOption={setSelectedProvinceDest}
-                  // errorText="Please select province"
-                  // isError={selectedProvinceDest === "" && isButtonSaveClicked}
                 />
                 <FormSelect
-                  // titleText="City"
                   defaultValue={selectedCityDest}
                   optionPlaceholderText="Select city"
                   options={
@@ -269,8 +265,6 @@ const Toolbar = ({
                       React.SetStateAction<string>
                     >
                   }
-                  // errorText="Please select city"
-                  // isError={selectedCityDest === "" && isButtonSaveClicked}
                   isDisabled={
                     iGetCitiesDestLoading || selectedProvinceDest === ""
                   }
@@ -282,6 +276,7 @@ const Toolbar = ({
                 <span>Estimated Cost*</span>
                 <span className="font-bold">
                   {availableCosts &&
+                    !isGetAvailableShippingLoading &&
                     `${currencyFormat(
                       Math.min.apply(Math, availableCosts)
                     )} - ${currencyFormat(
@@ -291,6 +286,9 @@ const Toolbar = ({
                     selectedCityDest !== "" &&
                     selectedCityOri !== "" &&
                     "Click 'Estimate Now'"}
+                  {isGetAvailableShippingLoading && (
+                    <span className="loading loading-bars loading-sm"></span>
+                  )}
                 </span>
                 <span className="text-[grey] text-xs self-end ">
                   *Estimated for package weight of {dummyWeight / 1000} kg with

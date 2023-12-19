@@ -48,20 +48,22 @@ const FormSelect = ({
           );
         })}
       </select>
-      <div
-        className={`label  ${
-          isError || isCorrect ? "visible" : "invisible"
-        } pb-0 pt-1`}
-      >
-        <span
-          className={`label-text-alt   ${
-            isError && "text-[red] animate-wiggle"
-          } ${isCorrect && "text-[green] animate-wiggle"}`}
+      {(errorText || correctText) && (
+        <div
+          className={`label  ${
+            isError || isCorrect ? "visible" : "invisible"
+          } pb-0 pt-1`}
         >
-          {isError && errorText}
-          {isCorrect && correctText}
-        </span>
-      </div>
+          <span
+            className={`label-text-alt   ${
+              isError && "text-[red] animate-wiggle"
+            } ${isCorrect && "text-[green] animate-wiggle"}`}
+          >
+            {isError && errorText}
+            {isCorrect && correctText}
+          </span>
+        </div>
+      )}
     </label>
   );
 };
