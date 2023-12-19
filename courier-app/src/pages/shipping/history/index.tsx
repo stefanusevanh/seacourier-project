@@ -6,6 +6,7 @@ import {
   PageTabContentHidden,
 } from "@/components/PageTab";
 import RatingStars from "@/components/RatingStars";
+import ShipmentNotFound from "@/components/ShipmentNotFound";
 import { useAppSelector } from "@/stores/store";
 import { IShippingDetail, TReview } from "@/types/api";
 import { addOnsMap, addOnsPriceMap } from "@/utils/addOnsMap";
@@ -16,7 +17,6 @@ import { maxTrackingNumberLength } from "@/utils/formFieldValidation";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-import { LuSearchX } from "react-icons/lu";
 
 const PaymentDetailTable = ({ item }: { item: IShippingDetail }) => {
   const LeftCol = ({
@@ -278,7 +278,7 @@ const ShippingHistory = () => {
       <PageTab>
         <PageTabContentHidden />
         {tabs.map((tab, idx) => {
-          const filteredShippings = shippings
+          const filteredShippings = (shippings as IShippingDetail[])
             ?.sort(sortShippingHistory)
             ?.filter((item) =>
               statusMap[tab as keyof typeof statusMap].includes(item.status)
@@ -315,16 +315,10 @@ const ShippingHistory = () => {
                     );
                   })}
                 {filteredShippings?.length === 0 && (
-                  <div className="flex flex-col items-center my-5  gap-6 ">
-                    <p className="text-4xl font-bold">Oops!</p>
-                    <LuSearchX size={80} />
-                    <p className="text-xl">
-                      Sorry, we can not find shipment with tracking number:
-                      <span className="bg-primary_red mx-1 text-[white] text-xl rounded-full px-2 py-1">
-                        {searchTrackingNumberDebounced}
-                      </span>
-                    </p>
-                  </div>
+                  <ShipmentNotFound
+                    trackingNumber={searchTrackingNumberDebounced}
+                    isInHistory={true}
+                  />
                 )}
               </div>
             </PageTabContent>
