@@ -119,8 +119,8 @@ const AddressNew = ({
       }
       setTimeout(() => {
         toast.success(
-          isEditing
-            ? `Edit Address #${editAddressIndex} successful`
+          isEditing && editAddressIndex !== undefined
+            ? `Edit Address #${editAddressIndex + 1} successful`
             : "New address has been added",
           { duration: 1500 }
         );
@@ -204,8 +204,6 @@ const AddressNew = ({
             isError={selectedCity === "" && isButtonSaveClicked}
             isDisabled={iGetCitiesLoading || selectedProvince === ""}
           />
-          {selectedProvince}
-          {selectedCity}
           <div className="flex flex-row self-end gap-2 mt-6">
             <div>
               <ButtonBorderOnly

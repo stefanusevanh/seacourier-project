@@ -3,15 +3,19 @@ import React, { ReactNode } from "react";
 export const Card = ({
   withShadow = true,
   cardPadding,
+  bgColor,
   children,
 }: {
   withShadow?: boolean;
   cardPadding?: string;
+  bgColor?: string;
   children: ReactNode;
 }) => {
   return (
     <div
-      className={`card w-full bg-base-100 border-base-300 border-[1px] items-center ${
+      className={`card w-full ${
+        bgColor ? bgColor : "bg-base-100"
+      } border-base-300 border-[1px] items-center ${
         withShadow ? "shadow-md" : "shadow-none"
       }`}
     >
