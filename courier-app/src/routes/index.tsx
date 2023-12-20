@@ -26,6 +26,7 @@ export const protectedUserRoutes = [
 export const dashboardHomeRoute = "/dashboard";
 export const dashboardEarningReportsRoute = "/dashboard/earning-reports";
 export const dashboardShippingRoute = "/dashboard/manage-shipping";
+export const dashboardShippingEditRoute = "/dashboard/manage-shipping/edit";
 export const dashboardAddressRoute = "/dashboard/manage-address";
 export const dashboardPromosRoute = "/dashboard/manage-promos";
 export const dashboardProfileRoute = "/dashboard/profile";
@@ -34,6 +35,7 @@ export const protectedAdminRoutes = [
   dashboardHomeRoute,
   dashboardEarningReportsRoute,
   dashboardShippingRoute,
+  dashboardShippingEditRoute,
   dashboardAddressRoute,
   dashboardPromosRoute,
   dashboardProfileRoute,

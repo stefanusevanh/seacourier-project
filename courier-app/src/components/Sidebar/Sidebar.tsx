@@ -22,6 +22,7 @@ const PageTitle = ({ currentPage }: { currentPage: string }) => {
       title = "Earning Reports";
       break;
     case R.dashboardShippingRoute:
+    case R.dashboardShippingEditRoute:
       title = "Manage Shipping";
       break;
     case R.dashboardAddressRoute:
@@ -52,6 +53,8 @@ const PageBreadcrumbs = ({ currentPage }: { currentPage: string }) => {
               href={
                 currentPage === R.dashboardProfileEditRoute
                   ? R.dashboardProfileRoute
+                  : currentPage === R.dashboardShippingEditRoute
+                  ? R.dashboardShippingRoute
                   : currentPage
               }
             >
@@ -64,6 +67,11 @@ const PageBreadcrumbs = ({ currentPage }: { currentPage: string }) => {
             <Link href={R.dashboardProfileEditRoute}>Edit</Link>
           </li>
         )}
+        {currentPage.includes(R.dashboardShippingEditRoute) && (
+          <li>
+            <span>Edit</span>
+          </li>
+        )}
       </ul>
     </div>
   );
@@ -71,7 +79,11 @@ const PageBreadcrumbs = ({ currentPage }: { currentPage: string }) => {
 
 const Sidebar = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const currentPage = router.route;
+  let currentPage = router.route;
+  if (currentPage.includes(R.dashboardShippingEditRoute)) {
+    currentPage = R.dashboardShippingEditRoute;
+  }
+
   const logout = useLogout();
   const { setRole } = useRole();
   const { user, getUser } = useUser();
