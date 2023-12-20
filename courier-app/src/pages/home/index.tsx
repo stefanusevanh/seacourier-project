@@ -216,7 +216,7 @@ const Toolbar = ({
         {isToolbarOpen && !isTracking && (
           <div className="flex flew-row justify-center gap-6  ">
             <div className="flex flew-row justify-between gap-2">
-              <div className="w-48 flex flex-col items-center">
+              <div className="w-48 flex flex-col items-center gap-4">
                 <h2 className="text-[white] text-lg font-medium">Origin</h2>
                 <FormSelect
                   defaultValue={selectedProvinceOri}
@@ -242,7 +242,7 @@ const Toolbar = ({
                   }
                 />
               </div>
-              <div className="w-48 flex flex-col items-center">
+              <div className="w-48 flex flex-col items-center gap-4">
                 <h2 className="text-[white] text-lg font-medium">
                   Destination
                 </h2>

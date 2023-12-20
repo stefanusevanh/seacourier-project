@@ -7,8 +7,8 @@ const RatingStars = ({
   setTrackingNumber,
 }: {
   ratingValue: number;
-  setRating: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setTrackingNumber: () => void;
+  setRating?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setTrackingNumber?: () => void;
 }) => {
   const numberOfStars = 5;
   const [selectedRating, setSelectedRating] = useState(ratingValue);
@@ -45,7 +45,9 @@ const RatingStars = ({
                 idx + 1 <= currentHoverValue || idx + 1 <= selectedRating
                   ? "opacity-100"
                   : "opacity-20"
-              } ${selectedRating !== 0 && !isDisabled && "opacity-100"}`}
+              } ${selectedRating !== 0 && !isDisabled && "opacity-100"} ${
+                isDisabled && "cursor-default"
+              }`}
               value={idx + 1}
               onMouseOver={(e) => {
                 if (!isDisabled) {
@@ -66,8 +68,10 @@ const RatingStars = ({
           <Button
             withoutHoverEffect
             onClick={() => {
-              setRating(selectedRating);
-              setTrackingNumber();
+              if (setRating !== undefined && setTrackingNumber !== undefined) {
+                setRating(selectedRating);
+                setTrackingNumber();
+              }
             }}
           >
             Submit Review
