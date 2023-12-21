@@ -42,8 +42,22 @@ export const TH = ({
 export const TD = ({ children }: { children?: ReactNode }) => {
   return <td className="px-3 py-2 border">{children}</td>;
 };
-export const TR = ({ children }: { children: ReactNode }) => {
-  return <tr className="border-b  hover:bg-base-300">{children}</tr>;
+export const TR = ({
+  children,
+  additionalStyle,
+}: {
+  children: ReactNode;
+  additionalStyle?: string;
+}) => {
+  return (
+    <tr
+      className={`border-b  hover:bg-base-300 ${
+        additionalStyle && additionalStyle
+      }`}
+    >
+      {children}
+    </tr>
+  );
 };
 
 export const Table = ({ children }: { children: ReactNode }) => {

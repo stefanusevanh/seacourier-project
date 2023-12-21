@@ -40,11 +40,15 @@ const NewShipmentStep2 = ({
   } = usePromoCode();
 
   const isPromoCodeExists =
-    availablePromoCode !== null && availablePromoCode.promoCode === promoInput;
+    availablePromoCode !== undefined &&
+    availablePromoCode !== null &&
+    availablePromoCode.promoCode === promoInput;
   const isPromoCodeQuotaOK =
+    availablePromoCode !== undefined &&
     availablePromoCode !== null &&
     availablePromoCode.quota > availablePromoCode.used;
   const isPromoCodeExpired =
+    availablePromoCode !== undefined &&
     availablePromoCode !== null &&
     availablePromoCode.expiryDate < new Date().toISOString();
   const isPromoCodeEligible =
@@ -231,7 +235,9 @@ const NewShipmentStep2 = ({
               value={promoInput}
               onChange={(e) => {
                 if (e.target.value.length <= maxPromoCodeDigits) {
-                  setPromoInput(e.target.value.replace(/([^a-zA-Z0-9])/g, ""));
+                  setPromoInput(
+                    e.target.value.replace(/([^a-zA-Z0-9])/g, "").toUpperCase()
+                  );
                 }
               }}
               errorText={handleErrorPromo(promoInput)}

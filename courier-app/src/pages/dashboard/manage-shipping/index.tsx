@@ -30,16 +30,8 @@ const ManageShipping = () => {
     review: "Review",
   };
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
-  const [sortItem, setSortItem] = useState<
-    | "trackingNumber"
-    | "createdAt"
-    | "category"
-    | "size"
-    | "status"
-    | "origin"
-    | "destination"
-    | "review"
-  >("trackingNumber");
+  const [sortItem, setSortItem] =
+    useState<keyof typeof heads>("trackingNumber");
   const sorting = (a: IShippingDetail, b: IShippingDetail) => {
     const val = (val: IShippingDetail) => {
       switch (sortItem) {
