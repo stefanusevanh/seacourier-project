@@ -32,10 +32,10 @@ const SearchInput = ({
       value={searchTrackingNumberInput}
       onChange={(e) => {
         if (
-          e.target.value.replace(/[^\da-zA-Z]/g, "").length <= maxInputLength
+          e.target.value.replace(/[^ \da-zA-Z]/g, "").length <= maxInputLength
         ) {
           setSearchTrackingNumberInput(
-            e.target.value.replace(/[^\da-zA-Z]/g, "")
+            e.target.value.replace(/[^ \da-zA-Z]/g, "")
           );
         }
       }}

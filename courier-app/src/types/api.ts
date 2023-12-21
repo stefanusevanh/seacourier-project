@@ -44,7 +44,7 @@ export interface IPromo {
 export interface IOriginAddress {
   id: number;
   branchName: string;
-  city: keyof typeof cityMap;
+  city: keyof typeof cityMap | "";
   province: string;
   street: string;
   createdAt: string;

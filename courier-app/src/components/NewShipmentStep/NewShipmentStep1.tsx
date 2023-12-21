@@ -92,7 +92,7 @@ const NewShipmentStep1 = ({
       isPackageWeightValid(packageWeightDebounced)
     ) {
       getAvailableShipping(
-        selectedOrigin.city,
+        selectedOrigin.city as keyof typeof cityMap,
         selectedDestination.city as keyof typeof cityMap,
         packageWeightDebounced
       );
@@ -280,7 +280,7 @@ const NewShipmentStep1 = ({
                 <DropdownMenuAddress
                   type="origin"
                   placeholder="Select origin address"
-                  addresses={originAddresses}
+                  addresses={originAddresses as IOriginAddress[]}
                   selectedAddress={selectedOrigin}
                   setSelectedAddressOrigin={setSelectedOrigin}
                 />
@@ -312,7 +312,6 @@ const NewShipmentStep1 = ({
                     ];
                   return (
                     <OptionCard
-                      //TODO: add cost for each category and TOTAL cost estimation
                       key={idx}
                       optionName="CategoryOption"
                       defaultValue={category}
