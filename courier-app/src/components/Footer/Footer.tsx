@@ -15,6 +15,10 @@ const Footer = () => {
             alt={"SeaCourier logo"}
             width={100}
             height={100}
+            style={{
+              filter:
+                "brightness(0) saturate(100%) invert(93%) sepia(19%) saturate(4658%) hue-rotate(328deg) brightness(106%) contrast(99%)",
+            }}
           />
         </Link>
 

@@ -1,8 +1,8 @@
 //USER and ADMIN ROUTES
 export const homeRoute = "/home";
-export const shippingRoute = "/shipping";
 
 //USER ROUTES
+export const shippingRoute = "/shipping";
 export const shippingHistoryRoute = "/shipping/history";
 export const addressRoute = "/address";
 export const addressEditRoute = "/address/edit";
@@ -12,6 +12,7 @@ export const paymentRoute = "/payment";
 export const profileRoute = "/profile";
 export const profileEditRoute = "/profile/edit";
 export const protectedUserRoutes = [
+  shippingRoute,
   shippingHistoryRoute,
   addressRoute,
   addressEditRoute,
@@ -23,8 +24,8 @@ export const protectedUserRoutes = [
 ];
 
 //ADMIN ROUTES
-export const dashboardHomeRoute = "/dashboard";
 export const dashboardEarningReportsRoute = "/dashboard/earning-reports";
+export const dashboardHomeRoute = dashboardEarningReportsRoute;
 export const dashboardShippingRoute = "/dashboard/manage-shipping";
 export const dashboardShippingEditRoute = "/dashboard/manage-shipping/edit";
 export const dashboardAddressRoute = "/dashboard/manage-address";
@@ -51,4 +52,4 @@ export const protectedAdminRoutes = [
 ];
 
 export const authRoutes = ["/auth", "/auth/login", "/auth/register"];
-export const publicRoutes = ["/home", "/shipping"];
+export const publicRoutes = ["/home"];

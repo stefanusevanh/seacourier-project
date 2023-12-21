@@ -48,9 +48,6 @@ const PageBreadcrumbs = ({ currentPage }: { currentPage: string }) => {
   return (
     <div className="text-sm breadcrumbs">
       <ul>
-        <li>
-          <Link href={R.dashboardHomeRoute}>Home</Link>
-        </li>
         {currentPage !== R.dashboardHomeRoute && (
           <li>
             <Link
@@ -165,14 +162,6 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
               </Link>
             </div>
 
-            <li>
-              <Link
-                href={R.dashboardHomeRoute}
-                className={activeText(R.dashboardHomeRoute)}
-              >
-                HOME
-              </Link>
-            </li>
             <li>
               <Link
                 href={R.dashboardEarningReportsRoute}

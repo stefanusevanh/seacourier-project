@@ -3,7 +3,6 @@ import { GameIcon } from "./GameIcon";
 import Link from "next/link";
 import Image from "next/image";
 import { NavbarMenu, NavbarMenuCollapsed } from "./NavbarMenu";
-import NotificationIcon from "./NotificationIcon";
 import { Button } from "../Button";
 import useRole from "@/hooks/useRole";
 import { dashboardHomeRoute, homeRoute } from "@/routes";
@@ -13,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div className="w-full bg-primary_blue ">
-      <div className="navbar w-[90%] max-w-screen-2xl mx-auto text-[white] ">
+      <div className="navbar w-[90%] max-w-screen-2xl mx-auto text-[white] relative z-[99]">
         <div className="navbar-start">
           <NavbarMenuCollapsed role={role} />
           <Link href={homeRoute} className="">
@@ -22,6 +21,10 @@ const Navbar = () => {
               alt={"SeaCourier logo"}
               width={100}
               height={100}
+              style={{
+                filter:
+                  "brightness(0) saturate(100%) invert(93%) sepia(19%) saturate(4658%) hue-rotate(328deg) brightness(106%) contrast(99%)",
+              }}
             />
           </Link>
         </div>
@@ -37,7 +40,6 @@ const Navbar = () => {
           )}
           {role === "USER" || role === "USERISADMIN" || role === "ADMIN" ? (
             <>
-              <NotificationIcon />
               <ProfileIcon role={role} setRole={setRole} />
             </>
           ) : (

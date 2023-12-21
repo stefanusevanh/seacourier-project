@@ -1,5 +1,7 @@
 import {
   authRoutes,
+  dashboardEarningReportsRoute,
+  homeRoute,
   protectedAdminRoutes,
   protectedUserRoutes,
 } from "@/routes";
@@ -31,12 +33,12 @@ export default function middleware(request: NextRequest) {
     protectedAdminRoutes.includes(destinationPath) && isUser;
 
   if (destinationPath === "/") {
-    return NextResponse.redirect(new URL("/home", request.url));
+    return NextResponse.redirect(new URL(homeRoute, request.url));
   }
 
   if (isUserIsAdmin) {
     if (authRoutes.includes(destinationPath)) {
-      return NextResponse.redirect(new URL("/home", request.url));
+      return NextResponse.redirect(new URL(homeRoute, request.url));
     }
     //unlock the protected routes
     return;
@@ -54,7 +56,9 @@ export default function middleware(request: NextRequest) {
   }
 
   if (isAdminToAuthRoutes) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(
+      new URL(dashboardEarningReportsRoute, request.url)
+    );
   }
   if (
     isUserToAuthRoutes ||
@@ -62,6 +66,6 @@ export default function middleware(request: NextRequest) {
     isUserToProtectedAdminRoutes ||
     isAdminToProtectedUserRoutes
   ) {
-    return NextResponse.redirect(new URL("/home", request.url));
+    return NextResponse.redirect(new URL(homeRoute, request.url));
   }
 }
