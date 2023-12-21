@@ -15,9 +15,6 @@ import { storeUserID } from "@/stores/roleIDSlice/roleIDSlice";
 const PageTitle = ({ currentPage }: { currentPage: string }) => {
   let title = "";
   switch (currentPage) {
-    case R.dashboardHomeRoute:
-      title = "Dashboard Home";
-      break;
     case R.dashboardEarningReportsRoute:
       title = "Earning Reports";
       break;
@@ -48,25 +45,23 @@ const PageBreadcrumbs = ({ currentPage }: { currentPage: string }) => {
   return (
     <div className="text-sm breadcrumbs">
       <ul>
-        {currentPage !== R.dashboardHomeRoute && (
-          <li>
-            <Link
-              href={
-                currentPage === R.dashboardProfileEditRoute
-                  ? R.dashboardProfileRoute
-                  : currentPage.includes(R.dashboardShippingRoute)
-                  ? R.dashboardShippingRoute
-                  : currentPage.includes(R.dashboardPromosRoute)
-                  ? R.dashboardPromosRoute
-                  : currentPage.includes(R.dashboardAddressRoute)
-                  ? R.dashboardAddressRoute
-                  : currentPage
-              }
-            >
-              <PageTitle currentPage={currentPage} />
-            </Link>
-          </li>
-        )}
+        <li>
+          <Link
+            href={
+              currentPage === R.dashboardProfileEditRoute
+                ? R.dashboardProfileRoute
+                : currentPage.includes(R.dashboardShippingRoute)
+                ? R.dashboardShippingRoute
+                : currentPage.includes(R.dashboardPromosRoute)
+                ? R.dashboardPromosRoute
+                : currentPage.includes(R.dashboardAddressRoute)
+                ? R.dashboardAddressRoute
+                : currentPage
+            }
+          >
+            <PageTitle currentPage={currentPage} />
+          </Link>
+        </li>
         {currentPage.includes("/edit") && (
           <li>
             <span>Edit</span>

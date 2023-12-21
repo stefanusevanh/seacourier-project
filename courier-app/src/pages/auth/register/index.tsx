@@ -128,7 +128,6 @@ const Register = () => {
   };
 
   useEffect(() => {
-    //to set off the error "Account with same email is already registered" after the user changes the email or password
     setIsButtonFirstClicked(false);
   }, [email, password, refCodeFriend]);
 

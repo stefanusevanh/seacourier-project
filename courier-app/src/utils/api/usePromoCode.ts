@@ -51,14 +51,12 @@ export const usePromoCode = () => {
       case "promoCode":
         if (promos !== null && (promos as IPromo[]).length > 0) {
           setAvailablePromoCode((promos as IPromo[])[0]);
-          console.log("1");
           return;
         }
         break;
       case "promoCodeID":
         if (promos !== null) {
           setAvailablePromoCode(promos as IPromo);
-          console.log("2");
           return;
         }
     }

@@ -40,7 +40,6 @@ export default function middleware(request: NextRequest) {
     if (authRoutes.includes(destinationPath)) {
       return NextResponse.redirect(new URL(homeRoute, request.url));
     }
-    //unlock the protected routes
     return;
   }
 

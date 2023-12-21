@@ -14,7 +14,6 @@ function useUpdateAdmin() {
       dataToBeUpdated.token ||
       dataToBeUpdated.createdAt
     ) {
-      //these data can not be updated
       return;
     }
     const url = `${ADMIN_API_URL}/${adminId}`;

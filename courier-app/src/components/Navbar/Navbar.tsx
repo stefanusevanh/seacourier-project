@@ -32,7 +32,6 @@ const Navbar = () => {
           <NavbarMenu role={role} />
         </div>
         <div className="navbar-end gap-1">
-          {(role === "USER" || role === "USERISADMIN") && <GameIcon />}
           {role === "ADMIN" && (
             <Link href={dashboardHomeRoute}>
               <Button withoutHoverEffect={true}>Go to Dashboard</Button>

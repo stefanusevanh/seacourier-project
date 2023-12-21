@@ -70,7 +70,6 @@ function EarningChart({
 
   return (
     <Chart
-      //   title="Test"
       ref={chartRef}
       type="line"
       data={chartData}

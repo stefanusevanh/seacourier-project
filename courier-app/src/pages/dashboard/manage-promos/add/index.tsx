@@ -109,7 +109,6 @@ const PromoDetail = ({
   }, [availablePromoCode]);
 
   useEffect(() => {
-    //to set off the error after the user changes input
     setIsButtonSaveClicked(false);
   }, [promoCode, discount, quota, expiryDate]);
 
@@ -120,7 +119,6 @@ const PromoDetail = ({
     if (!V.isPromoCodeLengthValid(promoInput)) {
       return `Please input max ${V.maxPromoCodeDigits} digits`;
     }
-    console.log(availablePromoCode);
     if (
       availablePromoCode !== undefined &&
       availablePromoCode !== null &&

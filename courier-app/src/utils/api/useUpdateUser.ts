@@ -13,7 +13,6 @@ function useUpdateUser() {
       dataToBeUpdated.refCodeFriend ||
       dataToBeUpdated.createdAt
     ) {
-      //these data can not be updated
       return;
     }
     const url = `${USERS_API_URL}/${userId}`;

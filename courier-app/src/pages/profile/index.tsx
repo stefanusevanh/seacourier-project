@@ -142,7 +142,6 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
       V.isPhoneNumValid(phoneNum);
 
     if (!isAllFieldValid) {
-      // setIsButtonLoading(false);
       return;
     }
 
@@ -193,7 +192,6 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
   }, [updatedUser, updatedAdmin]);
 
   useEffect(() => {
-    //to set off the error "Account with same email is already registered" after the user changes the email
     setIsButtonFirstClicked(false);
   }, [email]);
 
@@ -327,7 +325,6 @@ const Profile = ({ isEditable = false }: { isEditable?: boolean }) => {
                     <div>
                       <Button
                         onClick={() => {
-                          // TODO: HANDLE DOUBLE SUBMIT
                           setIsButtonFirstClicked(true);
                           setIsAnotherUserRegistered(false);
                           handleFormSubmit();

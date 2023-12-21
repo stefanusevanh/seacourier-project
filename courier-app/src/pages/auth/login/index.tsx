@@ -71,7 +71,6 @@ const Login = () => {
   };
 
   useEffect(() => {
-    //to set off the error "Invalid email or password" after the user changes the email or password
     setIsButtonFirstClicked(false);
   }, [email, password]);
 

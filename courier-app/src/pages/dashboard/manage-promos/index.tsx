@@ -42,12 +42,6 @@ const ManagePromos = () => {
   const sorting = (a: IPromo, b: IPromo) => {
     const val = (val: IPromo) => {
       switch (sortItem) {
-        // case "size":
-        //   return val.length * val.width * val.height;
-        // case "origin":
-        //   return val.originAddress.city;
-        // case "destination":
-        //   return val.destinationAddress.city;
         default:
           return val[sortItem].toString().toLowerCase();
       }

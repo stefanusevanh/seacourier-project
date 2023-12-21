@@ -10,7 +10,6 @@ function useUpdatePromoCode() {
     dataToBeUpdated?: Partial<IPromo>
   ) => {
     if (dataToBeUpdated?.id || dataToBeUpdated?.createdAt) {
-      //these data can not be updated
       return;
     }
     const url = `${PROMO_API_URL}/${type === "ADD" ? "" : promoCodeID}`;

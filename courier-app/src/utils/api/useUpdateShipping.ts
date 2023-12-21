@@ -42,7 +42,6 @@ function useUpdateShipping() {
     trackingNumber?: string
   ) => {
     if (dataToBeUpdated.createdAt) {
-      //this data can not be updated
       return;
     }
     switch (type) {

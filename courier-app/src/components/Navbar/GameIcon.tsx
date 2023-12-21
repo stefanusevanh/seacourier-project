@@ -1,5 +1,6 @@
 import { IoGift } from "react-icons/io5";
 export const GameIcon = () => {
+  //THIS COMPONENT IS NOT READY YET
   return (
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">

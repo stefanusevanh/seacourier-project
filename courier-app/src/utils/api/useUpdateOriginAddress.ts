@@ -10,7 +10,6 @@ function useUpdateOriginAddress() {
     dataToBeUpdated?: Partial<IOriginAddress>
   ) => {
     if (dataToBeUpdated?.id || dataToBeUpdated?.createdAt) {
-      //these data can not be updated
       return;
     }
     const url = `${ORI_API_URL}/${type === "ADD" ? "" : originAddressID}`;
