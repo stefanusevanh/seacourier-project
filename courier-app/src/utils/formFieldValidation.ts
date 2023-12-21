@@ -11,6 +11,8 @@ export const maxTrackingNumberLength = 7;
 export const maxPackageDimension = 1000; //cm
 export const maxPackageWeight = 30000; //gram
 export const maxStreetNameCharacter = 100;
+export const maxPromoDiscount = 100; //%
+export const maxPromoQuota = 999;
 
 export const isFormFieldEmpty = (field: string) => field === "";
 
@@ -48,8 +50,13 @@ export const isTopupAmountValid = (amount: number) =>
   amount >= minTopupAmount && amount <= maxTopupAmount;
 
 export const isPromoCodeLengthValid = (promoCode: string) =>
-  (promoCode.length > 0 && promoCode.length <= maxPromoCodeDigits) ||
-  promoCode.length === 0;
+  promoCode.length >= 0 && promoCode.length <= maxPromoCodeDigits;
+
+export const isPromoDiscountValid = (discount: number) =>
+  discount > 0 && discount <= maxPromoDiscount;
+
+export const isPromoQuotaValid = (quota: number) =>
+  quota > 0 && quota <= maxPromoQuota;
 
 export const isPackageDimensionValid = (dimension: number) =>
   dimension > 0 && dimension <= maxPackageDimension;

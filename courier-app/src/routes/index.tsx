@@ -29,6 +29,8 @@ export const dashboardShippingRoute = "/dashboard/manage-shipping";
 export const dashboardShippingEditRoute = "/dashboard/manage-shipping/edit";
 export const dashboardAddressRoute = "/dashboard/manage-address";
 export const dashboardPromosRoute = "/dashboard/manage-promos";
+export const dashboardPromosEditRoute = "/dashboard/manage-promos/edit";
+export const dashboardPromosAddRoute = "/dashboard/manage-promos/add";
 export const dashboardProfileRoute = "/dashboard/profile";
 export const dashboardProfileEditRoute = "/dashboard/profile/edit";
 export const protectedAdminRoutes = [
@@ -38,6 +40,8 @@ export const protectedAdminRoutes = [
   dashboardShippingEditRoute,
   dashboardAddressRoute,
   dashboardPromosRoute,
+  dashboardPromosEditRoute,
+  dashboardPromosAddRoute,
   dashboardProfileRoute,
   dashboardProfileEditRoute,
 ];

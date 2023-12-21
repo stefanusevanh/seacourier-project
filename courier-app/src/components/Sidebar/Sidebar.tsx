@@ -29,6 +29,8 @@ const PageTitle = ({ currentPage }: { currentPage: string }) => {
       title = "Manage Outlet Address";
       break;
     case R.dashboardPromosRoute:
+    case R.dashboardPromosAddRoute:
+    case R.dashboardPromosEditRoute:
       title = "Manage Promos";
       break;
     case R.dashboardProfileRoute:
@@ -53,8 +55,10 @@ const PageBreadcrumbs = ({ currentPage }: { currentPage: string }) => {
               href={
                 currentPage === R.dashboardProfileEditRoute
                   ? R.dashboardProfileRoute
-                  : currentPage === R.dashboardShippingEditRoute
+                  : currentPage.includes(R.dashboardShippingRoute)
                   ? R.dashboardShippingRoute
+                  : currentPage.includes(R.dashboardPromosRoute)
+                  ? R.dashboardPromosRoute
                   : currentPage
               }
             >
@@ -67,9 +71,15 @@ const PageBreadcrumbs = ({ currentPage }: { currentPage: string }) => {
             <Link href={R.dashboardProfileEditRoute}>Edit</Link>
           </li>
         )}
-        {currentPage.includes(R.dashboardShippingEditRoute) && (
+        {(currentPage.includes(R.dashboardShippingEditRoute) ||
+          currentPage.includes(R.dashboardPromosEditRoute)) && (
           <li>
             <span>Edit</span>
+          </li>
+        )}
+        {currentPage.includes(R.dashboardPromosAddRoute) && (
+          <li>
+            <span>Add</span>
           </li>
         )}
       </ul>
@@ -82,6 +92,10 @@ const Sidebar = ({ children }: { children: ReactNode }) => {
   let currentPage = router.route;
   if (currentPage.includes(R.dashboardShippingEditRoute)) {
     currentPage = R.dashboardShippingEditRoute;
+  } else if (currentPage.includes(R.dashboardPromosEditRoute)) {
+    currentPage = R.dashboardPromosEditRoute;
+  } else if (currentPage.includes(R.dashboardPromosAddRoute)) {
+    currentPage = R.dashboardPromosAddRoute;
   }
 
   const logout = useLogout();
