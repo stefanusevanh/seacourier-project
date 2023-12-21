@@ -28,6 +28,8 @@ export const dashboardEarningReportsRoute = "/dashboard/earning-reports";
 export const dashboardShippingRoute = "/dashboard/manage-shipping";
 export const dashboardShippingEditRoute = "/dashboard/manage-shipping/edit";
 export const dashboardAddressRoute = "/dashboard/manage-address";
+export const dashboardAddressEditRoute = "/dashboard/manage-address/edit";
+export const dashboardAddressAddRoute = "/dashboard/manage-address/add";
 export const dashboardPromosRoute = "/dashboard/manage-promos";
 export const dashboardPromosEditRoute = "/dashboard/manage-promos/edit";
 export const dashboardPromosAddRoute = "/dashboard/manage-promos/add";
@@ -39,6 +41,8 @@ export const protectedAdminRoutes = [
   dashboardShippingRoute,
   dashboardShippingEditRoute,
   dashboardAddressRoute,
+  dashboardAddressEditRoute,
+  dashboardAddressAddRoute,
   dashboardPromosRoute,
   dashboardPromosEditRoute,
   dashboardPromosAddRoute,

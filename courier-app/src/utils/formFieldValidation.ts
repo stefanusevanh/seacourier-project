@@ -11,6 +11,7 @@ export const maxTrackingNumberLength = 7;
 export const maxPackageDimension = 1000; //cm
 export const maxPackageWeight = 30000; //gram
 export const maxStreetNameCharacter = 100;
+export const maxBranchNameCharacter = 50;
 export const maxPromoDiscount = 100; //%
 export const maxPromoQuota = 999;
 
@@ -36,6 +37,10 @@ export const isPasswordValid = (password: string) =>
 
 export const isNameValid = (name: string) => {
   return name.match(/([^ a-zA-Z])/g) === null;
+};
+
+export const isBranchNameValid = (name: string) => {
+  return name.match(/([^ a-zA-Z\d])/g) === null;
 };
 
 export const isPhoneNumValid = (phoneNum: string) =>
