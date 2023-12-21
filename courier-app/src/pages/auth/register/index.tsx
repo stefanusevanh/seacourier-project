@@ -178,7 +178,7 @@ const Register = () => {
         setIsRefCodeFriendExists(true);
         setIsButtonLoading(false);
         registerUser(email, password, fullName, phoneNum, refCodeFriend);
-        if (referredUser?.length !== 0) {
+        if (referredUser?.length !== 0 && referredUser !== null) {
           updateUserData(referredUser![0].id, {
             countRefCode: referredUser![0].countRefCode + 1,
           });
