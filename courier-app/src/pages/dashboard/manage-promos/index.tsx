@@ -171,13 +171,13 @@ const ManagePromos = () => {
                   promo.promoCode.includes(searchPromoCode.toUpperCase()) ||
                   searchPromoCode === ""
               )
+              .sort(sorting)
               .slice(
                 (pageNum - 1) * numOfItemPerPage,
                 pageNum * numOfItemPerPage < maxItem
                   ? pageNum * numOfItemPerPage
                   : undefined
               )
-              .sort(sorting)
               .map((promo) => {
                 return (
                   <TR

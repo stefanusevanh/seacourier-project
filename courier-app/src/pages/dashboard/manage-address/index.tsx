@@ -167,13 +167,13 @@ const ManageAddress = () => {
                     .includes(searchBranchName.toLowerCase()) ||
                   searchBranchName === ""
               )
+              .sort(sorting)
               .slice(
                 (pageNum - 1) * numOfItemPerPage,
                 pageNum * numOfItemPerPage < maxItem
                   ? pageNum * numOfItemPerPage
                   : undefined
               )
-              .sort(sorting)
               .map((address) => {
                 return (
                   <TR key={address.id}>

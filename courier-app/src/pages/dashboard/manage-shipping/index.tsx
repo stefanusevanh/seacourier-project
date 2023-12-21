@@ -142,13 +142,13 @@ const ManageShipping = () => {
                 }
                 return true;
               })
+              .sort(sorting)
               .slice(
                 (pageNum - 1) * numOfItemPerPage,
                 pageNum * numOfItemPerPage < maxItem
                   ? pageNum * numOfItemPerPage
                   : undefined
               )
-              .sort(sorting)
               .map((shipping) => {
                 return (
                   <TR key={shipping.trackingNumber}>
